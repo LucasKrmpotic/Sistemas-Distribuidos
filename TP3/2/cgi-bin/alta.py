@@ -8,6 +8,7 @@ legajo = form.getvalue('legajo')
 sexo = form.getvalue('sexo')
 edad = form.getvalue('edad')
 password = form.getvalue('password')
+
 with open('bd.csv', 'a', newline='') as csvfile:
     fieldnames = ['nombre', 'legajo', 'sexo', 'edad', 'password']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames) #DictWiter es un escritor normal como writer pero que asigna diccionarios
