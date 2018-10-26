@@ -1,7 +1,8 @@
 # correr con
-
+# construir la imagen
 # docker build -t tp3sd .
 
+#correr el contenedor
 # docker run --name serversd -dit \
 #     -p 8080:80 \
 #     -v $PWD/html:/usr/local/apache2/htdocs \
