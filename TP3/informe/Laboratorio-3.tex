@@ -288,6 +288,62 @@ información que llega del lado del cliente, a nivel de HTTP o HTML
 (preferentemente
 HTTP).}\label{desarrolle-un-experimento-mediante-telnet-o-analizador-de-paquetes-que-muestre-si-el-servidor-de-http-agrega-o-quita-informaciuxf3n-a-la-que-genera-un-programa-cgi.-nota-deberuxeda-programar-o-utilizar-un-programa-cgi-para-conocer-exactamente-lo-que-genera-y-deberuxeda-mostrar-la-informaciuxf3n-que-llega-del-lado-del-cliente-a-nivel-de-http-o-html-preferentemente-http.}
 
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k+kn}{from} \PY{n+nn}{scapy}\PY{n+nn}{.}\PY{n+nn}{all} \PY{k}{import} \PY{o}{*}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+HTTP/1.1 400 Bad Request
+Date: Tue, 23 Oct 2018 19:36:51 GMT
+Server: Apache/2.4.35 (Unix)
+Vary: accept-language,accept-charset
+Accept-Ranges: bytes
+Connection: close
+Content-Type: text/html; charset=utf-8
+Content-Language: en
+Expires: Tue, 23 Oct 2018 19:36:51 GMT
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Bad request!</title>
+<link rev="made" href="mailto:you@example.com" />
+<style type="text/css"><!--/*--><![CDATA[/*><!--*/ 
+    body \{ color: \#000000; background-color: \#FFFFFF; \}
+    a:link \{ color: \#0000CC; \}
+    p, address \{margin-left: 3em;\}
+    span \{font-size: smaller;\}
+/*]]>*/--></style>
+</head>
+
+<body>
+<h1>Bad request!</h1>
+<p>
+
+
+    Your browser (or proxy) sent a request that
+    this server could not understand.
+
+</p>
+<p>
+If you think this is a server error, please contact
+the <a href="mailto:you@example.com">webmaster</a>.
+
+</p>
+
+<h2>Error 400</h2>
+<address>
+  <a href="/">localhost</a><br />
+  <span>Apache/2.4.35 (Unix)</span>
+</address>
+</body>
+</html>
+
+    \end{Verbatim}
+
     \section{Se debe desarrollar una aplicación que presente al usuario una
 página web con una opción de carga de datos y una opción de modificación
 de datos. La opción de carga consistirá en mostrar un formulario con un
