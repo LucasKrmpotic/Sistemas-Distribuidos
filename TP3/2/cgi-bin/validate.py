@@ -16,7 +16,7 @@ if ('HTTP_COOKIE') in os.environ:
 
     try:
         data = c['login'].value
-        #validar aca :/
+        #validar aca 
         print("Content-type: text/html\n\n")
         print("<html><head><title>CGI</title></head>")
         print("<body>")
@@ -30,10 +30,10 @@ if ('HTTP_COOKIE') in os.environ:
 else:
     print( """
         <h1>Login</h1>
-        <form method='GET' action="login.py">
+        <form method='GET' action="modificacion.py">
           Legajo:<br>
           <input type="text" name="legajo"><br>
-          Contrasenia:<br>
+          Password:<br>
           <input type="password" name="password"><br>
           <br>
           <input type="submit" value="Aceptar">
