@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import cgi
 import csv
+import pandas as pd
 
 form = cgi.FieldStorage()
 nombre = form.getvalue('nombre')
@@ -9,18 +10,22 @@ sexo = form.getvalue('sexo')
 edad = form.getvalue('edad')
 password = form.getvalue('password')
 
-with open('bd.csv', 'a', newline='') as csvfile:
-    fieldnames = ['nombre', 'legajo', 'sexo', 'edad', 'password']
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames) #DictWiter es un escritor normal como writer pero que asigna diccionarios
-    writer.writerow({'nombre': nombre, 'legajo': legajo, 'sexo':sexo, 'edad':edad, 'password':password})
-    
+alumno = [nombre, legajo, sexo, edad, password]
+
+alumnos = pd.read_csv('alumnos.csv')
+
+texto_respuesta = ""
+
+if len(alumnos[alumnos["legajo"] == int (legajo)]) > 0:
+    texto_respuesta = " El alumno ya se encuentra registrado "
+else:
+    texto_respuesta = " Exito ! "
+    alumnos.loc[len(alumnos)] = alumno 
+    alumnos.to_csv('alumnos.csv', index=False)
 
 print("Content-type: text/html\n\n")
 print("<html><head><title>CGI</title></head>")
 print("<body>")
-print("<font color = blue>\n")
-print("<TITLE>CGI script output</TITLE>")
-print("<h1 style=\"TEXT-ALIGN: center\">Exito !</h1>\n")
-print("</font>\n")
+print(texto_respuesta)
 print("</body>")
-print("</html>")
+print("</html>") 

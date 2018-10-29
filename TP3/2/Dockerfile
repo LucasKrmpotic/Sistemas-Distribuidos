@@ -29,6 +29,8 @@ RUN apt-get update && apt-get install -y \
     --no-install-recommends \ 
     python3-pip
 
+RUN pip3 install -r requirements.txt
+
 RUN chmod 755 /usr/local/apache2/cgi-bin/*
 
 # imagen base https://hub.docker.com/_/httpd/
