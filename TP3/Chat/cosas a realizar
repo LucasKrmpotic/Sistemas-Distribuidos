@@ -1,0 +1,13 @@
+1) Separar el CGI de ingreso de text y actualización del chat, en dos. Uno para actualizar el archivo con el ingreso de texto y otro que refresque el chat
+
+2) Programar (setInterval) para que el chat se actualice solo cada determinado tiempo
+
+3) Solicitar nick y que el form actúe en consecuencia (hasta que no ingresa nick no actualizar chat ni permitir ingresar text)
+
+4) registrar los nicks en el server (archivo de sesiones) y también mostrarlos en el cliente (con un refrescador del estilo del chat)
+
+5) Las solicitudes siguientes al ingreso del nick manejarlas con token (ya está autenticado en el server)
+
+6) Cuando se actualiza el chat, no solo poner el texto sino concatenar primero, el nick del que escribió
+
+7) Actualización del chat incremental (en lugar de completa cada vez que se refresca)
