@@ -1,12 +1,12 @@
-function get_alta() {
+function get_modificacion() {
     container = $('#main-container')
 
     $.ajax({
       method: "GET",
-      url: "/cgi-bin/alta.py"
+      url: "/cgi-bin/modificacion.py"
     })
     .done(function (res) {
-      container.html(res)
+        container.html(res);
     })
     .fail(function (err) {
         console.log(err);

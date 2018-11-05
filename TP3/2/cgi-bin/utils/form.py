@@ -57,20 +57,21 @@ def form_alta():
 
 def form_modificacion(nombre, legajo, sexo, edad):
 	formulario = """
+	<div class="row justify-content-md-center">
 	<div class="col-md-6">
-		<form method='POST' action="/cgi-bin/alta.py">
+		<form id="form-modificacion">
 			<fieldset>
-			<legend>Alta</legend>
+			<legend>Modificaci&oacute;n de datos</legend>
 
 			<div class="form-group">
 				<label for="nombre">Nombre y Apellido</label>
-				<input class="form-control" name="nombre" value="{}" readonly=True type="text" required>
+				<input class="form-control" name="nombre" value="{}" readonly=True type="text">
 				<small class="form-text text-muted">Ingrese su apellido seguido de su nombre.</small>
 			</div> 
 
 			<div class="form-group">
-				<label for="legajo">N&uacute; de legajo</label>
-				<input class="form-control" name="legajo" value="{}" type="text" required>
+				<label for="legajo">N&uacute;mero de legajo</label>
+				<input class="form-control" name="legajo" value="{}" type="text">
 				<small class="form-text text-muted">Ingrese su n&uacute;mero de legajo.</small>
 			</div>
 
@@ -99,7 +100,7 @@ def form_modificacion(nombre, legajo, sexo, edad):
 
 			<div class="form-group">
 				<label for="edad">Edad</label>
-				<input class="form-control" name="edad" value="{}" type="text" required>
+				<input class="form-control" name="edad" value="{}" type="text">
 				<small class="form-text text-muted">Ingrese la edad.</small>
 			</div>
 			
@@ -108,9 +109,10 @@ def form_modificacion(nombre, legajo, sexo, edad):
 				<input name="password" class="form-control" placeholder="Password" type="password">
 			</div>
 
-			<button type="submit" class="btn btn-primary">Enviar</button>
+			<button type="submit" onclick="post_modificacion()" class="btn btn-primary">Enviar</button>
 			</fieldset>
 		</form>
+	</div>
 	</div>
 	"""
 
@@ -120,4 +122,30 @@ def form_modificacion(nombre, legajo, sexo, edad):
 		return formulario.format(nombre, legajo, "", "checked=\"\"", "", edad)
 	elif sexo == "otro":
 		return formulario.format(nombre, legajo, "", "", "checked=\"\"", edad)
-		
+
+def form_login():
+
+    return """
+	<div class="row justify-content-md-center">
+	<div class="col-md-6">
+        <form id="form-login">
+          <fieldset>
+            <legend>Login</legend>
+
+            <div class="form-group">
+              <label for="legajo">N&uacutemero de legajo</label>
+              <input class="form-control" name="legajo" placeholder="Numero de legajo" type="text" required>
+              <small class="form-text text-muted">Ingrese su n&uacutemero de legajo.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password</label>
+				<input name="password" class="form-control" placeholder="Password" type="password">
+            </div>
+
+            <button type="submit" onclick="post_login()" class="btn btn-primary">Enviar</button>
+          </fieldset>
+        </form>
+	</div>
+	</div>
+    """
