@@ -5,8 +5,8 @@
 #correr el contenedor
 # docker run --name serversd -dit \
 #     -p 8080:80 \
-#     -v $PWD/html:/usr/local/apache2/htdocs \
-#     -v $PWD/cgi-bin:/usr/local/apache2/cgi-bin \
+    # -v $PWD/html:/usr/local/apache2/htdocs \
+    # -v $PWD/cgi-bin:/usr/local/apache2/cgi-bin \
 #      tp3sd
 
 # luego el contenedor se puede detener con
@@ -24,6 +24,7 @@
 FROM httpd
 
 COPY ./httpd.conf /usr/local/apache2/conf/httpd.conf
+COPY ./requirements.txt /usr/local/apache2
 
 RUN apt-get update && apt-get install -y \
     --no-install-recommends \ 

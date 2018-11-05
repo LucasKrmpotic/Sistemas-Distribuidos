@@ -23,7 +23,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" onclick="get_alta()" href="#">Altas</a>
+          <a class="nav-link" href="/alta.html">Altas</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/cgi-bin/validate.py">Modificaciones</a>
@@ -32,59 +32,50 @@
           <a class="nav-link" href="/consulta.html">Consultas</a>
         </li>
       </ul>
-      <form method="GET" action="/cgi-bin/logout.py" class="form-inline my-2 my-lg-0">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Logout
-        </button>
+      <form class="form-inline my-2 my-lg-0">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
       </form>
     </div>
   </nav>
 
   <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-md-6">
+        <form method='POST' action="/cgi-bin/login.py">
+          <fieldset>
+            <legend>Login</legend>
 
+            <div class="form-group">
+              <label for="legajo">Número de legajo</label>
+              <input class="form-control" name="legajo" placeholder="Numero de legajo" type="text" required>
+              <small class="form-text text-muted">Ingrese su número de legajo.</small>
+            </div>
 
-    <div id="alertSuccess" class="alert alert-dismissible alert-success" hidden>
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <strong>Operación exitosa</strong>
-      <span id="success-msg"></span>
-    </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input name="password" class="form-control" placeholder="Password" type="password">
+            </div>
 
-    <div id="alertError" class="alert alert-dismissible alert-danger" hidden="true">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <strong>Error en la operación</strong>
-      <span id="error-msg"></span>
-    </div>
-
-
-    <div id="main-container">
-      <div class="jumbotron">
-        <h1 class="display-3">Aplicación CGI</h1>
-        <p class="lead">Aplicación cgi. Sistemas Distribuidos 2018.</p>
-        <hr class="my-4">
-        <p>UNPSJB.</p>
-        <p class="lead">
-          <a class="btn btn-primary btn-lg" href="consulta.html" role="button">Consultas</a>
-        </p>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </fieldset>
+        </form>
       </div>
+
     </div>
   </div>
 
-  <div class="card-header" style="position: fixed;bottom: 0;width: 100%;">
+
+  <div class="card-header">
     Aguila Maximiliano, Krmpotic Lucas.
   </div>
   </div>
-
 </body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-  crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
   crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
   crossorigin="anonymous"></script>
-
-<script src="js/get_alta.js"></script>
-<script src="js/post_alta.js"></script>
 
 </html>

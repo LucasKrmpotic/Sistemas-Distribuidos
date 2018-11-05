@@ -1,6 +1,25 @@
 nombre,legajo,sexo,edad,password
-Maxi,123,masculino,24,asdasd
-Jorge,321,masculino,29,asd123
-Andres,111,masculino,30,123asd
-Mariquena,212,femenino,19,asddsa
-Facu,100,masculino,20,123321
+Lucas Krmpotic,1,masculino,30,1234
+alguien,5,masculino,10,1234
+otro,45,femenino,20,1234
+otro,85,femenino,20,1234
+lucas,19,femenino,12,1234
+otro,16,femenino,123,12
+alguien,11,masculino,12,1234
+alguien,15,femenino,1234,1234
+alguien,13,femenino,123,1234
+alguien,81,femenino,51,1234
+alguien,12,femenino,123,1234
+alguien,123,femenino,123,1234
+lucas,1258,femenino,123,1234
+3,321,femenino,123,1234
+5,51,femenino,123,1234
+6,62,femenino,123,1234
+lucas,123456,femenino,12,1234
+5,65431,femenino,123,1234
+alguien,951,femenino,123,1234
+1,651,femenino,123,<md5 HASH object @ 0x7f24e5c8b288>
+1,56488,femenino,123,b'\x81\xdc\x9b\xdbR\xd0M\xc2\x006\xdb\xd81>\xd0U'
+1,555,otro,123,gdyb21LQTcIANtvYMT7QVQ==
+1,54611,femenino,123,gdyb21LQTcIANtvYMT7QVQ==
+1,1235554,otro,123,gdyb21LQTcIANtvYMT7QVQ==

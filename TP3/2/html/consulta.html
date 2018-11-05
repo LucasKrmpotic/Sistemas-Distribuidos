@@ -1,23 +1,118 @@
 <html>
-  <head>
-    <title>CONSULTA</title>
-  </head>
-  <body>
-    <h1>Consulta de Alumnos</h1>
-    <form method='get' action="/cgi-bin/busqueda.py">
-      Nombre y Apellido:<br>
-      <input type="text" name="nombre"><br><br>
-      Numero de Alumno/Legajo:<br>
-      Desde:<input type="number" name="legajo-desde" step="5"> Hasta:<input type="number" name="legajo-hasta" step="5"><br><br>
-      Sexo:<br>
-      <input type="radio" name="sexo" value="masculino"> Masculino<br>
-      <input type="radio" name="sexo" value="femenino"> Femenino<br>
-      <input type="radio" name="sexo" value="otro"> Otro<br>
-      <input type="radio" name="sexo" value="cualquiera" checked> Cualquiera <br><br>
-      Edad:<br>
-      Desde: <input type="number" name="edad-desde" step="5"> Hasta:<input type="number" name="edad-hasta" step="5"><br><br>
-      <input type="submit" value="Aceptar"><br><br>
-      Por defecto la busqueda es con (*)
-    </form>
-  </body>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>CGI</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/lumen/bootstrap.min.css" rel="stylesheet" integrity="sha384-DfbCiBdRiiNWvRTbHe5X9IfkezKzm0pCrZSKc7EM9mmSl/OyckwbYk3GrajL8Ngy"
+    crossorigin="anonymous">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="/">CGI-App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Inicio
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="alta.html">Altas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="modificacion.html">Modificaciones</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="consulta.html">Consultas</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" placeholder="Search" type="text">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row justify-content-md-center">
+
+      <div class="col-md-6">
+        <form method='get' action="/cgi-bin/busqueda.py">
+          <fieldset>
+
+            <div class="form-group">
+              <label for="nombre">Nombre y Apellido</label>
+              <input class="form-control" name="nombre" aria-describedby="emailHelp" placeholder="Apellido y nombre" type="text" required>
+              <small class="form-text text-muted">Ingrese su apellido seguido de su nombre.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="legajo-desde">Número de legajo</label>
+              <input class="form-control" name="legajo-desde" aria-describedby="emailHelp" placeholder="Legajo mínimo" type="text" required>
+              <small class="form-text text-muted">Legajo mínimo.</small>
+              <input class="form-control" name="legajo-hasta" aria-describedby="emailHelp" placeholder="Legajo máximo" type="text" required>
+              <small class="form-text text-muted">Legajo máximo.</small>
+            </div>
+
+            <fieldset class="form-group">
+              <legend>Sexo</legend>
+
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" name="sexo" id="optionsRadios1" value="masculino" checked="" type="radio"> Masculino
+                </label>
+              </div>
+
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" name="sexo" id="optionsRadios1" value="femenino" checked="" type="radio"> Femenino
+                </label>
+              </div>
+
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" name="sexo" id="optionsRadios1" value="otro" checked="" type="radio"> Otro
+                </label>
+              </div>
+
+            </fieldset>
+
+            <div class="form-group">
+              <label for="edad-desde">Edad</label>
+              <input class="form-control" name="edad-desde" aria-describedby="emailHelp" placeholder="Edad desde" type="text" required>
+              <small class="form-text text-muted">Ingrese edad mínima.</small>
+              <input class="form-control" name="edad-hasta" aria-describedby="emailHelp" placeholder="Edad hasta" type="text" required>
+              <small class="form-text text-muted">Ingrese edad máxima.</small>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </fieldset>
+
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      Aguila Maximiliano, Krmpotic Lucas.
+    </div>
+  </div>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+  crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+  crossorigin="anonymous"></script>
+
 </html>
