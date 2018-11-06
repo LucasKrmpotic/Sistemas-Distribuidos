@@ -3,7 +3,7 @@ import cgi
 import csv
 import os
 from models.alumno import Alumno
-from utils.form import table_totales
+from views.totales import table_totales
 
 if os.environ["REQUEST_METHOD"] == "GET":
 

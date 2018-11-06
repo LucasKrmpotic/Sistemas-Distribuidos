@@ -5,7 +5,7 @@ import hashlib
 import base64
 import pandas as pd
 import sys, os
-from utils.form import form_alta
+from views.alta import form_alta
 from models.alumno import Alumno
 
 

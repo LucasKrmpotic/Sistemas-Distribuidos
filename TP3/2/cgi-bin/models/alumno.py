@@ -15,14 +15,9 @@ class Alumno():
         self.password = password
 
     @classmethod
-    def get_from_cookie(cls):
-        cookie = cookies.SimpleCookie(os.environ["HTTP_COOKIE"])
-
-        sessiones = pd.read_csv(SESSIONS_FILE)
-        session = sessiones[sessiones['cookie'] == int(cookie['session'].value)]
-
+    def get_by_legajo(cls, legajo):
         alumnos = pd.read_csv(MODEL_FILE)
-        alumno = alumnos[alumnos['legajo'] == session.get_value(0, 'legajo')]
+        alumno = alumnos[alumnos['legajo'] == legajo]
 
         return Alumno(
             alumno.at[0, 'nombre'],
@@ -30,7 +25,7 @@ class Alumno():
             alumno.at[0, 'sexo'],
             alumno.at[0, 'edad'],
             alumno.at[0, 'password']
-        )
+        )       
 
     @classmethod
     def get_totales(cls):
@@ -89,3 +84,6 @@ class Alumno():
                 self.password
             ]
             alumnos.to_csv(MODEL_FILE, index=False)
+
+    def check_pass(self, password):
+        return self.password == password

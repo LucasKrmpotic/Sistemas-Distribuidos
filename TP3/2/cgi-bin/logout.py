@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 import os
 import cgi
-from utils.session import delete_cookie
-from utils.authenticate import is_authenticated
 from http import cookies
+from models.session import Session
 
-if is_authenticated():
+if Session.exists():
 
-    cookie = delete_cookie()
+    session = Session.get_current_session()
+    cookie = session.delete_cookie()
+    
     print(cookie.output())
     print("Content-Type: text/html; charset=utf-8\n\r")
     print()

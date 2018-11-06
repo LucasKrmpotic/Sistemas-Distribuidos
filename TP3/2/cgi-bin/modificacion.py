@@ -6,14 +6,17 @@ import sys, os
 import base64
 import hashlib
 from http import cookies
-from utils.form import form_login, form_modificacion
-from utils.authenticate import is_authenticated
+from views.modificacion import form_modificacion
+from views.login import login_view
 from models.alumno import Alumno
+from models.session import Session
 
 if os.environ["REQUEST_METHOD"] == "GET":
-    if is_authenticated():
 
-        alumno = Alumno.get_from_cookie()
+    if Session.exists():
+
+        session = Session.get_current_session()
+        alumno = Alumno.get_by_legajo(session.legajo)
 
         print("Content-Type: text/html; charset=utf-8\n\r")
         print()
@@ -27,11 +30,12 @@ if os.environ["REQUEST_METHOD"] == "GET":
     else: 
         print("Content-Type: text/html; charset=utf-8\n\r")
         print()
-        print(form_login())
+        print(login_view())
 
 elif os.environ["REQUEST_METHOD"] == "POST":
     
-    alumno = Alumno.get_from_cookie()
+    session = Session.get_current_session()
+    alumno = Alumno.get_by_legajo(session.legajo)
 
     form = cgi.FieldStorage()
     nombre = form.getvalue('nombre')
@@ -45,11 +49,11 @@ elif os.environ["REQUEST_METHOD"] == "POST":
         if password != alumno.password:
             alumno.password = password
             
-    if nombre != alumno.nombre:
+    if nombre!= alumno.nombre and nombre is not None:
         alumno.nombre = nombre
-    if sexo != alumno.sexo:
+    if sexo != alumno.sexo and sexo is not None:
         alumno.sexo = sexo
-    if edad != alumno.edad:
+    if edad != alumno.edad and edad is not None:
         alumno.edad = edad
 
     try:

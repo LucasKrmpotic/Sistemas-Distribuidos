@@ -3,7 +3,7 @@ import cgi
 import csv
 import os
 import pandas as pd
-from utils.form import form_consulta, print_table
+from views.consultas import form_consulta, table
 from models.alumno import Alumno
 
 if os.environ["REQUEST_METHOD"] == "GET":
@@ -36,4 +36,4 @@ elif os.environ["REQUEST_METHOD"] == "POST":
 
     print("Content-Type: text/html; charset=utf-8\n\r")
     print()
-    print(print_table(table_body))
+    print(table(table_body))
