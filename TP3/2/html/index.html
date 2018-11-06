@@ -29,7 +29,10 @@
           <a class="nav-link" onclick="get_modificacion()" href="#">Modificaciones</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/consulta.html">Consultas</a>
+          <a class="nav-link" onclick="get_consultas()" href="#">Consultas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick="totales()" href="#">Totales</a>
         </li>
       </ul>
       <button id="logout" onclick="logout()" class="btn btn-secondary my-2 my-sm-0" type="button">Logout</button>
@@ -53,14 +56,14 @@
     </div>
 
 
-    <div id="main-container">
+    <div id="main-container" style="padding-bottom: 3em;">
       <div class="jumbotron">
         <h1 class="display-3">Aplicación CGI</h1>
         <p class="lead">Aplicación cgi. Sistemas Distribuidos 2018.</p>
         <hr class="my-4">
         <p>UNPSJB.</p>
         <p class="lead">
-          <a class="btn btn-primary btn-lg" href="consulta.html" role="button">Consultas</a>
+          <a class="btn btn-primary btn-lg" onclick="get_consultas()" href="#" role="button">Consultas</a>
         </p>
       </div>
     </div>
@@ -84,6 +87,9 @@
 
 <script src="js/alta.js"></script>
 <script src="js/modificacion.js"></script>
+<script src="js/consultas.js"></script>
+<script src="js/totales.js"></script>
+
 <script src="js/login.js"></script>
 <script src="js/logout.js"></script>
 <script src="js/cookies.js"></script>

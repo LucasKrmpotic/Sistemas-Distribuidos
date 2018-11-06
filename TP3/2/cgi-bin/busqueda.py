@@ -29,27 +29,4 @@ for i in range(0, len(alumnos_result)):
     table_body += "</tr>"
 
 
-print("""
-<div class="container">
-<div class="row justify-content-md-center">
-    <div class="col-md-8">
-    <h1 style="text-align: center; margin-top:1em;">Resultados de la busqueda</h1>
-    </div>
-</div>
-<div class="row justify-content-md-center">
-<div class="col-md-10">
-<table class="table table-hover" style="margin-top:1em;">
-  <thead>
-    <tr>
-      <th scope="col">Nombre</th>
-      <th scope="col">Legajo</th>
-      <th scope="col">Sexo</th>
-      <th scope="col">Edad</th>
-    </tr>
-  </thead>
-  <tbody>{}</tbody>
-        </table>
-        </div>
-        </div>
-        </div>
-""".format(table_body))
+print()

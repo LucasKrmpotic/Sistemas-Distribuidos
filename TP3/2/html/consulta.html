@@ -41,9 +41,8 @@
 
   <div class="container">
     <div class="row justify-content-md-center">
-
       <div class="col-md-6">
-        <form method='get' action="/cgi-bin/busqueda.py">
+        <form id="form-consulta">
           <fieldset>
 
             <div class="form-group">
@@ -91,7 +90,7 @@
               <small class="form-text text-muted">Ingrese edad máxima.</small>
             </div>
 
-            <button type="submit" class="btn btn-primary">Enviar</button>
+            <button type="submit" onclick="post_consulta()" class="btn btn-primary">Enviar</button>
           </fieldset>
 
 
