@@ -22,13 +22,14 @@ class Alumno():
         session = sessiones[sessiones['cookie'] == int(cookie['session'].value)]
 
         alumnos = pd.read_csv(MODEL_FILE)
-        alumno = alumnos[alumnos['legajo'] == session.at[0, 'legajo']]
+        alumno = alumnos[alumnos['legajo'] == session.get_value(0, 'legajo')]
 
         return Alumno(
             alumno.at[0, 'nombre'],
             alumno.at[0, 'legajo'],
             alumno.at[0, 'sexo'],
-            alumno.at[0, 'edad']
+            alumno.at[0, 'edad'],
+            alumno.at[0, 'password']
         )
     
     def save(self):
@@ -44,4 +45,19 @@ class Alumno():
                 self.edad,
                 self.password
             ] 
+            alumnos.to_csv(MODEL_FILE, index=False)
+
+    def update(self):
+        alumnos = pd.read_csv(MODEL_FILE)
+
+        if (len(alumnos[alumnos["legajo"] == self.legajo])) < 1:
+            raise Exception("El alumno no se encuentra registrado")
+        else:
+            alumnos.loc[alumnos["legajo"] == self.legajo] = [
+                self.nombre,
+                self.legajo,
+                self.sexo,
+                self.edad,
+                self.password
+            ]
             alumnos.to_csv(MODEL_FILE, index=False)

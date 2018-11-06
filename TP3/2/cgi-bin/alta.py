@@ -32,7 +32,7 @@ if os.environ["REQUEST_METHOD"] == "POST":
 
     except Exception as e:
         status = "Status: 400 Bab Request"
-        respuesta = " El alumno ya se encuentra registrado "
+        respuesta = str(e)
     
     print(status)
     print("Content-Type: text/html; charset=utf-8\n\r")

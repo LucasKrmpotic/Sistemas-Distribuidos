@@ -3,7 +3,7 @@
 def form_alta():
 	return """
 	<div class="row justify-content-md-center">
-	<div class="col-md-6">
+	<div class="col-md-8">
 		<form id="form-alta">
 			<fieldset>
 			<legend>Alta de alumno</legend>
@@ -58,20 +58,20 @@ def form_alta():
 def form_modificacion(nombre, legajo, sexo, edad):
 	formulario = """
 	<div class="row justify-content-md-center">
-	<div class="col-md-6">
+	<div class="col-md-8">
 		<form id="form-modificacion">
 			<fieldset>
 			<legend>Modificaci&oacute;n de datos</legend>
 
 			<div class="form-group">
 				<label for="nombre">Nombre y Apellido</label>
-				<input class="form-control" name="nombre" value="{}" readonly=True type="text">
+				<input class="form-control" name="nombre" value="{}" type="text">
 				<small class="form-text text-muted">Ingrese su apellido seguido de su nombre.</small>
 			</div> 
 
 			<div class="form-group">
 				<label for="legajo">N&uacute;mero de legajo</label>
-				<input class="form-control" name="legajo" value="{}" type="text">
+				<input class="form-control" name="legajo" value="{}" readonly=True type="text">
 				<small class="form-text text-muted">Ingrese su n&uacute;mero de legajo.</small>
 			</div>
 
@@ -127,7 +127,7 @@ def form_login():
 
     return """
 	<div class="row justify-content-md-center">
-	<div class="col-md-6">
+	<div class="col-md-8">
         <form id="form-login">
           <fieldset>
             <legend>Login</legend>
@@ -143,7 +143,7 @@ def form_login():
 				<input name="password" class="form-control" placeholder="Password" type="password">
             </div>
 
-            <button type="submit" onclick="post_login()" class="btn btn-primary">Enviar</button>
+            <button type="submit" onclick="login()" class="btn btn-primary">Enviar</button>
           </fieldset>
         </form>
 	</div>

@@ -32,10 +32,8 @@
           <a class="nav-link" href="/consulta.html">Consultas</a>
         </li>
       </ul>
-      <form method="GET" action="/cgi-bin/logout.py" class="form-inline my-2 my-lg-0">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Logout
-        </button>
-      </form>
+      <button id="logout" onclick="logout()" class="btn btn-secondary my-2 my-sm-0" type="button">Logout</button>
+      <button id="login" onclick="get_login()" class="btn btn-secondary my-2 my-sm-0" type="button">Login</button>
     </div>
   </nav>
 
@@ -84,10 +82,10 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
   crossorigin="anonymous"></script>
 
-<script src="js/get_alta.js"></script>
-<script src="js/post_alta.js"></script>
-<script src="js/get_modificacion.js"></script>
-<script src="js/post_modificacion.js"></script>
-<script src="js/post_login.js"></script>
+<script src="js/alta.js"></script>
+<script src="js/modificacion.js"></script>
+<script src="js/login.js"></script>
+<script src="js/logout.js"></script>
+<script src="js/cookies.js"></script>
 
 </html>

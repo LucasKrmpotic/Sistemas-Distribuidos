@@ -2,8 +2,6 @@
 import cgi
 import csv
 import pandas as pd
-from shared.footer import footer
-from shared.header import header
 
 form = cgi.FieldStorage()
 nombre = form.getvalue('nombre')
@@ -31,7 +29,6 @@ for i in range(0, len(alumnos_result)):
     table_body += "</tr>"
 
 
-print(header())
 print("""
 <div class="container">
 <div class="row justify-content-md-center">
@@ -50,13 +47,9 @@ print("""
       <th scope="col">Edad</th>
     </tr>
   </thead>
-  <tbody>
-""")
-print(table_body)
-print("""</tbody>
+  <tbody>{}</tbody>
         </table>
         </div>
         </div>
         </div>
-""")
-print(footer())
+""".format(table_body))
