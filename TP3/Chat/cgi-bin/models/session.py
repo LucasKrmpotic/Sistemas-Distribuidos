@@ -4,7 +4,7 @@ from http import cookies
 import datetime
 from random import randrange
 
-MODEL_FILE = 'sessiones.csv'
+SESSIONS_FILE = 'sessiones.csv'
 
 class Session():
 
@@ -19,23 +19,22 @@ class Session():
     def save(self):
         #TODO:excepcion si existe nickname
         sessiones = pd.read_csv(SESSIONS_FILE)
+
         sesion = [len(sessiones), self.nickname, str(self.cookie['session'].value), self.last_msg]
         sessiones.loc[len(sessiones)] = sesion 
+        
         sessiones.to_csv(SESSIONS_FILE, index=False)
 
 
     def update(self, last_msg):
         sessiones = pd.read_csv(SESSIONS_FILE)
 
-        if (len(sessiones[sessiones["nickname"] == self.nickname])) < 1:
-            raise Exception("El alumno no se encuentra registrado")
-        else:
-            sessiones.loc[sessiones["nickname"] == self.nickname] = [
-                self.cookie,
-                self.nickname,
-                last_msg
-            ]
-            sessiones.to_csv(MODEL_FILE, index=False)
+        sessiones.loc[sessiones["nickname"] == self.nickname] = [
+            self.cookie,
+            self.nickname,
+            last_msg
+        ]
+        sessiones.to_csv(SESSIONS_FILE, index=False)
 
 
     @classmethod
@@ -48,7 +47,7 @@ class Session():
 
         nickname = session.get_value(0, 'nickname')
         last_msg = session.get_value(0, 'last_msg')
-        return Session(cookie, nickname, last_msg)      
+        return Session(nickname, cookie, last_msg)      
 
     @classmethod
     def exists(cls):
