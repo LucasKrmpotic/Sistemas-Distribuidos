@@ -1,0 +1,184 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Alumno	../2/cgi-bin/alta.py	/^from models.alumno import Alumno$/;"	kind:namespace	line:9
+Alumno	../2/cgi-bin/consultas.py	/^from models.alumno import Alumno$/;"	kind:namespace	line:7
+Alumno	../2/cgi-bin/login.py	/^from models.alumno import Alumno$/;"	kind:namespace	line:7
+Alumno	../2/cgi-bin/models/alumno.py	/^class Alumno():$/;"	kind:class	line:8
+Alumno	../2/cgi-bin/modificacion.py	/^from models.alumno import Alumno$/;"	kind:namespace	line:11
+Alumno	../2/cgi-bin/totales.py	/^from models.alumno import Alumno$/;"	kind:namespace	line:5
+MODEL_FILE	../2/cgi-bin/models/alumno.py	/^MODEL_FILE = 'alumnos.csv'$/;"	kind:variable	line:6
+MODEL_FILE	../Chat/cgi-bin/models/message.py	/^MODEL_FILE = 'messages.csv'$/;"	kind:variable	line:5
+Message	../Chat/cgi-bin/login.py	/^from models.message import Message$/;"	kind:namespace	line:8
+Message	../Chat/cgi-bin/models/message.py	/^class Message():$/;"	kind:class	line:7
+SESSIONS_FILE	../2/cgi-bin/models/alumno.py	/^SESSIONS_FILE = 'sessiones.csv'$/;"	kind:variable	line:5
+SESSIONS_FILE	../2/cgi-bin/models/session.py	/^SESSIONS_FILE = 'sessiones.csv'$/;"	kind:variable	line:7
+SESSIONS_FILE	../Chat/cgi-bin/models/session.py	/^SESSIONS_FILE = 'sessiones.csv'$/;"	kind:variable	line:7
+Session	../2/cgi-bin/login.py	/^from models.session import Session$/;"	kind:namespace	line:8
+Session	../2/cgi-bin/logout.py	/^from models.session import Session$/;"	kind:namespace	line:5
+Session	../2/cgi-bin/models/session.py	/^class Session():$/;"	kind:class	line:9
+Session	../2/cgi-bin/modificacion.py	/^from models.session import Session$/;"	kind:namespace	line:12
+Session	../Chat/cgi-bin/models/session.py	/^class Session():$/;"	kind:class	line:9
+__init__	../2/cgi-bin/models/alumno.py	/^    def __init__(self, nombre, legajo, sexo, edad, password=None):$/;"	kind:member	line:10
+__init__	../2/cgi-bin/models/session.py	/^    def __init__(self, legajo, cookie=None):$/;"	kind:member	line:11
+__init__	../Chat/cgi-bin/models/message.py	/^    def __init__(self, user, text):$/;"	kind:member	line:9
+__init__	../Chat/cgi-bin/models/session.py	/^    def __init__(self, cookie=None, nickname, last_msg=None):$/;"	kind:member	line:11
+__init__.py	../2/cgi-bin/models/__init__.py	1;"	kind:file	line:1
+__init__.py	../2/cgi-bin/views/__init__.py	1;"	kind:file	line:1
+__init__.py	../Chat/cgi-bin/models/__init__.py	1;"	kind:file	line:1
+__init__.py	../Chat/cgi-bin/views/__init__.py	1;"	kind:file	line:1
+_new_cookie	../2/cgi-bin/models/session.py	/^    def _new_cookie(self):$/;"	kind:member	line:43
+_new_cookie	../Chat/cgi-bin/models/session.py	/^    def _new_cookie(self):$/;"	kind:member	line:62
+alta.py	../2/cgi-bin/alta.py	1;"	kind:file	line:1
+alta.py	../2/cgi-bin/views/alta.py	1;"	kind:file	line:1
+alumno	../2/cgi-bin/alta.py	/^    alumno = Alumno(nombre, legajo, sexo, edad, password)$/;"	kind:variable	line:27
+alumno	../2/cgi-bin/login.py	/^    alumno = Alumno.get_by_legajo(legajo)$/;"	kind:variable	line:23
+alumno	../2/cgi-bin/modificacion.py	/^        alumno = Alumno.get_by_legajo(session.legajo)$/;"	kind:variable	line:19
+alumno	../2/cgi-bin/modificacion.py	/^    alumno = Alumno.get_by_legajo(session.legajo)$/;"	kind:variable	line:38
+alumno.py	../2/cgi-bin/models/alumno.py	1;"	kind:file	line:1
+alumnos_result	../2/cgi-bin/consultas.py	/^    alumnos_result = Alumno.filter_by(nombre, legajo_desde, legajo_hasta, sexo, edad_desde, edad_hasta)    $/;"	kind:variable	line:25
+base64	../2/cgi-bin/alta.py	/^import base64$/;"	kind:namespace	line:5
+base64	../2/cgi-bin/login.py	/^import base64$/;"	kind:namespace	line:5
+base64	../2/cgi-bin/modificacion.py	/^import base64$/;"	kind:namespace	line:6
+base64	../Chat/cgi-bin/login.py	/^import base64$/;"	kind:namespace	line:5
+cgi	../2/cgi-bin/alta.py	/^import cgi$/;"	kind:namespace	line:2
+cgi	../2/cgi-bin/consultas.py	/^import cgi$/;"	kind:namespace	line:2
+cgi	../2/cgi-bin/login.py	/^import cgi$/;"	kind:namespace	line:2
+cgi	../2/cgi-bin/logout.py	/^import cgi$/;"	kind:namespace	line:3
+cgi	../2/cgi-bin/modificacion.py	/^import cgi$/;"	kind:namespace	line:2
+cgi	../2/cgi-bin/totales.py	/^import cgi$/;"	kind:namespace	line:2
+cgi	../Chat/cgi-bin/login.py	/^import cgi$/;"	kind:namespace	line:2
+check_pass	../2/cgi-bin/models/alumno.py	/^    def check_pass(self, password):$/;"	kind:member	line:88
+consultas.py	../2/cgi-bin/consultas.py	1;"	kind:file	line:1
+consultas.py	../2/cgi-bin/views/consultas.py	1;"	kind:file	line:1
+cookie	../2/cgi-bin/logout.py	/^    cookie = session.delete_cookie()$/;"	kind:variable	line:10
+cookies	../2/cgi-bin/logout.py	/^from http import cookies$/;"	kind:namespace	line:4
+cookies	../2/cgi-bin/models/alumno.py	/^from http import cookies$/;"	kind:namespace	line:3
+cookies	../2/cgi-bin/models/session.py	/^from http import cookies$/;"	kind:namespace	line:3
+cookies	../2/cgi-bin/modificacion.py	/^from http import cookies$/;"	kind:namespace	line:8
+cookies	../Chat/cgi-bin/models/message.py	/^from http import cookies$/;"	kind:namespace	line:3
+cookies	../Chat/cgi-bin/models/session.py	/^from http import cookies$/;"	kind:namespace	line:3
+csv	../2/cgi-bin/alta.py	/^import csv$/;"	kind:namespace	line:3
+csv	../2/cgi-bin/consultas.py	/^import csv$/;"	kind:namespace	line:3
+csv	../2/cgi-bin/login.py	/^import csv$/;"	kind:namespace	line:3
+csv	../2/cgi-bin/modificacion.py	/^import csv$/;"	kind:namespace	line:3
+csv	../2/cgi-bin/totales.py	/^import csv$/;"	kind:namespace	line:3
+csv	../Chat/cgi-bin/login.py	/^import csv$/;"	kind:namespace	line:3
+datetime	../2/cgi-bin/models/session.py	/^import datetime$/;"	kind:namespace	line:4
+datetime	../Chat/cgi-bin/models/session.py	/^import datetime$/;"	kind:namespace	line:4
+delete_cookie	../2/cgi-bin/models/session.py	/^    def delete_cookie(self):$/;"	kind:member	line:53
+delete_cookie	../Chat/cgi-bin/models/session.py	/^    def delete_cookie(self):$/;"	kind:member	line:72
+edad	../2/cgi-bin/alta.py	/^    edad = int(form.getvalue('edad'))$/;"	kind:variable	line:24
+edad	../2/cgi-bin/modificacion.py	/^    edad = int(form.getvalue('edad'))$/;"	kind:variable	line:43
+edad_desde	../2/cgi-bin/consultas.py	/^    edad_desde = int(form.getvalue('edad-desde'))$/;"	kind:variable	line:22
+edad_hasta	../2/cgi-bin/consultas.py	/^    edad_hasta = int(form.getvalue('edad-hasta'))$/;"	kind:variable	line:23
+exists	../2/cgi-bin/models/session.py	/^    def exists(cls):$/;"	kind:member	line:36
+exists	../Chat/cgi-bin/models/session.py	/^    def exists(cls):$/;"	kind:member	line:55
+filter_by	../2/cgi-bin/models/alumno.py	/^    def filter_by(cls, nombre, legajo_desde, legajo_hasta, sexo, edad_desde, edad_hasta):$/;"	kind:member	line:49
+form	../2/cgi-bin/alta.py	/^    form = cgi.FieldStorage()$/;"	kind:variable	line:20
+form	../2/cgi-bin/consultas.py	/^    form = cgi.FieldStorage()$/;"	kind:variable	line:17
+form	../2/cgi-bin/login.py	/^    form = cgi.FieldStorage()$/;"	kind:variable	line:19
+form	../2/cgi-bin/modificacion.py	/^    form = cgi.FieldStorage()$/;"	kind:variable	line:40
+form	../Chat/cgi-bin/login.py	/^    form = cgi.FieldStorage()$/;"	kind:variable	line:11
+form_alta	../2/cgi-bin/alta.py	/^from views.alta import form_alta$/;"	kind:namespace	line:8
+form_alta	../2/cgi-bin/views/alta.py	/^def form_alta():$/;"	kind:function	line:1
+form_consulta	../2/cgi-bin/consultas.py	/^from views.consultas import form_consulta, table$/;"	kind:namespace	line:6
+form_consulta	../2/cgi-bin/views/consultas.py	/^def form_consulta():$/;"	kind:function	line:1
+form_modificacion	../2/cgi-bin/modificacion.py	/^from views.modificacion import form_modificacion$/;"	kind:namespace	line:9
+form_modificacion	../2/cgi-bin/views/modificacion.py	/^def form_modificacion(nombre, legajo, sexo, edad):$/;"	kind:function	line:1
+get_by_legajo	../2/cgi-bin/models/alumno.py	/^    def get_by_legajo(cls, legajo):$/;"	kind:member	line:18
+get_current_session	../2/cgi-bin/models/session.py	/^    def get_current_session(cls):$/;"	kind:member	line:25
+get_current_session	../Chat/cgi-bin/models/session.py	/^    def get_current_session(cls):$/;"	kind:member	line:43
+get_last_msg_id	../Chat/cgi-bin/models/message.py	/^    def get_last_msg_id(cls):$/;"	kind:member	line:21
+get_totales	../2/cgi-bin/models/alumno.py	/^    def get_totales(cls):$/;"	kind:member	line:31
+hashlib	../2/cgi-bin/alta.py	/^import hashlib$/;"	kind:namespace	line:4
+hashlib	../2/cgi-bin/login.py	/^import hashlib$/;"	kind:namespace	line:4
+hashlib	../2/cgi-bin/modificacion.py	/^import hashlib$/;"	kind:namespace	line:7
+hashlib	../Chat/cgi-bin/login.py	/^import hashlib$/;"	kind:namespace	line:4
+hola.py	../1/cgi-bin/hola.py	1;"	kind:file	line:1
+legajo	../2/cgi-bin/alta.py	/^    legajo = int(form.getvalue('legajo'))$/;"	kind:variable	line:22
+legajo	../2/cgi-bin/login.py	/^    legajo = int(form.getvalue('legajo'))$/;"	kind:variable	line:20
+legajo_desde	../2/cgi-bin/consultas.py	/^    legajo_desde= int(form.getvalue('legajo-desde'))$/;"	kind:variable	line:19
+legajo_hasta	../2/cgi-bin/consultas.py	/^    legajo_hasta = int(form.getvalue('legajo-hasta'))$/;"	kind:variable	line:20
+login.py	../2/cgi-bin/login.py	1;"	kind:file	line:1
+login.py	../2/cgi-bin/views/login.py	1;"	kind:file	line:1
+login.py	../Chat/cgi-bin/login.py	1;"	kind:file	line:1
+login_view	../2/cgi-bin/login.py	/^from views.login import login_view$/;"	kind:namespace	line:9
+login_view	../2/cgi-bin/modificacion.py	/^from views.login import login_view$/;"	kind:namespace	line:10
+login_view	../2/cgi-bin/views/login.py	/^def login_view():$/;"	kind:function	line:1
+logout.py	../2/cgi-bin/logout.py	1;"	kind:file	line:1
+logout.py	../Chat/cgi-bin/logout.py	1;"	kind:file	line:1
+message.py	../Chat/cgi-bin/models/message.py	1;"	kind:file	line:1
+messages.py	../Chat/cgi-bin/messages.py	1;"	kind:file	line:1
+modificacion.py	../2/cgi-bin/modificacion.py	1;"	kind:file	line:1
+modificacion.py	../2/cgi-bin/views/modificacion.py	1;"	kind:file	line:1
+nickname	../Chat/cgi-bin/login.py	/^    nickname = form.getvalue('nickname')$/;"	kind:variable	line:12
+nombre	../2/cgi-bin/alta.py	/^    nombre = form.getvalue('nombre')$/;"	kind:variable	line:21
+nombre	../2/cgi-bin/consultas.py	/^    nombre = form.getvalue('nombre')$/;"	kind:variable	line:18
+nombre	../2/cgi-bin/modificacion.py	/^    nombre = form.getvalue('nombre')$/;"	kind:variable	line:41
+os	../2/cgi-bin/alta.py	/^import sys, os$/;"	kind:namespace	line:7
+os	../2/cgi-bin/consultas.py	/^import os$/;"	kind:namespace	line:4
+os	../2/cgi-bin/login.py	/^import sys, os$/;"	kind:namespace	line:6
+os	../2/cgi-bin/logout.py	/^import os$/;"	kind:namespace	line:2
+os	../2/cgi-bin/models/alumno.py	/^import sys, os$/;"	kind:namespace	line:2
+os	../2/cgi-bin/models/session.py	/^import sys, os$/;"	kind:namespace	line:2
+os	../2/cgi-bin/modificacion.py	/^import sys, os$/;"	kind:namespace	line:5
+os	../2/cgi-bin/totales.py	/^import os$/;"	kind:namespace	line:4
+os	../Chat/cgi-bin/login.py	/^import sys, os$/;"	kind:namespace	line:6
+os	../Chat/cgi-bin/models/message.py	/^import sys, os$/;"	kind:namespace	line:2
+os	../Chat/cgi-bin/models/session.py	/^import sys, os$/;"	kind:namespace	line:2
+passwd	../2/cgi-bin/modificacion.py	/^    passwd = form.getvalue('password')$/;"	kind:variable	line:44
+password	../2/cgi-bin/alta.py	/^    password = str(base64.b64encode(hashlib.md5(form.getvalue('password').encode('utf8')).digest()).decode("utf8"))$/;"	kind:variable	line:25
+password	../2/cgi-bin/login.py	/^    password = str(base64.b64encode(hashlib.md5(form.getvalue('password').encode('utf8')).digest()).decode("utf8"))$/;"	kind:variable	line:21
+password	../2/cgi-bin/modificacion.py	/^        password = str(base64.b64encode(hashlib.md5(passwd.encode('utf8')).digest()).decode("utf8"))$/;"	kind:variable	line:48
+pd	../2/cgi-bin/alta.py	/^import pandas as pd$/;"	kind:namespace	line:6
+pd	../2/cgi-bin/consultas.py	/^import pandas as pd$/;"	kind:namespace	line:5
+pd	../2/cgi-bin/models/alumno.py	/^import pandas as pd$/;"	kind:namespace	line:1
+pd	../2/cgi-bin/models/session.py	/^import pandas as pd$/;"	kind:namespace	line:1
+pd	../2/cgi-bin/modificacion.py	/^import pandas as pd$/;"	kind:namespace	line:4
+pd	../Chat/cgi-bin/models/message.py	/^import pandas as pd$/;"	kind:namespace	line:1
+pd	../Chat/cgi-bin/models/session.py	/^import pandas as pd$/;"	kind:namespace	line:1
+randrange	../2/cgi-bin/models/session.py	/^from random import randrange$/;"	kind:namespace	line:5
+randrange	../Chat/cgi-bin/models/session.py	/^from random import randrange$/;"	kind:namespace	line:5
+respuesta	../2/cgi-bin/alta.py	/^        respuesta = " Alumno registrado exitosamente "$/;"	kind:variable	line:31
+respuesta	../2/cgi-bin/alta.py	/^        respuesta = str(e)$/;"	kind:variable	line:35
+respuesta	../2/cgi-bin/modificacion.py	/^        respuesta = " Alumno actualizado exitosamente "$/;"	kind:variable	line:62
+respuesta	../2/cgi-bin/modificacion.py	/^        respuesta = str(e)$/;"	kind:variable	line:65
+save	../2/cgi-bin/models/alumno.py	/^    def save(self):$/;"	kind:member	line:58
+save	../2/cgi-bin/models/session.py	/^    def save(self):$/;"	kind:member	line:18
+save	../Chat/cgi-bin/models/message.py	/^    def save(self):$/;"	kind:member	line:13
+save	../Chat/cgi-bin/models/session.py	/^    def save(self):$/;"	kind:member	line:19
+session	../2/cgi-bin/login.py	/^        session = Session(alumno.legajo)$/;"	kind:variable	line:26
+session	../2/cgi-bin/logout.py	/^    session = Session.get_current_session()$/;"	kind:variable	line:9
+session	../2/cgi-bin/modificacion.py	/^        session = Session.get_current_session()$/;"	kind:variable	line:18
+session	../2/cgi-bin/modificacion.py	/^    session = Session.get_current_session()$/;"	kind:variable	line:37
+session.py	../2/cgi-bin/models/session.py	1;"	kind:file	line:1
+session.py	../Chat/cgi-bin/models/session.py	1;"	kind:file	line:1
+sexo	../2/cgi-bin/alta.py	/^    sexo = form.getvalue('sexo')$/;"	kind:variable	line:23
+sexo	../2/cgi-bin/consultas.py	/^    sexo = form.getvalue('sexo')$/;"	kind:variable	line:21
+sexo	../2/cgi-bin/modificacion.py	/^    sexo = form.getvalue('sexo')$/;"	kind:variable	line:42
+status	../2/cgi-bin/alta.py	/^        status = "Status: 200 OK"$/;"	kind:variable	line:30
+status	../2/cgi-bin/alta.py	/^        status = "Status: 400 Bab Request"$/;"	kind:variable	line:34
+status	../2/cgi-bin/modificacion.py	/^        status = "Status: 200 OK"$/;"	kind:variable	line:61
+status	../2/cgi-bin/modificacion.py	/^        status = "Status: 400 Bab Request"$/;"	kind:variable	line:64
+sys	../2/cgi-bin/alta.py	/^import sys, os$/;"	kind:namespace	line:7
+sys	../2/cgi-bin/login.py	/^import sys, os$/;"	kind:namespace	line:6
+sys	../2/cgi-bin/models/alumno.py	/^import sys, os$/;"	kind:namespace	line:2
+sys	../2/cgi-bin/models/session.py	/^import sys, os$/;"	kind:namespace	line:2
+sys	../2/cgi-bin/modificacion.py	/^import sys, os$/;"	kind:namespace	line:5
+sys	../Chat/cgi-bin/login.py	/^import sys, os$/;"	kind:namespace	line:6
+sys	../Chat/cgi-bin/models/message.py	/^import sys, os$/;"	kind:namespace	line:2
+sys	../Chat/cgi-bin/models/session.py	/^import sys, os$/;"	kind:namespace	line:2
+table	../2/cgi-bin/consultas.py	/^from views.consultas import form_consulta, table$/;"	kind:namespace	line:6
+table	../2/cgi-bin/views/consultas.py	/^def table(table_body):$/;"	kind:function	line:63
+table_body	../2/cgi-bin/consultas.py	/^    table_body = ""$/;"	kind:variable	line:27
+table_totales	../2/cgi-bin/totales.py	/^from views.totales import table_totales$/;"	kind:namespace	line:6
+table_totales	../2/cgi-bin/views/totales.py	/^def table_totales(table_body):$/;"	kind:function	line:1
+totales	../2/cgi-bin/totales.py	/^    totales = Alumno.get_totales()$/;"	kind:variable	line:10
+totales.py	../2/cgi-bin/totales.py	1;"	kind:file	line:1
+totales.py	../2/cgi-bin/views/totales.py	1;"	kind:file	line:1
+update	../2/cgi-bin/models/alumno.py	/^    def update(self):$/;"	kind:member	line:73
+update	../Chat/cgi-bin/models/session.py	/^    def update(self, last_msg):$/;"	kind:member	line:27

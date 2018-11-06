@@ -11,11 +11,11 @@ convert:
 
 
 # specify the main file and all the files that you are including
-SOURCE=$(NAME).tex references.bib 
+SOURCE=$(NAME).tex # references.bib 
 
 %.pdf: %.tex $(SOURCE)
 	pdflatex $*
-	bibtex $*
+	#bibtex $*
 	pdflatex $*
 	pdflatex $*
 	pdflatex $*

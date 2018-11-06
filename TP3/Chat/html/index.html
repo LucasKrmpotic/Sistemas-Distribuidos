@@ -1,144 +1,153 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Chat SD</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/chat.css">
-    </head>
-    <body>
-        <!-- Caja de Contactos -->
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-3">
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                            <span class="glyphicon glyphicon-bullhorn"></span> Contactos
-                        </div>
-                        <div class="panel-body"  style="overflow-y: scroll;">
-                            <ul class="chat "id="conectados">
-                            </ul>
-                        </div>
+
+<head>
+    <title>Chat SD</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/lumen/bootstrap.min.css" rel="stylesheet" integrity="sha384-DfbCiBdRiiNWvRTbHe5X9IfkezKzm0pCrZSKc7EM9mmSl/OyckwbYk3GrajL8Ngy"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- Caja de Contactos -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-bullhorn"></span> Contactos
                     </div>
-                </div>
-                <!-- Caja de Chat -->
-                <div class="col-sm-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <span class="glyphicon glyphicon-comment"></span> Chat
-                        </div>
-                        <div class="panel-body" id="caja_chat" style="overflow-y: scroll;height: 500px;">
-                            <ul class="chat">
-                            </ul>
-                        </div>
-                        <div class="panel-footer">
-                            <div class="input-group">
-                                <input id="input_chat" type="text" class="form-control input-sm" placeholder="Escribi tu mensaje aqui..." disabled/>
-                                <span class="input-group-btn">
-                                    <button class="btn btn-warning btn-sm" id="btn_send" onclick = "send()"disabled>
-                                        Enviar</button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Caja de NickName -->
-                <div class="col-sm-3">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <span class="glyphicon glyphicon-user" id="nick_panel" >Nick</span>
-                        </div>
-                        <div class="panel-body" id="panel-nick">
-                        <button type="submit" class="btn btn-success" id="openModal" class="btn btn-primary" data-toggle="modal" data-target="#modalLogin">
-                                Ingresar
-                        </button>
-                        <button type="submit" class="btn btn-success" id = "salir" onclick = "log_out()">Salir</button>
-                        </div>
-                    </div>
-                    <!-- Modal -->
-                    <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="pwd">Nick:</label>
-                                <input type="text" class="form-control" id="input_login" name="nick">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success" id="cerrarModal"class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-success" onclick = "login()" id="botonAceptar" class="btn btn-primary">Aceptar</button>
-                        </div>
-                        </div>
-                    </div>
+                    <div class="panel-body" style="overflow-y: scroll;">
+                        <ul class="chat " id="conectados">
+                        </ul>
                     </div>
                 </div>
             </div>
-        </div>                
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script type = "text/javascript"> 
+            <!-- Caja de Chat -->
+            <div class="col-sm-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-comment"></span> Chat
+                    </div>
+                    <div class="panel-body" id="caja_chat" style="overflow-y: scroll;height: 500px;">
+                        <ul class="chat">
+                        </ul>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="input-group">
+                            <input id="input_chat" type="text" class="form-control input-sm" placeholder="Escribi tu mensaje aqui..." disabled/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning btn-sm" id="btn_send" onclick="send()" disabled>
+                                    Enviar</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Caja de NickName -->
+            <div class="col-sm-3">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-user" id="nick_panel">Nick</span>
+                    </div>
+                    <div class="panel-body" id="panel-nick">
+                        <button type="submit" class="btn btn-success" id="openModal" class="btn btn-primary" data-toggle="modal" data-target="#modalLogin">
+                            Ingresar
+                        </button>
+                        <button type="submit" class="btn btn-success" id="salir" onclick="log_out()">Salir</button>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="pwd">Nick:</label>
+                                    <input type="text" class="form-control" id="input_login" name="nick">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success" id="cerrarModal" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success" onclick="login()" id="botonAceptar" class="btn btn-primary">Aceptar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
 
-            var id; // ID del intervalo que actualiza el chat
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+<!-- <script type = "text/javascript"> 
 
-            function getRequestObject() {
-                  var XMLHttpRequestObject; 
-                  if (window.XMLHttpRequest) { 
-                       XMLHttpRequestObject = new XMLHttpRequest(); 
-                  } else if (window.ActiveXObject) { 
-                      XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP"); 
-                  }
-                 return XMLHttpRequestObject; 
-              }
+        var id; // ID del intervalo que actualiza el chat
 
-            function actualizar_chat(){
-                alert("Hola...vengo a refrescar el chat :D");
-                var requestObject = getRequestObject();
+        function getRequestObject() {
+                var XMLHttpRequestObject; 
+                if (window.XMLHttpRequest) { 
+                    XMLHttpRequestObject = new XMLHttpRequest(); 
+                } else if (window.ActiveXObject) { 
+                    XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP"); 
+                }
+                return XMLHttpRequestObject; 
             }
 
-            function login(){
-                var nickname = document.getElementById("input_login").value;
-                document.getElementById("btn_send").removeAttribute("disabled");
-                document.getElementById("input_chat").removeAttribute("disabled");
-                document.getElementById("nick_panel").innerText = nickname;
-                document.getElementById("cerrarModal").click();
-                console.log(nickname);
+        function actualizar_chat(){
+            // alert("Hola...vengo a refrescar el chat :D");
+            var requestObject = getRequestObject();
+        }
 
-                // Refresca el chat cada 2 segundos  
-                id = setInterval(function(){ actualizar_chat(); }, 1500);
+        function login(){
+            var nickname = $("#input_login").value;
+            $("#btn_send").removeAttribute("disabled");
+            $("#input_chat").removeAttribute("disabled");
+            $("#nick_panel").innerText = nickname;
+            $("#cerrarModal").click();
 
-                // Armar y guardar la cookie
-            }
+            // Refresca el chat cada 2 segundos  
+            id = setInterval(function(){ actualizar_chat(); }, 1500);
 
-            function log_out(){
-                document.getElementById("btn_send").setAttribute("disabled", true);
-                document.getElementById("input_chat").setAttribute("disabled", true);
-                document.getElementById("nick_panel").innerText = "Nick";
-                
-                // Quitar los contactos de la cajita
-                
-                document.getElementById("input_chat").value = "";
-                
-                // Limpiar el chat
+            // Armar y guardar la cookie
+        }
 
-                clearInterval(id);
-            }
+        function log_out(){
+            $("#btn_send").setAttribute("disabled", true);
+            $("#input_chat").setAttribute("disabled", true);
+            $("#nick_panel").innerText = "Nick";
+            
+            // Quitar los contactos de la cajita
+            
+            $("#input_chat").value = "";
+            
+            // Limpiar el chat
 
-            function send(){
-                var mensaje = document.getElementById("input_chat").value;
-                console.log(mensaje);
-                document.getElementById("input_chat").value = "";
-                // Mostrar el mensaje en el chat con el nick del usuario para distinguir el mensaje
-                
-            }
+            clearInterval(id);
+        }
 
+        function send(){
+            var mensaje = $("#input_chat").value;
+            console.log(mensaje);
+            $("#input_chat").value = "";
+            // Mostrar el mensaje en el chat con el nick del usuario para distinguir el mensaje
+            
+        }
+    </script> -->
 
-        </script>
-    </body>
 </html>

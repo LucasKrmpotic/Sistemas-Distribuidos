@@ -288,6 +288,147 @@ información que llega del lado del cliente, a nivel de HTTP o HTML
 (preferentemente
 HTTP).}\label{desarrolle-un-experimento-mediante-telnet-o-analizador-de-paquetes-que-muestre-si-el-servidor-de-http-agrega-o-quita-informaciuxf3n-a-la-que-genera-un-programa-cgi.-nota-deberuxeda-programar-o-utilizar-un-programa-cgi-para-conocer-exactamente-lo-que-genera-y-deberuxeda-mostrar-la-informaciuxf3n-que-llega-del-lado-del-cliente-a-nivel-de-http-o-html-preferentemente-http.}
 
+    \subsection{Experimento con modulo "requests" de
+python}\label{experimento-con-modulo-requests-de-python}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}50}]:} \PY{k+kn}{import} \PY{n+nn}{requests}
+         
+         \PY{c+c1}{\PYZsh{}r = requests.post(\PYZdq{}http://localhost/cgi\PYZhy{}bin/hola.py\PYZdq{})}
+         \PY{n}{response} \PY{o}{=} \PY{n}{requests}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{http://localhost:8080/cgi\PYZhy{}bin/modificacion.py}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{json}\PY{o}{.}\PY{n}{dumps}\PY{p}{(}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{response}\PY{o}{.}\PY{n}{headers}\PY{p}{)}\PY{p}{,} \PY{n}{indent}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{response}\PY{o}{.}\PY{n}{text}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{json}\PY{o}{.}\PY{n}{dumps}\PY{p}{(}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{response}\PY{o}{.}\PY{n}{request}\PY{o}{.}\PY{n}{headers}\PY{p}{)}\PY{p}{,} \PY{n}{indent}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\{
+  "Date": "Tue, 06 Nov 2018 15:54:21 GMT",
+  "Server": "Apache/2.4.35 (Unix)",
+  "Keep-Alive": "timeout=5, max=100",
+  "Connection": "Keep-Alive",
+  "Transfer-Encoding": "chunked",
+  "Content-Type": "text/html; charset=utf-8"
+\}
+
+
+	<div class="row justify-content-md-center">
+	<div class="col-md-8">
+        <form id="form-login">
+          <fieldset>
+            <legend>Login</legend>
+
+            <div class="form-group">
+              <label for="legajo">N\&uacutemero de legajo</label>
+              <input class="form-control" name="legajo" placeholder="Numero de legajo" type="text" required>
+              <small class="form-text text-muted">Ingrese su n\&uacutemero de legajo.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password</label>
+				<input name="password" class="form-control" placeholder="Password" type="password">
+            </div>
+
+            <button type="submit" onclick="login()" class="btn btn-primary">Enviar</button>
+          </fieldset>
+        </form>
+	</div>
+	</div>
+    
+
+\{
+  "User-Agent": "python-requests/2.18.4",
+  "Accept-Encoding": "gzip, deflate",
+  "Accept": "*/*",
+  "Connection": "keep-alive"
+\}
+
+    \end{Verbatim}
+
+    Indicar que cgi también resuelve (además de las cabeceras) el contenido
+(response.text) html de las respuestas de error del servidor
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}51}]:}  
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{r}\PY{o}{.}\PY{n}{headers}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\{
+  "Date": "Tue, 06 Nov 2018 15:54:43 GMT",
+  "Server": "Apache/2.4.35 (Unix)",
+  "Vary": "accept-language,accept-charset",
+  "Accept-Ranges": "bytes",
+  "Keep-Alive": "timeout=5, max=100",
+  "Connection": "Keep-Alive",
+  "Transfer-Encoding": "chunked",
+  "Content-Type": "text/html; charset=utf-8",
+  "Content-Language": "en"
+\}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Object not found!</title>
+<link rev="made" href="mailto:you@example.com" />
+<style type="text/css"><!--/*--><![CDATA[/*><!--*/ 
+    body \{ color: \#000000; background-color: \#FFFFFF; \}
+    a:link \{ color: \#0000CC; \}
+    p, address \{margin-left: 3em;\}
+    span \{font-size: smaller;\}
+/*]]>*/--></style>
+</head>
+
+<body>
+<h1>Object not found!</h1>
+<p>
+
+
+    The requested URL was not found on this server.
+
+  
+
+    If you entered the URL manually please check your
+    spelling and try again.
+
+  
+
+</p>
+<p>
+If you think this is a server error, please contact
+the <a href="mailto:you@example.com">webmaster</a>.
+
+</p>
+
+<h2>Error 404</h2>
+<address>
+  <a href="/">localhost</a><br />
+  <span>Apache/2.4.35 (Unix)</span>
+</address>
+</body>
+</html>
+
+
+
+    \end{Verbatim}
+
+    \subsection{Experimento desde
+Wireshark}\label{experimento-desde-wireshark}
+
+\begin{figure}
+\centering
+\includegraphics{images/pto1.png}
+\caption{error}
+\end{figure}
+
+    \subsection{Conclusion}\label{conclusion}
+
+Analizando el header, podemos ver que a nivel HTTP se agregan los campos
+de estado, fecha, servidor y última modificación.
+
     \section{Se debe desarrollar una aplicación que presente al usuario una
 página web con una opción de carga de datos y una opción de modificación
 de datos. La opción de carga consistirá en mostrar un formulario con un
@@ -380,10 +521,245 @@ funcionalidad:}\label{tome-el-cuxf3digo-que-se-adjunta-como-anexo-5-del-apunte-d
   entre un Servidor y un Cliente Linux. Describir la operatoria en el
   informe.
 \item
-  \textbf{b)}7 Configurar Samba y efectuar un compartimiento de archivos
+  \textbf{b)} Configurar Samba y efectuar un compartimiento de archivos
   entre un Windows y un Cliente Linux. Describir la operatoria en el
   informe.
 \end{itemize}
+
+    \subsection{NFS}\label{nfs}
+
+Un NFS nos permite acceso local a archivos remotos y utiliza una
+arquitectura estándar cliente-servidor para compartir archivos entre
+maquinas con SO basados en unix. Aún así, no es necesario que las dos
+máquinas corran el mismo sistema operativo.
+
+En nuestro caso configuramos NFS para una distribucion ArchLinux.
+
+Como primer paso debemos instalar el paquete \textbf{nfs-utils}.
+
+\begin{verbatim}
+sudo pacman -S nfs-utils
+\end{verbatim}
+
+\subsubsection{Configuracion}\label{configuracion}
+
+\begin{itemize}
+\tightlist
+\item
+  Iniciar y abilitar los servicios de NFS
+\end{itemize}
+
+\begin{verbatim}
+systemctl start nfs-server.service
+\end{verbatim}
+
+\begin{verbatim}
+systemctl enable nfs-server.service
+\end{verbatim}
+
+Ahora bien, algunos de los archivos más importantes que entran en juego
+con NFS son (Con sus rutas absolutas en ArchLinux): + /etc/exports: Es
+el archivo primario de configuración de NFS. Todos los archivos y
+carpetas exportados que se especifican en este archivo son los que se
+sirven. + /etc/fstab: Archivo de FS de linux en el que se especifican
+los puntos de montaje de las diferentes particiones. Se utiliza para
+definir un mounpoint para el/los directorio/s de NFS (Y que persistan
+luego de reiniciar el sistema). + /etc/idmapd.conf: Archivo en el que se
+realiza el mapeo de IDs. Utilizado principalmente para definir el nombre
+del dominio para que el servicio se configure correctamente.
+
+\subsubsection{Mapeo de ID}\label{mapeo-de-id}
+
+\begin{itemize}
+\item
+  Para este paso hay que modificar el archivo de
+  configuracion~\textbf{/etc/idmapd.conf}~y establezca el
+  campo~\textbf{Domain}~con el nombre de dominio.
+\item
+  Seguidamente, creamos el recurso que vamos a servir. En este caso es
+  una carpeta que ubicaremos en \textbf{/srv/nfs4/datos}
+\end{itemize}
+
+\begin{verbatim}
+sudo mkdir -p /srv/nfs4/datos
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Luego creamos la carpeta del sistema de archivos del servidor en donde
+  será montado el recurso a compartir:
+\end{itemize}
+
+\begin{verbatim}
+sudo mkdir /mnt/datos
+\end{verbatim}
+
+Se deben otorgar permisos de lectura/escritura al directorio
+\textbf{datos} para que los clientes puedan escribir en él.
+
+\begin{itemize}
+\tightlist
+\item
+  Luego, como siguiente paso es montar el directorio que desea
+  compartir, en este caso~\textbf{/mnt/datos}, en el directorio
+  compartido de NFS a través de la instrucción de montaje.
+\end{itemize}
+
+\begin{verbatim}
+mount --bind /mnt/datos /srv/nfs4/datos
+\end{verbatim}
+
+Para hacer que los cambios sean permanentes en cada reinicio del
+servidor, añada el enlace de montaje a~\textbf{fstab}
+
+\begin{figure}
+\centering
+\includegraphics{images/fstab.png}
+\caption{error}
+\end{figure}
+
+\subsubsection{Exportacion}\label{exportacion}
+
+Como siguiente paso, se añaden los directorios que se compartirán y la
+dirección IP o nombre de servidor de las máquinas cliente a las que les
+estará permitido montarlas en~\textbf{exports}:
+
+\begin{figure}
+\centering
+\includegraphics{images/exports.png}
+\caption{error}
+\end{figure}
+
+Si se modifica~\textbf{/etc/exports}~mientras el servidor está
+funcionando, debe volver a exportarlos para que los cambios surtan
+efecto.
+
+\begin{verbatim}
+exportfs -rav
+\end{verbatim}
+
+\begin{figure}
+\centering
+\includegraphics{images/exportfs.png}
+\caption{error}
+\end{figure}
+
+Finalmente, para levantar el servidor, debemos arrancar los servicios
+\textbf{rpcbind} y \textbf{nfs-client.target}.
+
+\begin{verbatim}
+systemctl start rpcbind nfs-client.target
+\end{verbatim}
+
+Ahora desde el lado del \textbf{Cliente}, tambien necesitan el modulo
+\textbf{nfs-utils} para poder conectarse.
+
+\subsubsection{Montaje en Linux}\label{montaje-en-linux}
+
+Para mostrar los sistemas de archivos exportados por el servidor:
+
+\begin{verbatim}
+showmount -e servername
+\end{verbatim}
+
+A continuación se monta omitiendo la raíz de exportación del servidor
+NFS:
+
+\begin{verbatim}
+mount -t nfs4 servername:/datos /mountpoint/on/client
+\end{verbatim}
+
+\subsection{SAMBA}\label{samba}
+
+Como paso inicial debemos instalar el~paquete de~\textbf{samba}.
+
+\begin{verbatim}
+sudo pacman -S samba
+\end{verbatim}
+
+Samba se configura en el~\textbf{/etc/samba/smb.conf}.
+
+Debido a que el~paquete~samba~no proporciona este archivo, se debe
+crear~antes de~iniciar~samba.
+
+Utilizamos un ejemplo documentado~\textbf{smb.conf.default} desde
+el~repositorio de git de \textbf{Samba}~para la
+configuración~\textbf{/etc/samba/smb.conf}.
+
+Link:
+\url{https://git.samba.org/samba.git/?p=samba.git;a=blob_plain;f=examples/smb.conf.default;hb=HEAD}
+
+\begin{itemize}
+\tightlist
+\item
+  Siempre que modifique el~smb.confarchivo, es recomendable ejecutar
+  el~comando \textbf{testparm} para verificar si hay errores
+  sintácticos.
+\end{itemize}
+
+\begin{verbatim}
+testparm
+\end{verbatim}
+
+\includegraphics{images/testparm1.png}
+\includegraphics{images/testparm2.png}
+
+\subsubsection{Gestión de usuarios}\label{gestiuxf3n-de-usuarios}
+
+Samba requiere una cuenta de usuario de Linux. Puede usar una cuenta de
+usuario existente o crear una~nueva. Aunque el nombre de usuario se
+comparte con el sistema Linux, Samba usa una contraseña separada de la
+de las cuentas de usuario de Linux.~Reemplazar~\textbf{samba\_usercon}
+la cuenta de usuario Samba elegida:
+
+\begin{verbatim}
+smbpasswd -a samba_user
+\end{verbatim}
+
+Luego, del lado del cliente (Workgroup del equipo): Debemos asegurarnos
+que los servicios smbd y nmbd estén corriendo (Ya sea con START o
+ENABLE). Esto inicia la escucha del servidor.
+
+Ahora es necesario crear el recurso compartido. Hacemos una carpeta en
+\textbf{/var/lib/samba} llamada \textbf{usershare} (Quedando como:
+\textbf{/var/lib/samba/usershare}).
+
+Ahora vamos a modificar los permisos sobre esa carpeta. Típicamente lo
+que se hace es crear un grupo de usuarios que se puede llamar
+\textbf{sambashare} y se le asignan permisos de lectura/escritura sobre
+el recurso compartido. Paso a paso tenemos:
+
+\begin{itemize}
+\item
+  Creamos el grupo sambashare con el comando \textbf{groupadd -r
+  sambashare}
+\item
+  Cambiamos el grupo dueño de la carpeta compartida con el comando
+  ``chown root:sambashare /var/lib/samba/usershare''.
+\item
+  Cambiamos los permisos a nivel de FS sobre la carpeta compartida con
+  el comando ``chmod 770 /var/lib/samba/usershare''
+\item
+  En el archivo de configuración de samba (smb.conf) debemos agregar el
+  recurso compartido. Un posible ejemplo de esto podría ser:
+
+\begin{verbatim}
+\[global\]
+ usershare path = /var/lib/samba/usershare
+ usershare max shares = 100
+ usershare allow guests = yes
+ usershare owner only = yes
+\end{verbatim}
+\end{itemize}
+
+Finalmente, agregamos el usuario al grupo \textbf{sambashare} con el
+comando \textbf{gpasswd sambashare -a usuario}. Luego de esto, es
+necesario reiniciar la sesión del SO para que se apliquen los cambios.
+
+\begin{verbatim}
+gpasswd sambashare -a usuario
+\end{verbatim}
 
     \section{DNS:}\label{dns}
 
@@ -392,22 +768,66 @@ tiempos de acceso. Efectuar el siguiente experimento, verificando
 información con la ayuda de un analizador de protocolo:
 
 \begin{itemize}
+\tightlist
 \item
   \textbf{a)} Desde el browser haga una conexión a una página WEB de
   argentina, que haya utilizado hace mucho tiempo o que no haya
   utilizado (un diario, un blog, etc.). Obtenga la diferencia temporal
   entre la consulta que se observa en el analizador y su respuesta.
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics{images/server_nacional.png}
+\caption{error}
+\end{figure}
+
+\begin{itemize}
+\tightlist
 \item
   \textbf{b)} Haga lo mismo con una página no frecuentada por Ud. que se
   supone que está situada en un servidor europeo o de Asia. (la página
   oficial del grupo Nightwish, o algún diario galés, etc.). Compare sus
   conclusiones con las obtenidas en el caso a).
+\end{itemize}
+
+Se puede ver claramente que que el tiempo de respuesta es mucho mayor a
+la respuesta a un servidor nacional (como el del anterior caso).
+
+\begin{figure}
+\centering
+\includegraphics{images/server_externo.png}
+\caption{error}
+\end{figure}
+
+\begin{itemize}
+\tightlist
 \item
   \textbf{c)} Vuelva nuevamente a invocar la página seleccionada en a),
   (que se supone ya reside en su caché). Compare resultados.
+\end{itemize}
+
+Se puede ver la significativa mejora en el tiempo de respuesta de la
+peticion, esto es porque la pagina reside en nuestra cache. Siempre que
+una pagina resida en la cache, la respuesta sera mucho mas rapida.
+
+\begin{figure}
+\centering
+\includegraphics{images/cacheada.png}
+\caption{error}
+\end{figure}
+
+\begin{itemize}
+\tightlist
 \item
   \textbf{d)} Aporte las conclusiones que puede sacar del experimento.
 \end{itemize}
+
+Como pudimos observar en las distintas experiencias, es más rápido
+resolver una consulta de una página nacional (www.lanacion.com.ar) que
+una europea (www.fortnite.com). Sin embargo los tiempos de respuesta
+cambian favorablemente cuando se encuentran cacheadas las páginas, las
+respuestas son significativamente mas rapidas.
 
 
     % Add a bibliography block to the postdoc
