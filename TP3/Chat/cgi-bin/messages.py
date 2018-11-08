@@ -20,15 +20,20 @@ if os.environ["REQUEST_METHOD"] == "GET":
         print(messages)
 
     else: 
+        print("Status: 403 Forbidden")
         print("Content-Type: text/html; charset=utf-8\n\r")
-        print("Location: / ")
+        print("/login.html")
         print()
 
 elif os.environ["REQUEST_METHOD"] == "POST":
     
     form = cgi.FieldStorage()
-    nickname = form.getvalue('nickname')
-    text = int(form.getvalue('text'))
+    text = form.getvalue('message')
+    session = Session.get_current_session()
 
-    message = Message(nickname, text)
+    message = Message(session.nickname, text)
     message.save()
+
+    print("Content-Type: text/html; charset=utf-8\n\r")
+    print()
+    print("<h1>Mensaje: {}, usuario {}, id de mensaje {}".format(message.text, message.user, message.id))

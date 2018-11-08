@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  chat:
+    build: .
+    volumes:
+      - $PWD/html:/usr/local/apache2/htdocs 
+      - $PWD/cgi-bin:/usr/local/apache2/cgi-bin 
+    ports:
+      - "8080:80"

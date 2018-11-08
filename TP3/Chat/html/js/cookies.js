@@ -14,12 +14,13 @@ function readCookie(name) {
 
 $( document ).ready(function(){
     let cookie = readCookie('session')
-    
     if (cookie == null){
-        $("#login").fadeIn();
-        $("#logout").fadeOut();    
-    } else {
-        $("#login").fadeOut();
-        $("#logout").fadeIn();
+
+        var URLActual = $(location).attr('href')
+        if ( URLActual != 'http://localhost:8080/login.html'){
+
+            location.href = 'http://localhost:8080/login.html'
+        }
     }
+
 })

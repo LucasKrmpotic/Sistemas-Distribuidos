@@ -1,175 +1,90 @@
 <!DOCTYPE html>
-<html>
-
+<html class=''>
 <head>
-    <title>Chat SD</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/lumen/bootstrap.min.css" rel="stylesheet" integrity="sha384-DfbCiBdRiiNWvRTbHe5X9IfkezKzm0pCrZSKc7EM9mmSl/OyckwbYk3GrajL8Ngy"
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <meta charset='UTF-8'>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
+    <script src="https://use.typekit.net/hoy3lrg.js"></script>
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
-    <!-- Caja de Contactos -->
+
     <div class="container-fluid">
-
-
-
-
-
-        <div class="row">
-
-            <div class="col-md-3">
-
-                <div class="card mb-3">
-                    <h3 class="card-header">Aca van los contactos.</h3>
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Vestibulum at eros</li>
+        <div class="row justify-content-md-center">
+            <div id="frame">
+                <div id="sidepanel">
+                    <div id="profile">
+                        <div class="wrap">
+                            <img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
+                            <p>Mike Ross</p>
+                        </div>
+                    </div>
+                    <div id="search">
+                        <label for="">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </label>
+                        <input type="text" placeholder="Search contacts..." />
+                    </div>
+                    <div id="contacts">
+                        <ul>
+                            <li class="contact">
+                                <div class="wrap">
+                                    <span class="contact-status online"></span>
+                                    <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
+                                    <div class="meta">
+                                        <p class="name">Louis Litt</p>
+                                        <p class="preview">You just got LITT up, Mike.</p>
+                                    </div>
+                                </div>
+                            </li>
                         </ul>
+
                     </div>
-                    <div class="card-footer text-muted">
-                        2 days ago
-                    </div>
-                </div>
-                <div class="card">
 
                 </div>
-            </div>
-
-
-            <div class="col-md-6">
-
-                <div class="card mb-3">
-                    <h3 class="card-header">Aca van los mensages.</h3>
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Vestibulum at eros</li>
-                        </ul>
-                    </div>
-                    <div class="card-footer text-muted">
-                        2 days ago
-                    </div>
-                </div>
-                <div class="card">
-
-                </div>
-            </div>
-
-
-            <div class="col-md-3">
-
-                <div class="card mb-3">
-                    <h3 class="card-header">Aca va el login.</h3>
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Vestibulum at eros</li>
-                        </ul>
-                    </div>
-                    <div class="card-footer text-muted">
-                    <button type="submit" class="btn btn-success" id="openModal" class="btn btn-primary" data-toggle="modal" data-target="#modalLogin">
-                        Ingresar
-                    </button>
-                    </div>
-                </div>
-                <div class="card">
-
-                </div>
-            </div>
-
-            <!-- <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
-
-            <div class="modal" id="modalLogin">
-                <div class="modal-dialog" role="dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Modal title</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Modal body text goes here.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-
-            <div class="row">
-                <!-- Caja de Chat -->
-                <div class="col-sm-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <span class="glyphicon glyphicon-comment"></span> Chat
-                        </div>
-                        <div class="panel-body" id="caja_chat" style="overflow-y: scroll;height: 500px;">
-                            <ul class="chat">
-                            </ul>
-                        </div>
-                        <div class="panel-footer">
-                            <div class="input-group">
-                                <input id="input_chat" type="text" class="form-control input-sm" placeholder="Escribi tu mensaje aqui..." disabled/>
-                                <span class="input-group-btn">
-                                    <button class="btn btn-warning btn-sm" id="btn_send" onclick="send()" disabled>
-                                        Enviar</button>
-                                </span>
+                <div class="content">
+                    <div class="contact-profile">
+                        <div class="row">
+                            <div class="col-md-2 col-md-offset-10">
+                                <button id="logout" onclick="logout()" class="btn btn-info" type="button">Logout</button>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- Caja de NickName -->
-                <div class="col-sm-3">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <span class="glyphicon glyphicon-user" id="nick_panel">Nick</span>
-                        </div>
-                        <div class="panel-body" id="panel-nick">
-                            <button type="submit" class="btn btn-success" id="openModal" class="btn btn-primary" data-toggle="modal" data-target="#modalLogin">
-                                Ingresar
-                            </button>
-                            <button type="submit" class="btn btn-success" id="salir" onclick="log_out()">Salir</button>
-                        </div>
+
+
+                    <div class="messages">
+                        <ul>
+                            <li class="sent">
+                                <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
+                                <p>How the hell am I supposed to get a jury to believe you when I am not even sure that I do?!</p>
+                            </li>
+                            <li class="replies">
+                                <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+                                <p>When you're backed against the wall, break the god damn thing down.</p>
+                            </li>
+                        </ul>
                     </div>
-                    <!-- Modal -->
-                    <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
+                    <div class="message-input">
+                        <div class="wrap">
+                            <form id="form-msg">
+                                <div class="form-group">
+                                    <input type="text" name="message" placeholder="Write your message..." />
+                                    <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+                                    <button id="btn-send" type="submit" onclick="newMessage()">
+                                        <i class="fa fa-paper-plane" aria-hidden="true"></i>
                                     </button>
                                 </div>
-                                <div class="modal-body">
-                                    <form id="form-login">
-                                        <div class="form-group">
-                                            <label for="pwd">Nick:</label>
-                                            <input type="text" class="form-control" id="input_login" name="nick">
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success" id="cerrarModal" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-success" onclick="login()" id="botonAceptar" class="btn btn-primary">Aceptar</button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
@@ -180,61 +95,9 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"></script>
 
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-<!-- <script type = "text/javascript"> 
-
-        var id; // ID del intervalo que actualiza el chat
-
-        function getRequestObject() {
-                var XMLHttpRequestObject; 
-                if (window.XMLHttpRequest) { 
-                    XMLHttpRequestObject = new XMLHttpRequest(); 
-                } else if (window.ActiveXObject) { 
-                    XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP"); 
-                }
-                return XMLHttpRequestObject; 
-            }
-
-        function actualizar_chat(){
-            // alert("Hola...vengo a refrescar el chat :D");
-            var requestObject = getRequestObject();
-        }
-
-        function login(){
-            var nickname = $("#input_login").value;
-            $("#btn_send").removeAttribute("disabled");
-            $("#input_chat").removeAttribute("disabled");
-            $("#nick_panel").innerText = nickname;
-            $("#cerrarModal").click();
-
-            // Refresca el chat cada 2 segundos  
-            id = setInterval(function(){ actualizar_chat(); }, 1500);
-
-            // Armar y guardar la cookie
-        }
-
-        function log_out(){
-            $("#btn_send").setAttribute("disabled", true);
-            $("#input_chat").setAttribute("disabled", true);
-            $("#nick_panel").innerText = "Nick";
-            
-            // Quitar los contactos de la cajita
-            
-            $("#input_chat").value = "";
-            
-            // Limpiar el chat
-
-            clearInterval(id);
-        }
-
-        function send(){
-            var mensaje = $("#input_chat").value;
-            console.log(mensaje);
-            $("#input_chat").value = "";
-            // Mostrar el mensaje en el chat con el nick del usuario para distinguir el mensaje
-            
-        }
-    </script> -->
-
+<script src="js/helpers.js"></script>
+<script src="js/send_message.js"></script>
+<script src="js/cookies.js"></script>
+<script src="js/logout.js"></script>
+<script src="js/login.js"></script>
 </html>

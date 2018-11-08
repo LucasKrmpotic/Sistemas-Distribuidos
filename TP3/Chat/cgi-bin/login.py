@@ -19,4 +19,9 @@ if os.environ["REQUEST_METHOD"] == "POST":
     print("Content-type: text/html")
     print(session.cookie.output())
     print()
-    print("<h3>Te has logueado exitosamente</h3>")
+    print("<h3>Te has logueado exitosamente. Bienvenido {}</h3>".format(nickname))
+
+elif os.environ["REQUEST_METHOD"] == "GET":
+
+    print("Location: /login.html")
+    print()

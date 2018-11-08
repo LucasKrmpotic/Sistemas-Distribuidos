@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chat SD</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/lumen/bootstrap.min.css" rel="stylesheet" integrity="sha384-DfbCiBdRiiNWvRTbHe5X9IfkezKzm0pCrZSKc7EM9mmSl/OyckwbYk3GrajL8Ngy"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- Caja de Contactos -->
+    <div class="container-fluid">
+
+
+
+
+
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <div class="card mb-3">
+                    <h3 class="card-header">Aca van los contactos.</h3>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Cras justo odio</li>
+                            <li class="list-group-item">Dapibus ac facilisis in</li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer text-muted">
+                        2 days ago
+                    </div>
+                </div>
+                <div class="card">
+
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+
+                <div class="card mb-3">
+                    <h3 class="card-header">Aca van los mensages.</h3>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Cras justo odio</li>
+                            <li class="list-group-item">Dapibus ac facilisis in</li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer text-muted">
+                        2 days ago
+                    </div>
+                </div>
+                <div class="card">
+
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+
+                <div class="card mb-3">
+                    <h3 class="card-header">Aca va el login.</h3>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Cras justo odio</li>
+                            <li class="list-group-item">Dapibus ac facilisis in</li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer text-muted">
+                    <button type="submit" class="btn btn-success" id="openModal" class="btn btn-primary" data-toggle="modal" data-target="#modalLogin">
+                        Ingresar
+                    </button>
+                    </div>
+                </div>
+                <div class="card">
+
+                </div>
+            </div>
+
+            <!-- <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
+
+            <div class="modal" id="modalLogin">
+                <div class="modal-dialog" role="dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Modal body text goes here.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="row">
+                <!-- Caja de Chat -->
+                <div class="col-sm-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <span class="glyphicon glyphicon-comment"></span> Chat
+                        </div>
+                        <div class="panel-body" id="caja_chat" style="overflow-y: scroll;height: 500px;">
+                            <ul class="chat">
+                            </ul>
+                        </div>
+                        <div class="panel-footer">
+                            <div class="input-group">
+                                <input id="input_chat" type="text" class="form-control input-sm" placeholder="Escribi tu mensaje aqui..." disabled/>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-warning btn-sm" id="btn_send" onclick="send()" disabled>
+                                        Enviar</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Caja de NickName -->
+                <div class="col-sm-3">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <span class="glyphicon glyphicon-user" id="nick_panel">Nick</span>
+                        </div>
+                        <div class="panel-body" id="panel-nick">
+                            <button type="submit" class="btn btn-success" id="openModal" class="btn btn-primary" data-toggle="modal" data-target="#modalLogin">
+                                Ingresar
+                            </button>
+                            <button type="submit" class="btn btn-success" id="salir" onclick="log_out()">Salir</button>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="form-login">
+                                        <div class="form-group">
+                                            <label for="pwd">Nick:</label>
+                                            <input type="text" class="form-control" id="input_login" name="nick">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-success" id="cerrarModal" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-success" onclick="login()" id="botonAceptar" class="btn btn-primary">Aceptar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+<!-- <script type = "text/javascript"> 
+
+        var id; // ID del intervalo que actualiza el chat
+
+        function getRequestObject() {
+                var XMLHttpRequestObject; 
+                if (window.XMLHttpRequest) { 
+                    XMLHttpRequestObject = new XMLHttpRequest(); 
+                } else if (window.ActiveXObject) { 
+                    XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP"); 
+                }
+                return XMLHttpRequestObject; 
+            }
+
+        function actualizar_chat(){
+            // alert("Hola...vengo a refrescar el chat :D");
+            var requestObject = getRequestObject();
+        }
+
+        function login(){
+            var nickname = $("#input_login").value;
+            $("#btn_send").removeAttribute("disabled");
+            $("#input_chat").removeAttribute("disabled");
+            $("#nick_panel").innerText = nickname;
+            $("#cerrarModal").click();
+
+            // Refresca el chat cada 2 segundos  
+            id = setInterval(function(){ actualizar_chat(); }, 1500);
+
+            // Armar y guardar la cookie
+        }
+
+        function log_out(){
+            $("#btn_send").setAttribute("disabled", true);
+            $("#input_chat").setAttribute("disabled", true);
+            $("#nick_panel").innerText = "Nick";
+            
+            // Quitar los contactos de la cajita
+            
+            $("#input_chat").value = "";
+            
+            // Limpiar el chat
+
+            clearInterval(id);
+        }
+
+        function send(){
+            var mensaje = $("#input_chat").value;
+            console.log(mensaje);
+            $("#input_chat").value = "";
+            // Mostrar el mensaje en el chat con el nick del usuario para distinguir el mensaje
+            
+        }
+    </script> -->
+
+</html>

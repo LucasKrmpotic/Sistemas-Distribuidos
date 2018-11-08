@@ -14,7 +14,7 @@ class Message():
     def save(self):
         messages = pd.read_csv(MODEL_FILE)        
         self.id = len(messages)
-        messages.loc[self.id] = [self.id, self.user, self.text]
+        messages.loc[len(messages)] = [len(messages), self.user, self.text]
         messages.to_csv(MODEL_FILE, index=False)
 
     @classmethod
@@ -23,4 +23,8 @@ class Message():
         messages = pd.read_csv(MODEL_FILE)
         return messages[last_msg_id:]
 
+    @classmethod
+    def get_last_msg_id(cls):
+        messages = pd.read_csv(MODEL_FILE)
+        return len(messages)-1 if len(messages) != 0 else 0 
 

@@ -4,7 +4,7 @@ from http import cookies
 import datetime
 from random import randrange
 
-SESSIONS_FILE = 'sessiones.csv'
+SESSIONS_FILE = 'sessions.csv'
 
 class Session():
 
@@ -44,9 +44,11 @@ class Session():
 
         sessiones = pd.read_csv(SESSIONS_FILE, index_col="id")
         session = sessiones[sessiones['cookie'] == int(cookie['session'].value)]  
+        if len(session) == 0:
+            raise Exception("No existe la sesion")
 
-        nickname = session.get_value(0, 'nickname')
-        last_msg = session.get_value(0, 'last_msg')
+        nickname = session.at[0, 'nickname']
+        last_msg = session.at[0, 'lastmsg']
         return Session(nickname, cookie, last_msg)      
 
     @classmethod
