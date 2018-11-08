@@ -65,6 +65,7 @@
     \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
     \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
                                 % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
     
 
     
@@ -91,6 +92,8 @@
     \definecolor{ansi-cyan-intense}{HTML}{258F8F}
     \definecolor{ansi-white}{HTML}{C5C1B4}
     \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
 
     % commands and environments needed by pandoc snippets
     % extracted from the output of `pandoc -s`
@@ -137,11 +140,18 @@
     % Define a nice break command that doesn't care if a line doesn't already
     % exist.
     \def\br{\hspace*{\fill} \\* }
-    % Math Jax compatability definitions
+    % Math Jax compatibility definitions
     \def\gt{>}
     \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
     % Document parameters
+    % Document title
     \title{Laboratorio-3}
+    
+    
     
     
     
@@ -301,7 +311,6 @@ python}\label{experimento-con-modulo-requests-de-python}
          \PY{n+nb}{print}\PY{p}{(}\PY{n}{json}\PY{o}{.}\PY{n}{dumps}\PY{p}{(}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{response}\PY{o}{.}\PY{n}{request}\PY{o}{.}\PY{n}{headers}\PY{p}{)}\PY{p}{,} \PY{n}{indent}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 
-
     \begin{Verbatim}[commandchars=\\\{\}]
 \{
   "Date": "Tue, 06 Nov 2018 15:54:21 GMT",
@@ -353,7 +362,6 @@ python}\label{experimento-con-modulo-requests-de-python}
 {\color{incolor}In [{\color{incolor}51}]:}  
          \PY{n+nb}{print}\PY{p}{(}\PY{n}{r}\PY{o}{.}\PY{n}{headers}\PY{p}{)}
 \end{Verbatim}
-
 
     \begin{Verbatim}[commandchars=\\\{\}]
 \{
@@ -418,10 +426,10 @@ the <a href="mailto:you@example.com">webmaster</a>.
     \subsection{Experimento desde
 Wireshark}\label{experimento-desde-wireshark}
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{images/pto1.png}
-\caption{error}
+\caption{}
 \end{figure}
 
     \subsection{Conclusion}\label{conclusion}
@@ -462,6 +470,113 @@ sistema de archivos.
 
 Justifique si este ejercicio puede ser considerado una aplicación web.
 
+    \subsection{Implementacion}\label{implementacion}
+
+Para la implementacion del \textbf{Servidor} utilizamos el modemo MVC
+(Model, View, Controller) para un manejo claro de la funcionalidad.
+
+\begin{figure}[h]
+\centering
+\includegraphics{images/Servidor_completo.png}
+\caption{}
+\end{figure}
+
+Donde los archivos: + login.py + logout.py + alta.py + modificacion.py +
+consultas.py + totales.py
+
+Son los \textbf{Controladores} y los archivos dentro de la carpeta
+\textbf{Models} son el \textbf{Modelo} y los archivos dentro de la
+carpeta \textbf{Views} son nuestras \textbf{Vistas}.
+
+Luego en la carpet \textbf{html} tenemos solamente una plantilla html,
+\textbf{index.html}.
+
+\begin{figure}[h]
+\centering
+\includegraphics{images/html.png}
+\caption{}
+\end{figure}
+
+Esto es asi y no tenemos las demas plantillas, porque utilizamos
+\textbf{AJAX} para formar y armar el contenido de la pagina. Según la
+peticion requerida, se va insertando en el container de la pagina los
+distintos htmls.
+
+Dentro del directorio \textbf{js} tenemos los archivos javascript con
+las peticiones que realizara el navegador a nuestro servidor.
+
+El controlador a esta accion, verifica si la peticion es un \textbf{GET}
+o un \textbf{POST} y segun esto realiza una determinada funcion.
+
+El \textbf{Controlador} verifica el \textbf{GET} o \textbf{POST} de la
+siguiente manera:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ os.environ[}\StringTok{"REQUEST_METHOD"}\NormalTok{] }\OperatorTok{==} \StringTok{"POST"}\NormalTok{:}
+    \CommentTok{# Accion al POST}
+
+\ControlFlowTok{if}\NormalTok{ os.environ[}\StringTok{"REQUEST_METHOD"}\NormalTok{] }\OperatorTok{==} \StringTok{"GET"}\NormalTok{:}
+    \CommentTok{# Accion al GET}
+\end{Highlighting}
+\end{Shaded}
+
+Otra desicion que se tomo, fue la de utilizar archivos CSV para menejar
+las sesiones y los alumnos dados de alta.
+
+Para manejar este tipo de archivo utilizamos la libreria de python
+\textbf{pandas} que nos brinda un manejo mas transparente y no tan
+rudimentario de este tipo de archivos (csv).
+
+Como ventaja de esta libreria, pudimos manipular mas facilmente los
+archivos csv sin necesitar de bucles para las consultas. Un claro
+ejemplo de utilizacion en nuestro proyecto es en la clase
+\textbf{alumno.py} del \textbf{modelo} con su metodo
+\textbf{get\_totales()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ get_totales(cls):}
+\NormalTok{        alumnos }\OperatorTok{=}\NormalTok{ pd.read_csv(MODEL_FILE)}
+
+\NormalTok{        result }\OperatorTok{=}\NormalTok{ \{}
+            \StringTok{"mujeres1"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"femenino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{21}\NormalTok{)]),}
+            \StringTok{"mujeres2"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"femenino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ ((alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{20}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{41}\NormalTok{))]),}
+            \StringTok{"mujeres3"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"femenino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{40}\NormalTok{)]),}
+            \StringTok{"varones1"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"masculino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{21}\NormalTok{)]),}
+            \StringTok{"varones2"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"masculino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ ((alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{20}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{41}\NormalTok{))]),}
+            \StringTok{"varones3"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"masculino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{40}\NormalTok{)]),}
+            \StringTok{"otro1"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"otro"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{21}\NormalTok{)]),}
+            \StringTok{"otro2"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"otro"}\NormalTok{) }\OperatorTok{&}\NormalTok{ ((alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{20}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{41}\NormalTok{))]),}
+            \StringTok{"otro3"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"otro"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{40}\NormalTok{)]),}
+\NormalTok{        \}}
+
+        \ControlFlowTok{return}\NormalTok{ result}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Vista de la Aplicacion
+CGI}\label{vista-de-la-aplicacion-cgi}
+
+Utilizamos \textbf{bootstrap} y \textbf{css} para que la implementacion
+de la pagina de la aplicacion y los formularios.
+
+\begin{figure}[h]
+\centering
+\includegraphics{images/interfaz-cgi.png}
+\caption{}
+\end{figure}
+
+\subsection{Conclusion}\label{conclusion}
+
+Esta aplicacion que se implemento puede ser considerada una aplicacion
+web ya que cumple todos sus fundamentos.
+
+El cliente (navegador) para cada llamada a un servicio del servidor
+realiza una llamada \textbf{cgi} hacia el servidor (que son scripts cgi
+que residen en el servidor)y el mismo responde de acuerdo a la peticion
+realizada.
+
     \section{Agregue a la aplicación del ejercicio 3 cuatro posibilidades de
 consultas básicas: por nombre y apellido (pueden haber ``*''), Número de
 Alumno/Legajo (puede ser un intervalo), sexo, y edad (puede ser un
@@ -483,6 +598,22 @@ CGI debería combinar la generación de HMTL con el resultado de lo que se
 procesa localmente en el servidor. Y que el HTML generado puede ser
 "largo". El programa CGI puede estar en el lenguaje que se desee.
 
+    \subsection{Solucion}\label{solucion}
+
+Para la solucion de este punto, se decidio agregar en la aplicacion un
+apartado para \textbf{consultas} en el cual se despliega un formulario
+para ingresar el/los filtros para realizar la busqueda.
+
+Como se menciono anteriormente, se utilizo la libreria de python
+\textbf{pandas} para el manejo de los archivos \textbf{.csv} para asi
+poder manupularlos de una manera mas facil y menos rudimentaria.
+
+\begin{figure}[h]
+\centering
+\includegraphics{images/consultas.png}
+\caption{}
+\end{figure}
+
     \section{Agregue a la aplicación la consulta de valores totales por
 rango de edad (0-20, 20-40, mas de 40) y
 sexo.}\label{agregue-a-la-aplicaciuxf3n-la-consulta-de-valores-totales-por-rango-de-edad-0-20-20-40-mas-de-40-y-sexo.}
@@ -491,6 +622,47 @@ sexo.}\label{agregue-a-la-aplicaciuxf3n-la-consulta-de-valores-totales-por-rango
 parte del procesamiento en el lado del servidor puede ser solamente para
 computar valores simples a mostrar, pero que pueden ser resultado de
 procesamiento relativamente complejo.
+
+    \subsection{Impleentacion}\label{impleentacion}
+
+De la misma forma que se hizo con las consultas del punto anterior, para
+este caso se agrego un apartado \textbf{totales} a nuestra aplicacion en
+la cual se muestra como resultado una tabla con los totales por rango de
+edad y sexo.
+
+La resolucion tambien fue realizada con la libreria de python
+\textbf{pandas}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ get_totales(cls):}
+\NormalTok{        alumnos }\OperatorTok{=}\NormalTok{ pd.read_csv(MODEL_FILE)}
+
+\NormalTok{        result }\OperatorTok{=}\NormalTok{ \{}
+            \StringTok{"mujeres1"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"femenino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{21}\NormalTok{)]),}
+            \StringTok{"mujeres2"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"femenino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ ((alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{20}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{41}\NormalTok{))]),}
+            \StringTok{"mujeres3"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"femenino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{40}\NormalTok{)]),}
+            \StringTok{"varones1"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"masculino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{21}\NormalTok{)]),}
+            \StringTok{"varones2"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"masculino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ ((alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{20}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{41}\NormalTok{))]),}
+            \StringTok{"varones3"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"masculino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{40}\NormalTok{)]),}
+            \StringTok{"otro1"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"otro"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{21}\NormalTok{)]),}
+            \StringTok{"otro2"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"otro"}\NormalTok{) }\OperatorTok{&}\NormalTok{ ((alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{20}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{41}\NormalTok{))]),}
+            \StringTok{"otro3"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"otro"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{40}\NormalTok{)]),}
+\NormalTok{        \}}
+
+        \ControlFlowTok{return}\NormalTok{ result}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Vista desde la aplicacion}\label{vista-desde-la-aplicacion}
+
+\begin{figure}[h]
+\centering
+\includegraphics{images/totales.png}
+\caption{}
+\end{figure}
+
+\newpage
 
     \section{Tome el código que se adjunta como Anexo 5 del apunte de AJAX y
 agregue las siguientes mejora de
@@ -512,6 +684,8 @@ funcionalidad:}\label{tome-el-cuxf3digo-que-se-adjunta-como-anexo-5-del-apunte-d
   mediante el almacenamiento en cada cliente de la última línea de chat
   enviada.
 \end{itemize}
+
+    
 
     \section{DFS:}\label{dfs}
 
@@ -613,10 +787,10 @@ mount --bind /mnt/datos /srv/nfs4/datos
 Para hacer que los cambios sean permanentes en cada reinicio del
 servidor, añada el enlace de montaje a~\textbf{fstab}
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{images/fstab.png}
-\caption{error}
+\caption{}
 \end{figure}
 
 \subsubsection{Exportacion}\label{exportacion}
@@ -625,10 +799,10 @@ Como siguiente paso, se añaden los directorios que se compartirán y la
 dirección IP o nombre de servidor de las máquinas cliente a las que les
 estará permitido montarlas en~\textbf{exports}:
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{images/exports.png}
-\caption{error}
+\caption{}
 \end{figure}
 
 Si se modifica~\textbf{/etc/exports}~mientras el servidor está
@@ -639,10 +813,10 @@ efecto.
 exportfs -rav
 \end{verbatim}
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{images/exportfs.png}
-\caption{error}
+\caption{}
 \end{figure}
 
 Finalmente, para levantar el servidor, debemos arrancar los servicios
@@ -745,7 +919,7 @@ el recurso compartido. Paso a paso tenemos:
   recurso compartido. Un posible ejemplo de esto podría ser:
 
 \begin{verbatim}
-\[global\]
+[global]
  usershare path = /var/lib/samba/usershare
  usershare max shares = 100
  usershare allow guests = yes
@@ -776,10 +950,10 @@ información con la ayuda de un analizador de protocolo:
   entre la consulta que se observa en el analizador y su respuesta.
 \end{itemize}
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{images/server_nacional.png}
-\caption{error}
+\caption{}
 \end{figure}
 
 \begin{itemize}
@@ -794,10 +968,10 @@ información con la ayuda de un analizador de protocolo:
 Se puede ver claramente que que el tiempo de respuesta es mucho mayor a
 la respuesta a un servidor nacional (como el del anterior caso).
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{images/server_externo.png}
-\caption{error}
+\caption{}
 \end{figure}
 
 \begin{itemize}
@@ -811,10 +985,10 @@ Se puede ver la significativa mejora en el tiempo de respuesta de la
 peticion, esto es porque la pagina reside en nuestra cache. Siempre que
 una pagina resida en la cache, la respuesta sera mucho mas rapida.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{images/cacheada.png}
-\caption{error}
+\caption{}
 \end{figure}
 
 \begin{itemize}
@@ -828,6 +1002,12 @@ resolver una consulta de una página nacional (www.lanacion.com.ar) que
 una europea (www.fortnite.com). Sin embargo los tiempos de respuesta
 cambian favorablemente cuando se encuentran cacheadas las páginas, las
 respuestas son significativamente mas rapidas.
+
+    
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} 
+\end{Verbatim}
 
 
     % Add a bibliography block to the postdoc
