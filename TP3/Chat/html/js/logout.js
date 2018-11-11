@@ -6,7 +6,6 @@ function logout(){
     })
     .done(function (res) {
         location.href = "/"
-
     })
     .fail(function (err) {
         console.log(err);

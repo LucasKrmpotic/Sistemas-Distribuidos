@@ -1,6 +1,6 @@
 function login(){
- 
-    var nickname = $("#input_login").value;
+    
+    var container = $("#frame")
 
     $('#form-login').submit(function (event) {
     
@@ -13,15 +13,12 @@ function login(){
             data: frmValues
         })
         .done(function (res) {
-            
+            container.html(res);
             location.href = "/"
-
         })
         .fail(function (err) {
             console.log(err);
-            
         });
         event.preventDefault(); 
     });
-
 }

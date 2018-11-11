@@ -14,59 +14,8 @@
 
     
     
-    \usepackage[T1]{fontenc}
-    % Nicer default font (+ math font) than Computer Modern for most use cases
-    \usepackage{mathpazo}
+\input{project_settings}
 
-    % Basic figure setup, for now with no caption control since it's done
-    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
-    \usepackage{graphicx}
-    % We will generate all images so they have a width \maxwidth. This means
-    % that they will get their normal width if they fit onto the page, but
-    % are scaled down if they would overflow the margins.
-    \makeatletter
-    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
-    \else\Gin@nat@width\fi}
-    \makeatother
-    \let\Oldincludegraphics\includegraphics
-    % Set max figure width to be 80% of text width, for now hardcoded.
-    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
-    % Ensure that by default, figures have no caption (until we provide a
-    % proper Figure object with a Caption API and a way to capture that
-    % in the conversion process - todo).
-    \usepackage{caption}
-    \DeclareCaptionLabelFormat{nolabel}{}
-    \captionsetup{labelformat=nolabel}
-
-    \usepackage{adjustbox} % Used to constrain images to a maximum size 
-    \usepackage{xcolor} % Allow colors to be defined
-    \usepackage{enumerate} % Needed for markdown enumerations to work
-    \usepackage{geometry} % Used to adjust the document margins
-    \usepackage{amsmath} % Equations
-    \usepackage{amssymb} % Equations
-    \usepackage{textcomp} % defines textquotesingle
-    % Hack from http://tex.stackexchange.com/a/47451/13684:
-    \AtBeginDocument{%
-        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
-    }
-    \usepackage{upquote} % Upright quotes for verbatim code
-    \usepackage{eurosym} % defines \euro
-    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
-    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
-    \usepackage{fancyvrb} % verbatim replacement that allows latex
-    \usepackage{grffile} % extends the file name processing of package graphics 
-                         % to support a larger range 
-    % The hyperref package gives us a pdf with properly built
-    % internal navigation ('pdf bookmarks' for the table of contents,
-    % internal cross-reference links, web links for URLs, etc.)
-    \usepackage{hyperref}
-    \usepackage{longtable} % longtable support required by pandoc >1.10
-    \usepackage{booktabs}  % table support for pandoc > 1.12.2
-    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
-    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
-                                % normalem makes italics be italics, not underlines
-    \usepackage{mathrsfs}
-    
 
     
     
@@ -92,8 +41,6 @@
     \definecolor{ansi-cyan-intense}{HTML}{258F8F}
     \definecolor{ansi-white}{HTML}{C5C1B4}
     \definecolor{ansi-white-intense}{HTML}{A1A6B2}
-    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
-    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
 
     % commands and environments needed by pandoc snippets
     % extracted from the output of `pandoc -s`
@@ -140,17 +87,10 @@
     % Define a nice break command that doesn't care if a line doesn't already
     % exist.
     \def\br{\hspace*{\fill} \\* }
-    % Math Jax compatibility definitions
+    % Math Jax compatability definitions
     \def\gt{>}
     \def\lt{<}
-    \let\Oldtex\TeX
-    \let\Oldlatex\LaTeX
-    \renewcommand{\TeX}{\textrm{\Oldtex}}
-    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
     % Document parameters
-    % Document title
-    \title{Laboratorio-3}
-    
     
     
     
@@ -285,7 +225,12 @@
     \begin{document}
     
     
-    \maketitle
+    
+\input{titlepage}
+\newpage
+\tableofcontents
+\newpage
+
     
     
 
@@ -301,57 +246,61 @@ HTTP).}\label{desarrolle-un-experimento-mediante-telnet-o-analizador-de-paquetes
     \subsection{Experimento con modulo "requests" de
 python}\label{experimento-con-modulo-requests-de-python}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}50}]:} \PY{k+kn}{import} \PY{n+nn}{requests}
-         
-         \PY{c+c1}{\PYZsh{}r = requests.post(\PYZdq{}http://localhost/cgi\PYZhy{}bin/hola.py\PYZdq{})}
-         \PY{n}{response} \PY{o}{=} \PY{n}{requests}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{http://localhost:8080/cgi\PYZhy{}bin/modificacion.py}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{json}\PY{o}{.}\PY{n}{dumps}\PY{p}{(}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{response}\PY{o}{.}\PY{n}{headers}\PY{p}{)}\PY{p}{,} \PY{n}{indent}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{response}\PY{o}{.}\PY{n}{text}\PY{p}{)}
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{json}\PY{o}{.}\PY{n}{dumps}\PY{p}{(}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{response}\PY{o}{.}\PY{n}{request}\PY{o}{.}\PY{n}{headers}\PY{p}{)}\PY{p}{,} \PY{n}{indent}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
-\end{Verbatim}
+    La aplicación cgi para este ejercicio se encuentra en
+\emph{"1/cgi-bin/hola.py"}
 
     \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k+kn}{import} \PY{n+nn}{requests}
+        \PY{k+kn}{import} \PY{n+nn}{json}
+        \PY{n}{response} \PY{o}{=} \PY{n}{requests}\PY{o}{.}\PY{n}{post}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{http://localhost:8080/cgi\PYZhy{}bin/hola.py}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{} cabeceras de la petición \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{json}\PY{o}{.}\PY{n}{dumps}\PY{p}{(}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{response}\PY{o}{.}\PY{n}{request}\PY{o}{.}\PY{n}{headers}\PY{p}{)}\PY{p}{,} \PY{n}{indent}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{} cabeceras de la respuesta \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{json}\PY{o}{.}\PY{n}{dumps}\PY{p}{(}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{response}\PY{o}{.}\PY{n}{headers}\PY{p}{)}\PY{p}{,} \PY{n}{indent}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{} texto de la respuesta \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{response}\PY{o}{.}\PY{n}{text}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+------------ cabeceras de la petición ----------------
+
 \{
-  "Date": "Tue, 06 Nov 2018 15:54:21 GMT",
+  "User-Agent": "python-requests/2.20.1",
+  "Accept-Encoding": "gzip, deflate",
+  "Accept": "*/*",
+  "Connection": "keep-alive",
+  "Content-Length": "0"
+\}
+------------ cabeceras de la respuesta ----------------
+
+\{
+  "Date": "Sun, 11 Nov 2018 18:06:31 GMT",
   "Server": "Apache/2.4.35 (Unix)",
   "Keep-Alive": "timeout=5, max=100",
   "Connection": "Keep-Alive",
   "Transfer-Encoding": "chunked",
-  "Content-Type": "text/html; charset=utf-8"
+  "Content-Type": "text/html"
 \}
+------------ texto de la respuesta ----------------
 
 
-	<div class="row justify-content-md-center">
-	<div class="col-md-8">
-        <form id="form-login">
-          <fieldset>
-            <legend>Login</legend>
+<HTML><head><title>CGI</title></head><BODY>
 
-            <div class="form-group">
-              <label for="legajo">N\&uacutemero de legajo</label>
-              <input class="form-control" name="legajo" placeholder="Numero de legajo" type="text" required>
-              <small class="form-text text-muted">Ingrese su n\&uacutemero de legajo.</small>
-            </div>
+<font color = blue>
 
-            <div class="form-group">
-              <label for="password">Password</label>
-				<input name="password" class="form-control" placeholder="Password" type="password">
-            </div>
+<TITLE>CGI script output</TITLE>
+<h1 style="TEXT-ALIGN: center">HOLA MUNDO</h1>
 
-            <button type="submit" onclick="login()" class="btn btn-primary">Enviar</button>
-          </fieldset>
-        </form>
-	</div>
-	</div>
-    
+</font>
 
-\{
-  "User-Agent": "python-requests/2.18.4",
-  "Accept-Encoding": "gzip, deflate",
-  "Accept": "*/*",
-  "Connection": "keep-alive"
-\}
+</HTML>
+
 
     \end{Verbatim}
 
@@ -359,13 +308,22 @@ python}\label{experimento-con-modulo-requests-de-python}
 (response.text) html de las respuestas de error del servidor
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}51}]:}  
-         \PY{n+nb}{print}\PY{p}{(}\PY{n}{r}\PY{o}{.}\PY{n}{headers}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{response} \PY{o}{=} \PY{n}{requests}\PY{o}{.}\PY{n}{post}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{http://localhost:8080/cgi\PYZhy{}bin/algoquenoexiste.py}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{} cabeceras de la respuesta \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{json}\PY{o}{.}\PY{n}{dumps}\PY{p}{(}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{response}\PY{o}{.}\PY{n}{headers}\PY{p}{)}\PY{p}{,} \PY{n}{indent}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{} texto de la respuesta \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{response}\PY{o}{.}\PY{n}{text}\PY{p}{)}
 \end{Verbatim}
 
+
     \begin{Verbatim}[commandchars=\\\{\}]
+------------ cabeceras de la respuesta ----------------
+
 \{
-  "Date": "Tue, 06 Nov 2018 15:54:43 GMT",
+  "Date": "Sun, 11 Nov 2018 18:10:15 GMT",
   "Server": "Apache/2.4.35 (Unix)",
   "Vary": "accept-language,accept-charset",
   "Accept-Ranges": "bytes",
@@ -375,6 +333,8 @@ python}\label{experimento-con-modulo-requests-de-python}
   "Content-Type": "text/html; charset=utf-8",
   "Content-Language": "en"
 \}
+------------ texto de la respuesta ----------------
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -426,7 +386,7 @@ the <a href="mailto:you@example.com">webmaster</a>.
     \subsection{Experimento desde
 Wireshark}\label{experimento-desde-wireshark}
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics{images/pto1.png}
 \caption{}
@@ -475,7 +435,7 @@ Justifique si este ejercicio puede ser considerado una aplicación web.
 Para la implementacion del \textbf{Servidor} utilizamos el modemo MVC
 (Model, View, Controller) para un manejo claro de la funcionalidad.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics{images/Servidor_completo.png}
 \caption{}
@@ -491,7 +451,7 @@ carpeta \textbf{Views} son nuestras \textbf{Vistas}.
 Luego en la carpet \textbf{html} tenemos solamente una plantilla html,
 \textbf{index.html}.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics{images/html.png}
 \caption{}
@@ -537,21 +497,30 @@ ejemplo de utilizacion en nuestro proyecto es en la clase
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{def}\NormalTok{ get_totales(cls):}
-\NormalTok{        alumnos }\OperatorTok{=}\NormalTok{ pd.read_csv(MODEL_FILE)}
+\NormalTok{    alumnos }\OperatorTok{=}\NormalTok{ pd.read_csv(MODEL_FILE)}
 
-\NormalTok{        result }\OperatorTok{=}\NormalTok{ \{}
-            \StringTok{"mujeres1"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"femenino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{21}\NormalTok{)]),}
-            \StringTok{"mujeres2"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"femenino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ ((alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{20}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{41}\NormalTok{))]),}
-            \StringTok{"mujeres3"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"femenino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{40}\NormalTok{)]),}
-            \StringTok{"varones1"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"masculino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{21}\NormalTok{)]),}
-            \StringTok{"varones2"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"masculino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ ((alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{20}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{41}\NormalTok{))]),}
-            \StringTok{"varones3"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"masculino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{40}\NormalTok{)]),}
-            \StringTok{"otro1"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"otro"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{21}\NormalTok{)]),}
-            \StringTok{"otro2"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"otro"}\NormalTok{) }\OperatorTok{&}\NormalTok{ ((alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{20}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{41}\NormalTok{))]),}
-            \StringTok{"otro3"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"otro"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{40}\NormalTok{)]),}
-\NormalTok{        \}}
+\NormalTok{    result }\OperatorTok{=}\NormalTok{ \{}
+        \StringTok{"mujeres1"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"femenino"}\NormalTok{) }\OperatorTok{&} \OperatorTok{\textbackslash{}}
+\NormalTok{                               (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{21}\NormalTok{)]),}
+        \StringTok{"mujeres2"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"femenino"}\NormalTok{) }\OperatorTok{&} \OperatorTok{\textbackslash{}}
+\NormalTok{                               ((alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{20}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{41}\NormalTok{))]),}
+        \StringTok{"mujeres3"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"femenino"}\NormalTok{) }\OperatorTok{&} \OperatorTok{\textbackslash{}}
+\NormalTok{                               (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{40}\NormalTok{)]),}
+        \StringTok{"varones1"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"masculino"}\NormalTok{) }\OperatorTok{&} \OperatorTok{\textbackslash{}}
+\NormalTok{                               (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{21}\NormalTok{)]),}
+        \StringTok{"varones2"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"masculino"}\NormalTok{) }\OperatorTok{&} \OperatorTok{\textbackslash{}}
+\NormalTok{                               ((alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{20}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{41}\NormalTok{))]),}
+        \StringTok{"varones3"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"masculino"}\NormalTok{) }\OperatorTok{&} \OperatorTok{\textbackslash{}}
+\NormalTok{                               (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{40}\NormalTok{)]),}
+        \StringTok{"otro1"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"otro"}\NormalTok{) }\OperatorTok{&} \OperatorTok{\textbackslash{}}
+\NormalTok{                            (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{21}\NormalTok{)]),}
+        \StringTok{"otro2"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"otro"}\NormalTok{) }\OperatorTok{&} \OperatorTok{\textbackslash{}}
+\NormalTok{                            ((alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{20}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{41}\NormalTok{))]),}
+        \StringTok{"otro3"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"otro"}\NormalTok{) }\OperatorTok{&} \OperatorTok{\textbackslash{}}
+\NormalTok{                            (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{40}\NormalTok{)]),}
+\NormalTok{    \}}
 
-        \ControlFlowTok{return}\NormalTok{ result}
+    \ControlFlowTok{return}\NormalTok{ result}
 \end{Highlighting}
 \end{Shaded}
 
@@ -561,7 +530,7 @@ CGI}\label{vista-de-la-aplicacion-cgi}
 Utilizamos \textbf{bootstrap} y \textbf{css} para que la implementacion
 de la pagina de la aplicacion y los formularios.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics{images/interfaz-cgi.png}
 \caption{}
@@ -580,18 +549,8 @@ realizada.
     \section{Agregue a la aplicación del ejercicio 3 cuatro posibilidades de
 consultas básicas: por nombre y apellido (pueden haber ``*''), Número de
 Alumno/Legajo (puede ser un intervalo), sexo, y edad (puede ser un
-intervalo). Los resultados deben mostrarse visualmente diferenciados.
-ej:}\label{agregue-a-la-aplicaciuxf3n-del-ejercicio-3-cuatro-posibilidades-de-consultas-buxe1sicas-por-nombre-y-apellido-pueden-haber-nuxfamero-de-alumnolegajo-puede-ser-un-intervalo-sexo-y-edad-puede-ser-un-intervalo.-los-resultados-deben-mostrarse-visualmente-diferenciados.-ej}
-
-\begin{longtable}[]{@{}llll@{}}
-\toprule
-Nombre & Nro & Edad & Sexo\tabularnewline
-\midrule
-\endhead
-nomrbe1 & nro1 & edad1 & sexo1\tabularnewline
-nomrbe2 & nro2 & edad2 & sexo2\tabularnewline
-\bottomrule
-\end{longtable}
+intervalo). Los resultados deben mostrarse visualmente
+diferenciados}\label{agregue-a-la-aplicaciuxf3n-del-ejercicio-3-cuatro-posibilidades-de-consultas-buxe1sicas-por-nombre-y-apellido-pueden-haber-nuxfamero-de-alumnolegajo-puede-ser-un-intervalo-sexo-y-edad-puede-ser-un-intervalo.-los-resultados-deben-mostrarse-visualmente-diferenciados}
 
 \textbf{COMENTARIO:} este ejercicio es para que se vea que el programa
 CGI debería combinar la generación de HMTL con el resultado de lo que se
@@ -608,7 +567,7 @@ Como se menciono anteriormente, se utilizo la libreria de python
 \textbf{pandas} para el manejo de los archivos \textbf{.csv} para asi
 poder manupularlos de una manera mas facil y menos rudimentaria.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics{images/consultas.png}
 \caption{}
@@ -636,33 +595,40 @@ La resolucion tambien fue realizada con la libreria de python
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{def}\NormalTok{ get_totales(cls):}
-\NormalTok{        alumnos }\OperatorTok{=}\NormalTok{ pd.read_csv(MODEL_FILE)}
+\NormalTok{    alumnos }\OperatorTok{=}\NormalTok{ pd.read_csv(MODEL_FILE)}
 
-\NormalTok{        result }\OperatorTok{=}\NormalTok{ \{}
-            \StringTok{"mujeres1"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"femenino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{21}\NormalTok{)]),}
-            \StringTok{"mujeres2"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"femenino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ ((alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{20}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{41}\NormalTok{))]),}
-            \StringTok{"mujeres3"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"femenino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{40}\NormalTok{)]),}
-            \StringTok{"varones1"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"masculino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{21}\NormalTok{)]),}
-            \StringTok{"varones2"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"masculino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ ((alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{20}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{41}\NormalTok{))]),}
-            \StringTok{"varones3"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"masculino"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{40}\NormalTok{)]),}
-            \StringTok{"otro1"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"otro"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{21}\NormalTok{)]),}
-            \StringTok{"otro2"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"otro"}\NormalTok{) }\OperatorTok{&}\NormalTok{ ((alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{20}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{41}\NormalTok{))]),}
-            \StringTok{"otro3"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"otro"}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{40}\NormalTok{)]),}
-\NormalTok{        \}}
+\NormalTok{    result }\OperatorTok{=}\NormalTok{ \{}
+        \StringTok{"mujeres1"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"femenino"}\NormalTok{) }\OperatorTok{&} \OperatorTok{\textbackslash{}}
+\NormalTok{                               (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{21}\NormalTok{)]),}
+        \StringTok{"mujeres2"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"femenino"}\NormalTok{) }\OperatorTok{&} \OperatorTok{\textbackslash{}}
+\NormalTok{                               ((alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{20}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{41}\NormalTok{))]),}
+        \StringTok{"mujeres3"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"femenino"}\NormalTok{) }\OperatorTok{&} \OperatorTok{\textbackslash{}}
+\NormalTok{                               (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{40}\NormalTok{)]),}
+        \StringTok{"varones1"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"masculino"}\NormalTok{) }\OperatorTok{&} \OperatorTok{\textbackslash{}}
+\NormalTok{                               (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{21}\NormalTok{)]),}
+        \StringTok{"varones2"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"masculino"}\NormalTok{) }\OperatorTok{&} \OperatorTok{\textbackslash{}}
+\NormalTok{                               ((alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{20}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{41}\NormalTok{))]),}
+        \StringTok{"varones3"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"masculino"}\NormalTok{) }\OperatorTok{&} \OperatorTok{\textbackslash{}}
+\NormalTok{                               (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{40}\NormalTok{)]),}
+        \StringTok{"otro1"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"otro"}\NormalTok{) }\OperatorTok{&} \OperatorTok{\textbackslash{}}
+\NormalTok{                            (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{21}\NormalTok{)]),}
+        \StringTok{"otro2"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"otro"}\NormalTok{) }\OperatorTok{&} \OperatorTok{\textbackslash{}}
+\NormalTok{                            ((alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{20}\NormalTok{) }\OperatorTok{&}\NormalTok{ (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{<} \DecValTok{41}\NormalTok{))]),}
+        \StringTok{"otro3"}\NormalTok{:}\BuiltInTok{len}\NormalTok{(alumnos[(alumnos[}\StringTok{'sexo'}\NormalTok{] }\OperatorTok{==} \StringTok{"otro"}\NormalTok{) }\OperatorTok{&} \OperatorTok{\textbackslash{}}
+\NormalTok{                            (alumnos[}\StringTok{'edad'}\NormalTok{] }\OperatorTok{>} \DecValTok{40}\NormalTok{)]),}
+\NormalTok{    \}}
 
-        \ControlFlowTok{return}\NormalTok{ result}
+    \ControlFlowTok{return}\NormalTok{ result}
 \end{Highlighting}
 \end{Shaded}
 
 \subsection{Vista desde la aplicacion}\label{vista-desde-la-aplicacion}
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics{images/totales.png}
 \caption{}
 \end{figure}
-
-\newpage
 
     \section{Tome el código que se adjunta como Anexo 5 del apunte de AJAX y
 agregue las siguientes mejora de
@@ -685,7 +651,311 @@ funcionalidad:}\label{tome-el-cuxf3digo-que-se-adjunta-como-anexo-5-del-apunte-d
   enviada.
 \end{itemize}
 
+    \subsection{Diseño e implementación del
+servidor}\label{diseuxf1o-e-implementaciuxf3n-del-servidor}
+
+\subsubsection{Modelos}\label{modelos}
+
+Se definieron dos modelos que resuelven la lógica de negocio de la
+aplicación. Por un lado la clase Session (similar a la implementada en
+el ejercicio anterior) y por otro la clase Message.
+
+La clase Session posee los siguientes atributos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{self}\NormalTok{.}\BuiltInTok{id} \CommentTok{# identificador único autoincremental para manejo del archivo}
+\VariableTok{self}\NormalTok{.nickname }\CommentTok{# nickname del usuario }
+\VariableTok{self}\NormalTok{.cookie }\CommentTok{# objeto cookie}
+\VariableTok{self}\NormalTok{.last_msg }\CommentTok{# identificador del último mensaje entregado al usuario}
+\end{Highlighting}
+\end{Shaded}
+
+y los siguientes métodos
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ save(}\VariableTok{self}\NormalTok{): }
+\CommentTok{# guarda una sessión en el archivo}
+\KeywordTok{def}\NormalTok{ update(}\VariableTok{self}\NormalTok{, last_msg): }
+\CommentTok{# actializa el id del último mensaje entregado al usuario}
+\KeywordTok{def}\NormalTok{ _new_cookie(}\VariableTok{self}\NormalTok{): }
+\CommentTok{# genera una nueva cookie de sesión}
+\KeywordTok{def}\NormalTok{ delete_cookie(}\VariableTok{self}\NormalTok{): }
+\CommentTok{# elimina una cookie y borra la sesión del registro}
     
+\AttributeTok{@classmethod}
+\KeywordTok{def}\NormalTok{ get_users(cls, nickname): }
+\CommentTok{# obtiene la lista de usuarios conectados}
+\AttributeTok{@classmethod}
+\KeywordTok{def}\NormalTok{ get_current_session(cls): }
+\CommentTok{# devuelve una instancia de Session que representa la sesión actual}
+\AttributeTok{@classmethod}
+\KeywordTok{def}\NormalTok{ exists(cls): }
+\CommentTok{# chequea si existe una sesión}
+\end{Highlighting}
+\end{Shaded}
+
+Los atributos de la clase Message son:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{self}\NormalTok{.}\BuiltInTok{id} \CommentTok{# identificador único autoincremental para manejo del archivo}
+\VariableTok{self}\NormalTok{.user }\CommentTok{# nickname del usuario que envió el mensaje}
+\VariableTok{self}\NormalTok{.text }\CommentTok{# texto del mensaje}
+\end{Highlighting}
+\end{Shaded}
+
+y tiene los siguientes métodos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ save(}\VariableTok{self}\NormalTok{):}
+\CommentTok{# guarda un mensaje en el archivo}
+
+\AttributeTok{@classmethod}
+\KeywordTok{def}\NormalTok{ get_messages(cls, last_msg_id}\OperatorTok{=}\VariableTok{None}\NormalTok{):}
+\CommentTok{# Obtiene una colección de mensajes, desde last_msg_id en adelante }
+\CommentTok{# o desde 0 si last_msg_id es None}
+
+\AttributeTok{@classmethod}
+\KeywordTok{def}\NormalTok{ get_last_msg_id(cls):}
+\CommentTok{# obtiene el id del último mensaje registrado en el archivo}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Controladores}\label{controladores}
+
+Los controladores de la aplicación se encuentran definidos en los
+siguientes archivos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{login.py }
+\CommentTok{# maneja peticiones post login}
+\NormalTok{logout.py }
+\CommentTok{# maneja peticiones post logout}
+\NormalTok{messages.py }
+\CommentTok{# maneja peticiones get para obtener mensajes y post para guardarlos}
+\NormalTok{users.py }
+\CommentTok{# maneja peticiones get para obtener los usuarios conectados}
+\NormalTok{main.py }
+\CommentTok{# recibe un get y resuelve mostrar la vista login o chat }
+\CommentTok{# según usuario autenticado }
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Diseño e implementación del
+cliente}\label{diseuxf1o-e-implementaciuxf3n-del-cliente}
+
+Similarmente a como se resolvió en el ejercicio anterior, la aplicación
+tiene una sola página (index.html) y vía ajax se carga el contenido
+dinámicamente en el div principal (id="frame"):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{<body>}
+  \KeywordTok{<div}\OtherTok{ class=}\StringTok{"container-fluid"}\KeywordTok{>}
+    \KeywordTok{<div}\OtherTok{ class=}\StringTok{"row justify-content-md-center frame"}\KeywordTok{>}
+      \KeywordTok{<div}\OtherTok{ id=}\StringTok{"frame"}\KeywordTok{>}
+        
+      \KeywordTok{</div>}
+    \KeywordTok{</div>}
+  \KeywordTok{</div>}
+\KeywordTok{</body>}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Controladores del
+cliente}\label{controladores-del-cliente}
+
+\subsection{Diseño e implementación del
+servidor}\label{diseuxf1o-e-implementaciuxf3n-del-servidor-1}
+
+\subsubsection{Modelos}\label{modelos-1}
+
+Se definieron dos modelos que resuelven la lógica de negocio de la
+aplicación. Por un lado la clase Session (similar a la implementada en
+el ejercicio anterior) y por otro la clase Message.
+
+La clase Session posee los siguientes atributos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{self}\NormalTok{.}\BuiltInTok{id} \CommentTok{# identificador único autoincremental para manejo del archivo}
+\VariableTok{self}\NormalTok{.nickname }\CommentTok{# nickname del usuario }
+\VariableTok{self}\NormalTok{.cookie }\CommentTok{# objeto cookie}
+\VariableTok{self}\NormalTok{.last_msg }\CommentTok{# identificador del último mensaje entregado al usuario}
+\end{Highlighting}
+\end{Shaded}
+
+y los siguientes métodos
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ save(}\VariableTok{self}\NormalTok{): }
+\CommentTok{# guarda una sessión en el archivo}
+\KeywordTok{def}\NormalTok{ update(}\VariableTok{self}\NormalTok{, last_msg): }
+\CommentTok{# actializa el id del último mensaje entregado al usuario}
+\KeywordTok{def}\NormalTok{ _new_cookie(}\VariableTok{self}\NormalTok{): }
+\CommentTok{# genera una nueva cookie de sesión}
+\KeywordTok{def}\NormalTok{ delete_cookie(}\VariableTok{self}\NormalTok{): }
+\CommentTok{# elimina una cookie y borra la sesión del registro}
+    
+\AttributeTok{@classmethod}
+\KeywordTok{def}\NormalTok{ get_users(cls, nickname): }
+\CommentTok{# obtiene la lista de usuarios conectados}
+\AttributeTok{@classmethod}
+\KeywordTok{def}\NormalTok{ get_current_session(cls): }
+\CommentTok{# devuelve una instancia de Session que representa la sesión actual}
+\AttributeTok{@classmethod}
+\KeywordTok{def}\NormalTok{ exists(cls): }
+\CommentTok{# chequea si existe una sesión}
+\end{Highlighting}
+\end{Shaded}
+
+Los atributos de la clase Message son:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{self}\NormalTok{.}\BuiltInTok{id} \CommentTok{# identificador único autoincremental para manejo del archivo}
+\VariableTok{self}\NormalTok{.user }\CommentTok{# nickname del usuario que envió el mensaje}
+\VariableTok{self}\NormalTok{.text }\CommentTok{# texto del mensaje}
+\end{Highlighting}
+\end{Shaded}
+
+y tiene los siguientes métodos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ save(}\VariableTok{self}\NormalTok{):}
+\CommentTok{# guarda un mensaje en el archivo}
+
+\AttributeTok{@classmethod}
+\KeywordTok{def}\NormalTok{ get_messages(cls, last_msg_id}\OperatorTok{=}\VariableTok{None}\NormalTok{):}
+\CommentTok{# Obtiene una colección de mensajes, desde last_msg_id en adelante }
+\CommentTok{# o desde 0 si last_msg_id es None}
+
+\AttributeTok{@classmethod}
+\KeywordTok{def}\NormalTok{ get_last_msg_id(cls):}
+\CommentTok{# obtiene el id del último mensaje registrado en el archivo}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Controladores}\label{controladores-1}
+
+Los controladores de la aplicación se encuentran definidos en los
+siguientes archivos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{login.py }
+\CommentTok{# maneja peticiones post login}
+\NormalTok{logout.py }
+\CommentTok{# maneja peticiones post logout}
+\NormalTok{messages.py }
+\CommentTok{# maneja peticiones get para obtener mensajes y post para guardarlos}
+\NormalTok{users.py }
+\CommentTok{# maneja peticiones get para obtener los usuarios conectados}
+\NormalTok{main.py }
+\CommentTok{# recibe un get y resuelve mostrar la vista login o chat }
+\CommentTok{# según usuario autenticado }
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Diseño e implementación del
+cliente}\label{diseuxf1o-e-implementaciuxf3n-del-cliente-1}
+
+Similarmente a como se resolvió en el ejercicio anterior, la aplicación
+tiene una sola página (index.html) y vía ajax se carga el contenido
+dinámicamente en el div principal (id="frame"):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{<body>}
+  \KeywordTok{<div}\OtherTok{ class=}\StringTok{"container-fluid"}\KeywordTok{>}
+    \KeywordTok{<div}\OtherTok{ class=}\StringTok{"row justify-content-md-center frame"}\KeywordTok{>}
+      \KeywordTok{<div}\OtherTok{ id=}\StringTok{"frame"}\KeywordTok{>}
+        
+      \KeywordTok{</div>}
+    \KeywordTok{</div>}
+  \KeywordTok{</div>}
+\KeywordTok{</body>}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Controladores del
+cliente}\label{controladores-del-cliente-1}
+
+Las peticiones post a las rutas \emph{cgi-bin/login.py},
+\emph{cgi-bin/logout.py} y \emph{cgi-bin/messages.py} son gestionadas
+por los scripts:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{login}\NormalTok{.}\AttributeTok{js} 
+\VariableTok{logout}\NormalTok{.}\AttributeTok{js}
+\VariableTok{send_message}\NormalTok{.}\AttributeTok{js}
+\end{Highlighting}
+\end{Shaded}
+
+Su funcioanmiento es similar en los 3 casos.
+
+Al cargarse la página se ejecuta el script definido en \emph{main.js}
+que lanzará la primera petición get a la ruta \emph{cgi-bin/main.py}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\AttributeTok{$}\NormalTok{( document ).}\AttributeTok{ready}\NormalTok{(}\KeywordTok{function}\NormalTok{()}\OperatorTok{\{}
+    
+    \AttributeTok{main}\NormalTok{()}\OperatorTok{;}
+    \KeywordTok{function} \AttributeTok{main}\NormalTok{()}\OperatorTok{\{}
+        \KeywordTok{var}\NormalTok{ container }\OperatorTok{=}\NormalTok{  (}\StringTok{"#frame"}\NormalTok{)}
+\NormalTok{        .}\AttributeTok{ajax}\NormalTok{(}\OperatorTok{\{}
+            \DataTypeTok{method}\OperatorTok{:} \StringTok{"GET"}\OperatorTok{,}
+            \DataTypeTok{url}\OperatorTok{:} \StringTok{"/cgi-bin/main.py"}\OperatorTok{,}
+        \OperatorTok{\}}\NormalTok{)}
+\NormalTok{        .}\AttributeTok{done}\NormalTok{(}\KeywordTok{function}\NormalTok{ (res) }\OperatorTok{\{}
+            \VariableTok{container}\NormalTok{.}\AttributeTok{html}\NormalTok{(res)}\OperatorTok{;}
+        \OperatorTok{\}}\NormalTok{)}
+\NormalTok{        .}\AttributeTok{fail}\NormalTok{(}\KeywordTok{function}\NormalTok{ (err) }\OperatorTok{\{}
+            \VariableTok{container}\NormalTok{.}\AttributeTok{html}\NormalTok{(err)}\OperatorTok{;}
+        \OperatorTok{\}}\NormalTok{)}\OperatorTok{;} 
+    \OperatorTok{\}}
+\OperatorTok{\}}\NormalTok{)}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+En ese mismo script se verifica si existe una cookie, en caso de existir
+se intentará obtener del servidor los mensajes y los usuarios conectados
+(si no está autenticado el usuario, éste devolverá error). Esto último
+es parte de lo que debe consultarse periódicamente y por eso se define
+dentro de una función que engloba estas dos tareas y que se ejecuta cada
+2 seg.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{var}\NormalTok{ interval }\OperatorTok{=} \KeywordTok{null}\OperatorTok{;}
+\KeywordTok{let}\NormalTok{ cookie }\OperatorTok{=} \VariableTok{Cookies}\NormalTok{.}\AttributeTok{get}\NormalTok{(}\StringTok{'session'}\NormalTok{)}\OperatorTok{;}
+
+\ControlFlowTok{if}\NormalTok{ (}\KeywordTok{typeof}\NormalTok{ cookie }\OperatorTok{===} \StringTok{"undefined"}\NormalTok{)}\OperatorTok{\{}
+    \AttributeTok{clearInterval}\NormalTok{(interval)}\OperatorTok{;}
+\OperatorTok{\}} \ControlFlowTok{else} \OperatorTok{\{}       
+\NormalTok{    interval }\OperatorTok{=} \AttributeTok{setInterval}\NormalTok{(updateChat}\OperatorTok{,} \DecValTok{2000}\NormalTok{)}\OperatorTok{;}
+\OperatorTok{\}}
+
+\KeywordTok{function} \AttributeTok{updateChat}\NormalTok{()}\OperatorTok{\{}
+    \AttributeTok{update_messajes}\NormalTok{()}\OperatorTok{;}
+    \AttributeTok{update_users}\NormalTok{()}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+    El resultado final en términos de vistas de la aplicación puede
+apreciarse en las siguientes imágenes:
+
+\includegraphics{images/login-chat.png}
+\includegraphics{images/chat-chat.png}
 
     \section{DFS:}\label{dfs}
 
@@ -787,7 +1057,7 @@ mount --bind /mnt/datos /srv/nfs4/datos
 Para hacer que los cambios sean permanentes en cada reinicio del
 servidor, añada el enlace de montaje a~\textbf{fstab}
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics{images/fstab.png}
 \caption{}
@@ -799,7 +1069,7 @@ Como siguiente paso, se añaden los directorios que se compartirán y la
 dirección IP o nombre de servidor de las máquinas cliente a las que les
 estará permitido montarlas en~\textbf{exports}:
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics{images/exports.png}
 \caption{}
@@ -813,7 +1083,7 @@ efecto.
 exportfs -rav
 \end{verbatim}
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics{images/exportfs.png}
 \caption{}
@@ -950,7 +1220,7 @@ información con la ayuda de un analizador de protocolo:
   entre la consulta que se observa en el analizador y su respuesta.
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics{images/server_nacional.png}
 \caption{}
@@ -968,7 +1238,7 @@ información con la ayuda de un analizador de protocolo:
 Se puede ver claramente que que el tiempo de respuesta es mucho mayor a
 la respuesta a un servidor nacional (como el del anterior caso).
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics{images/server_externo.png}
 \caption{}
@@ -985,7 +1255,7 @@ Se puede ver la significativa mejora en el tiempo de respuesta de la
 peticion, esto es porque la pagina reside en nuestra cache. Siempre que
 una pagina resida en la cache, la respuesta sera mucho mas rapida.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics{images/cacheada.png}
 \caption{}
@@ -1002,12 +1272,6 @@ resolver una consulta de una página nacional (www.lanacion.com.ar) que
 una europea (www.fortnite.com). Sin embargo los tiempos de respuesta
 cambian favorablemente cuando se encuentran cacheadas las páginas, las
 respuestas son significativamente mas rapidas.
-
-    
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor} }]:} 
-\end{Verbatim}
 
 
     % Add a bibliography block to the postdoc

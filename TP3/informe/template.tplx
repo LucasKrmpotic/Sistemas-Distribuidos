@@ -4,6 +4,23 @@
 \documentclass[12pt]{extarticle}
 ((* endblock docclass *))
 
+((* block packages *))
+\input{project_settings}
+((* endblock packages *))
+
+((* block title -*))
+((*- endblock title *))
+
+((* block author -*))
+((* endblock author *))
+
+((* block maketitle *))
+\input{titlepage}
+\newpage
+\tableofcontents
+\newpage
+((* endblock maketitle *))
+
 
 ((* block bibliography *))
 \bibliographystyle{plain}

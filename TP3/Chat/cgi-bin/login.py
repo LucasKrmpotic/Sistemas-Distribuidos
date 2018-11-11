@@ -6,6 +6,7 @@ import base64
 import sys, os
 from models.session import Session
 from models.message import Message
+from views.chat_view import chat_view
 
 if os.environ["REQUEST_METHOD"] == "POST":
     form = cgi.FieldStorage()
@@ -19,7 +20,7 @@ if os.environ["REQUEST_METHOD"] == "POST":
     print("Content-type: text/html")
     print(session.cookie.output())
     print()
-    print("<h3>Te has logueado exitosamente. Bienvenido {}</h3>".format(nickname))
+    print(chat_view(nickname))
 
 elif os.environ["REQUEST_METHOD"] == "GET":
 
