@@ -1,0 +1,47 @@
+version: '3'
+services:
+  broker:
+    image: eclipse-mosquitto 
+    container_name: "broker"
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    networks:
+      tp4-net:
+        ipv4_address: 172.16.240.10
+
+  publisher:
+    build: .
+    container_name: "publisher"
+    # command: node /usr/src/node-red/node_modules/node-red/red.js  /data/lib/flows/flows.json "--userDir" "/data"
+    # environment:
+    #   FLOWS: /data/lib/flows/flows.json
+    ports:
+      - "1880:1880"
+    volumes:
+      - "./flows/publisher:/data/lib/flows"
+    networks:
+      tp4-net:
+        ipv4_address: 172.16.240.20 
+
+  subscriber:
+    build: .
+    container_name: "subscriber"
+    # command: node /usr/src/node-red/node_modules/node-red/red.js  /data/lib/flows/flows.json "--userDir" "/data"
+    # environment:
+    #   FLOWS: /data/lib/flows/flows.json
+    ports:
+      - "1881:1880"
+    volumes:
+      - "./flows/subscriber:/data/lib/flows"
+    networks:
+      tp4-net:
+        ipv4_address: 172.16.240.30
+
+networks:
+  tp4-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.240.0/24
+        
