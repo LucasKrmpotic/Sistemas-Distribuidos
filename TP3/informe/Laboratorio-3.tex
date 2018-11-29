@@ -249,6 +249,14 @@ python}\label{experimento-con-modulo-requests-de-python}
     La aplicación cgi para este ejercicio se encuentra en
 \emph{"1/cgi-bin/hola.py"}
 
+    CGI gestiona las cabeceras http que no definimos explícitamente y que
+son necesarias para lograr una respuesta consistente, que sea aceptada
+por el cliente.
+
+En el siguiente ejemplo se muestran las cabeceras de la petición y de la
+respuesta (de la cual solo se definió explícitamente el Content-type) y
+el texto de la respuesta.
+
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}7}]:} \PY{k+kn}{import} \PY{n+nn}{requests}
         \PY{k+kn}{import} \PY{n+nn}{json}
@@ -304,8 +312,7 @@ python}\label{experimento-con-modulo-requests-de-python}
 
     \end{Verbatim}
 
-    Indicar que cgi también resuelve (además de las cabeceras) el contenido
-(response.text) html de las respuestas de error del servidor
+    Por otro lado también un contenido html de las respuestas de error
 
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}11}]:} \PY{n}{response} \PY{o}{=} \PY{n}{requests}\PY{o}{.}\PY{n}{post}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{http://localhost:8080/cgi\PYZhy{}bin/algoquenoexiste.py}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
@@ -386,7 +393,7 @@ the <a href="mailto:you@example.com">webmaster</a>.
     \subsection{Experimento desde
 Wireshark}\label{experimento-desde-wireshark}
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{images/pto1.png}
 \caption{}
@@ -451,7 +458,7 @@ carpeta \textbf{Views} son nuestras \textbf{Vistas}.
 Luego en la carpet \textbf{html} tenemos solamente una plantilla html,
 \textbf{index.html}.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{images/html.png}
 \caption{}
@@ -530,7 +537,7 @@ CGI}\label{vista-de-la-aplicacion-cgi}
 Utilizamos \textbf{bootstrap} y \textbf{css} para que la implementacion
 de la pagina de la aplicacion y los formularios.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{images/interfaz-cgi.png}
 \caption{}
@@ -567,7 +574,7 @@ Como se menciono anteriormente, se utilizo la libreria de python
 \textbf{pandas} para el manejo de los archivos \textbf{.csv} para asi
 poder manupularlos de una manera mas facil y menos rudimentaria.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{images/consultas.png}
 \caption{}
@@ -624,7 +631,7 @@ La resolucion tambien fue realizada con la libreria de python
 
 \subsection{Vista desde la aplicacion}\label{vista-desde-la-aplicacion}
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{images/totales.png}
 \caption{}
@@ -769,124 +776,6 @@ dinámicamente en el div principal (id="frame"):
 \subsubsection{Controladores del
 cliente}\label{controladores-del-cliente}
 
-\subsection{Diseño e implementación del
-servidor}\label{diseuxf1o-e-implementaciuxf3n-del-servidor-1}
-
-\subsubsection{Modelos}\label{modelos-1}
-
-Se definieron dos modelos que resuelven la lógica de negocio de la
-aplicación. Por un lado la clase Session (similar a la implementada en
-el ejercicio anterior) y por otro la clase Message.
-
-La clase Session posee los siguientes atributos:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\VariableTok{self}\NormalTok{.}\BuiltInTok{id} \CommentTok{# identificador único autoincremental para manejo del archivo}
-\VariableTok{self}\NormalTok{.nickname }\CommentTok{# nickname del usuario }
-\VariableTok{self}\NormalTok{.cookie }\CommentTok{# objeto cookie}
-\VariableTok{self}\NormalTok{.last_msg }\CommentTok{# identificador del último mensaje entregado al usuario}
-\end{Highlighting}
-\end{Shaded}
-
-y los siguientes métodos
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{def}\NormalTok{ save(}\VariableTok{self}\NormalTok{): }
-\CommentTok{# guarda una sessión en el archivo}
-\KeywordTok{def}\NormalTok{ update(}\VariableTok{self}\NormalTok{, last_msg): }
-\CommentTok{# actializa el id del último mensaje entregado al usuario}
-\KeywordTok{def}\NormalTok{ _new_cookie(}\VariableTok{self}\NormalTok{): }
-\CommentTok{# genera una nueva cookie de sesión}
-\KeywordTok{def}\NormalTok{ delete_cookie(}\VariableTok{self}\NormalTok{): }
-\CommentTok{# elimina una cookie y borra la sesión del registro}
-    
-\AttributeTok{@classmethod}
-\KeywordTok{def}\NormalTok{ get_users(cls, nickname): }
-\CommentTok{# obtiene la lista de usuarios conectados}
-\AttributeTok{@classmethod}
-\KeywordTok{def}\NormalTok{ get_current_session(cls): }
-\CommentTok{# devuelve una instancia de Session que representa la sesión actual}
-\AttributeTok{@classmethod}
-\KeywordTok{def}\NormalTok{ exists(cls): }
-\CommentTok{# chequea si existe una sesión}
-\end{Highlighting}
-\end{Shaded}
-
-Los atributos de la clase Message son:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\VariableTok{self}\NormalTok{.}\BuiltInTok{id} \CommentTok{# identificador único autoincremental para manejo del archivo}
-\VariableTok{self}\NormalTok{.user }\CommentTok{# nickname del usuario que envió el mensaje}
-\VariableTok{self}\NormalTok{.text }\CommentTok{# texto del mensaje}
-\end{Highlighting}
-\end{Shaded}
-
-y tiene los siguientes métodos:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{def}\NormalTok{ save(}\VariableTok{self}\NormalTok{):}
-\CommentTok{# guarda un mensaje en el archivo}
-
-\AttributeTok{@classmethod}
-\KeywordTok{def}\NormalTok{ get_messages(cls, last_msg_id}\OperatorTok{=}\VariableTok{None}\NormalTok{):}
-\CommentTok{# Obtiene una colección de mensajes, desde last_msg_id en adelante }
-\CommentTok{# o desde 0 si last_msg_id es None}
-
-\AttributeTok{@classmethod}
-\KeywordTok{def}\NormalTok{ get_last_msg_id(cls):}
-\CommentTok{# obtiene el id del último mensaje registrado en el archivo}
-\end{Highlighting}
-\end{Shaded}
-
-\subsubsection{Controladores}\label{controladores-1}
-
-Los controladores de la aplicación se encuentran definidos en los
-siguientes archivos:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{login.py }
-\CommentTok{# maneja peticiones post login}
-\NormalTok{logout.py }
-\CommentTok{# maneja peticiones post logout}
-\NormalTok{messages.py }
-\CommentTok{# maneja peticiones get para obtener mensajes y post para guardarlos}
-\NormalTok{users.py }
-\CommentTok{# maneja peticiones get para obtener los usuarios conectados}
-\NormalTok{main.py }
-\CommentTok{# recibe un get y resuelve mostrar la vista login o chat }
-\CommentTok{# según usuario autenticado }
-\end{Highlighting}
-\end{Shaded}
-
-\subsection{Diseño e implementación del
-cliente}\label{diseuxf1o-e-implementaciuxf3n-del-cliente-1}
-
-Similarmente a como se resolvió en el ejercicio anterior, la aplicación
-tiene una sola página (index.html) y vía ajax se carga el contenido
-dinámicamente en el div principal (id="frame"):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{<body>}
-  \KeywordTok{<div}\OtherTok{ class=}\StringTok{"container-fluid"}\KeywordTok{>}
-    \KeywordTok{<div}\OtherTok{ class=}\StringTok{"row justify-content-md-center frame"}\KeywordTok{>}
-      \KeywordTok{<div}\OtherTok{ id=}\StringTok{"frame"}\KeywordTok{>}
-        
-      \KeywordTok{</div>}
-    \KeywordTok{</div>}
-  \KeywordTok{</div>}
-\KeywordTok{</body>}
-\end{Highlighting}
-\end{Shaded}
-
-\subsubsection{Controladores del
-cliente}\label{controladores-del-cliente-1}
-
 Las peticiones post a las rutas \emph{cgi-bin/login.py},
 \emph{cgi-bin/logout.py} y \emph{cgi-bin/messages.py} son gestionadas
 por los scripts:
@@ -906,7 +795,7 @@ que lanzará la primera petición get a la ruta \emph{cgi-bin/main.py}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\AttributeTok{$}\NormalTok{( document ).}\AttributeTok{ready}\NormalTok{(}\KeywordTok{function}\NormalTok{()}\OperatorTok{\{}
+\AttributeTok{\$}\NormalTok{( document ).}\AttributeTok{ready}\NormalTok{(}\KeywordTok{function}\NormalTok{()}\OperatorTok{\{}
     
     \AttributeTok{main}\NormalTok{()}\OperatorTok{;}
     \KeywordTok{function} \AttributeTok{main}\NormalTok{()}\OperatorTok{\{}
@@ -954,8 +843,16 @@ dentro de una función que engloba estas dos tareas y que se ejecuta cada
     El resultado final en términos de vistas de la aplicación puede
 apreciarse en las siguientes imágenes:
 
+\begin{figure}[h]
+\centering
 \includegraphics{images/login-chat.png}
+\end{figure}
+
+\begin{figure}[h]
+\centering
 \includegraphics{images/chat-chat.png}
+\end{figure}
+
 
     \section{DFS:}\label{dfs}
 
@@ -1057,7 +954,7 @@ mount --bind /mnt/datos /srv/nfs4/datos
 Para hacer que los cambios sean permanentes en cada reinicio del
 servidor, añada el enlace de montaje a~\textbf{fstab}
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{images/fstab.png}
 \caption{}
@@ -1069,7 +966,7 @@ Como siguiente paso, se añaden los directorios que se compartirán y la
 dirección IP o nombre de servidor de las máquinas cliente a las que les
 estará permitido montarlas en~\textbf{exports}:
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{images/exports.png}
 \caption{}
@@ -1083,7 +980,7 @@ efecto.
 exportfs -rav
 \end{verbatim}
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{images/exportfs.png}
 \caption{}
@@ -1146,8 +1043,15 @@ Link:
 testparm
 \end{verbatim}
 
+\begin{figure}
+\centering
 \includegraphics{images/testparm1.png}
+\end{figure}
+
+\begin{figure}
+\centering
 \includegraphics{images/testparm2.png}
+\end{figure}
 
 \subsubsection{Gestión de usuarios}\label{gestiuxf3n-de-usuarios}
 
@@ -1190,10 +1094,10 @@ el recurso compartido. Paso a paso tenemos:
 
 \begin{verbatim}
 [global]
- usershare path = /var/lib/samba/usershare
- usershare max shares = 100
- usershare allow guests = yes
- usershare owner only = yes
+ usershare path = /var/lib/samba/usershare
+ usershare max shares = 100
+ usershare allow guests = yes
+ usershare owner only = yes
 \end{verbatim}
 \end{itemize}
 
@@ -1220,7 +1124,7 @@ información con la ayuda de un analizador de protocolo:
   entre la consulta que se observa en el analizador y su respuesta.
 \end{itemize}
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{images/server_nacional.png}
 \caption{}
@@ -1238,7 +1142,7 @@ información con la ayuda de un analizador de protocolo:
 Se puede ver claramente que que el tiempo de respuesta es mucho mayor a
 la respuesta a un servidor nacional (como el del anterior caso).
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{images/server_externo.png}
 \caption{}
@@ -1255,7 +1159,7 @@ Se puede ver la significativa mejora en el tiempo de respuesta de la
 peticion, esto es porque la pagina reside en nuestra cache. Siempre que
 una pagina resida en la cache, la respuesta sera mucho mas rapida.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{images/cacheada.png}
 \caption{}
