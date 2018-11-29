@@ -1,0 +1,103 @@
+package RFS;
+import jade.core.*;
+import java.io.*;
+import jade.core.behaviours.CyclicBehaviour;
+import java.util.Scanner;
+import jade.content.*;
+import jade.domain.JADEAgentManagement.*;
+
+public class ReadAgent extends Agent{
+    public String destinoName;
+    public Location origen = null;
+    public String remoteFile;
+    public String localFile;
+    public ContainerID destino;
+    public int count;
+    
+    // Constructor
+    public ReadAgent(String destino, String remoteFile, String localFile, Location origen, int count){
+        
+        this.destinoName = destino;
+        this.origen = origen;
+        this.localFile = localFile;
+        this.remoteFile = remoteFile;
+        this.destino = null;
+        this.count = count;
+    }
+
+	public void setup(){
+
+        System.out.println("Se crea al agente --> " + getName());
+        
+        // inicializa origen y destino
+        this.destino = new ContainerID(this.destinoName, null);
+
+         System.out.println("Origen --> " + this.origen.getID()); 
+		System.out.println("Destino --> " + this.destino.getID());
+        
+        // registra el comportamiento deseado del agente
+        addBehaviour(new CyclicBehaviour(this){
+			public void action() {
+                
+                switch(_state){
+                    case 0:
+                    // Comienza la migración del agente al destino
+                        _state++;
+                        System.out.println("Estado 0 Comienza la migración del agente al destino --> " + destino.getID());
+                        try {
+                            doMove(destino);
+                            Thread.sleep(3000);
+                            System.out.println("Despues de doMove en CyclicBehaviour de Estado 0 --> " + destino.getID());
+                        } catch (Exception e) {
+                            System.out.println("fallo al moverse al Container destino");
+                            e.getMessage();
+                        }
+                        break;
+                    case 1:
+                    // el agente llegó al destino, recupera el directorio y regresa
+                        _state++;
+                        System.out.println("Estado 1 agente llegó a destino, realiza la operacion y regresa a --> " + origen.getID());
+                        
+                        try {
+                            Thread.sleep(3000);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        // regresa al origen e imprime el directorio
+                        try {
+                            System.out.println("regresando a --> " + origen.getID());
+                            doMove(origen);
+                            System.out.println("despues de domove en CyclicBehaviour estado 1 --> " + here().getID());
+                        } catch (Exception e) {
+                            System.out.println("Falla al mover al regresar al origen"); 
+                            e.getMessage();
+                        }
+                        break;
+                    case 2:
+                        // Regresó al origen, imprime el directorio y destruye al agente
+                        System.out.println("Estado 2 Regresó a origen --> " + here().getID());
+                        
+                        try {
+                            Thread.sleep(3000);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        
+                        // destruye al agente
+                        System.out.println("destruye al agente --> " + getName());
+                        doDelete();
+                        break;
+                    default:
+                        myAgent.doDelete();
+                    }
+			    }
+			private int _state = 0; // variable de máquina de estados del agente
+		});
+
+    }
+
+    
+
+
+}
