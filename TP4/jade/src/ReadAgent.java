@@ -15,14 +15,13 @@ public class ReadAgent extends Agent{
     public int count;
     
     // Constructor
-    public ReadAgent(String destino, String remoteFile, String localFile, Location origen, int count){
+    public ReadAgent(String destino, String remoteFile, String localFile, Location origen){
         
         this.destinoName = destino;
         this.origen = origen;
         this.localFile = localFile;
         this.remoteFile = remoteFile;
         this.destino = null;
-        this.count = count;
     }
 
 	public void setup(){

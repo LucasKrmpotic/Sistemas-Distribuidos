@@ -34,7 +34,7 @@ public class App extends Agent{
 
             if(opcion == 1){
                 this.setting();
-                ReadAgent rd = new ReadAgent(this.destino, this.remoteFile, this.localFile, this.origen, this.count);
+                ReadAgent rd = new ReadAgent(this.destino, this.remoteFile, this.localFile, this.origen);
                 try{
                     container.acceptNewAgent("ReadAgent", rd).start();
                     

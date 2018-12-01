@@ -2,6 +2,7 @@ package ListadoCircular;
 import jade.core.*;
 import jade.core.behaviours.CyclicBehaviour;
 import java.util.*;
+import javax.sound.midi.MidiDevice.Info;
 import jade.lang.acl.*;
 import jade.content.*;
 import jade.content.onto.basic.*;
@@ -15,7 +16,8 @@ public class ListadoCircular extends Agent {
 	public int operacion = 0;
 	public ArrayList containers = new ArrayList<>();  // Obtiene una Lista de los Contenedores registrados en JADE.
 	public int cantidad_maxima_contenedores = 0;
-    public int cant_contenedores = 0;
+	public int cant_contenedores = 0;
+	public ArrayList<Informacion> listaInfo = new ArrayList<Informacion>();
 
     // ContainerID destino = null;
 	Location destino= null;
@@ -23,7 +25,7 @@ public class ListadoCircular extends Agent {
     Location mudarse = null;
 
     public void setup() {
-
+		
 		System.out.println("Se crea al agente --> " + getName()+"\n");
 
 		// Registramos el lenguaje y ontologia para la movilidad del agente.
@@ -31,8 +33,8 @@ public class ListadoCircular extends Agent {
 	    getContentManager().registerOntology(MobilityOntology.getInstance());
 
 	    origen = here();
-		System.out.println("Origen --> " + origen.getName()+"\n");		
-
+		System.out.println("Origen --> " + origen.getName()+"\n");
+		
 		// Registra el comportamiento deseado del agente
 		addBehaviour( 
 			new CyclicBehaviour(this) {
@@ -52,15 +54,21 @@ public class ListadoCircular extends Agent {
 							// ME MUDO A LA SIGUIENTE MAQUINA   
 							destino = (Location)containers.get(cant_contenedores);
 							++cant_contenedores;
-                            System.out.println("Estado 1 Comienza la migracion del agente al destino --> " + destino.getName()+"\n");
-                            if(cant_contenedores < cantidad_maxima_contenedores){
+                            System.out.println("Estado 1 --> Comienza la migracion del agente al destino --> " + destino.getName()+"\n");
+							
+							if(cant_contenedores < cantidad_maxima_contenedores){
                                 try {
                                     doMove(destino);
-                                    System.out.println("Despues de doMove en CyclicBehaviour de Estado 1 --> " + destino.getName()+"\n");
-                                } catch (Exception e) {
+								} catch (Exception e) {
                                     System.out.println("fallo al moverse \n");
                                     e.getMessage();
-                                }
+								}
+							
+								// Leno la lista (Info) de cada migracion
+								Informacion info = new Informacion();		
+								info.leerDatos();
+								listaInfo.add(info);
+
                             }else {
                                 _state++;
                                 try {
@@ -75,12 +83,16 @@ public class ListadoCircular extends Agent {
 							
 							break;
 						case 2:							
-							System.out.println("Estado 2 Comienza la auto eliminacion del agente en origen --> " + getName()+"\n");
+							// Muestra la lista con la info de los contenedores
+							for (Informacion i : listaInfo) {
+								i.mostrarInfo();
+							}
+							System.out.println("Estado 2 --> Comienza la auto eliminacion del agente en origen --> " + getName()+"\n");
 							try {
 								doDelete();
 								System.out.println("Despues de la auto eliminacion del agente Estado 2 --> " + getName() +"\n");
 							} catch (Exception e) {
-								System.out.println("fallo al moverse al Container-1 \n");
+								System.out.println("fallo al moverse al Destino \n");
 								e.getMessage();
 							}
 							break; 									
