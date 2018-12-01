@@ -7,13 +7,20 @@ import jade.content.*;
 import jade.domain.JADEAgentManagement.*;
 
 public class ReadAgent extends Agent{
+    
+    private final int MAX_BUFFER = 1024;
+    
     public String destinoName;
     public Location origen = null;
     public String remoteFile;
     public String localFile;
     public ContainerID destino;
     public int count;
-    
+    public byte[] buffer;
+    public FileInputStream in = null;
+    public FileOutputStream out = null;
+
+
     // Constructor
     public ReadAgent(String destino, String remoteFile, String localFile, Location origen){
         
@@ -22,6 +29,10 @@ public class ReadAgent extends Agent{
         this.localFile = localFile;
         this.remoteFile = remoteFile;
         this.destino = null;
+        this.buffer = new byte[MAX_BUFFER];
+        this.in = new FileInputStream(localFile);
+        this.out = new FileOutputStream(remoteFile);
+
     }
 
 	public void setup(){
@@ -72,16 +83,16 @@ public class ReadAgent extends Agent{
                             System.out.println("Falla al mover al regresar al origen"); 
                             e.getMessage();
                         }
+                        // Leer el archivo (tamaño del buffer)
                         break;
                     case 2:
+                        // Estoy en el origen
+                        // escribir archivo local (tamaño del buffer)
+                        // _state--; para volver al estado anterior de la maquina de estados
+                        // _state++; cuando termine de escribir el archivo
+                    case 3:
                         // Regresó al origen, imprime el directorio y destruye al agente
                         System.out.println("Estado 2 Regresó a origen --> " + here().getID());
-                        
-                        try {
-                            Thread.sleep(3000);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
                         
                         // destruye al agente
                         System.out.println("destruye al agente --> " + getName());
