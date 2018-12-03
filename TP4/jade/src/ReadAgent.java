@@ -19,8 +19,7 @@ public class ReadAgent extends Agent{
     public byte[] buffer;
     public FileInputStream in = null;
     public FileOutputStream out = null;
-   
-    int length = 0;
+
 
     // Constructor
     public ReadAgent(String destino, String remoteFile, String localFile, Location origen){
@@ -32,7 +31,7 @@ public class ReadAgent extends Agent{
         this.destino = null;
         this.buffer = new byte[MAX_BUFFER];
         this.in = new FileInputStream(localFile);
-        this.out = new FileOutputStream(remoteFile, true);
+        this.out = new FileOutputStream(remoteFile);
 
     }
 
@@ -45,7 +44,7 @@ public class ReadAgent extends Agent{
 
          System.out.println("Origen --> " + this.origen.getID()); 
 		System.out.println("Destino --> " + this.destino.getID());
-
+        
         // registra el comportamiento deseado del agente
         addBehaviour(new CyclicBehaviour(this){
 			public void action() {
@@ -57,6 +56,7 @@ public class ReadAgent extends Agent{
                         System.out.println("Estado 0 Comienza la migración del agente al destino --> " + destino.getID());
                         try {
                             doMove(destino);
+                            Thread.sleep(3000);
                             System.out.println("Despues de doMove en CyclicBehaviour de Estado 0 --> " + destino.getID());
                         } catch (Exception e) {
                             System.out.println("fallo al moverse al Container destino");
@@ -66,17 +66,15 @@ public class ReadAgent extends Agent{
                     case 1:
                     // el agente llegó al destino, recupera el directorio y regresa
                         _state++;
-                        System.out.println("Estado 1 agente llegó a destino, lee de archivo y regresa a --> " + origen.getID());
+                        System.out.println("Estado 1 agente llegó a destino, realiza la operacion y regresa a --> " + origen.getID());
+                        
                         try {
-                            // Leemos del archivo
-                            length = in.read(buffer);
-                            System.out.println("Leyendo " + length + "Bytes");
-
+                            Thread.sleep(3000);
                         } catch (Exception e) {
-                            e.getMessage();
+                            e.printStackTrace();
                         }
-                                              
-                        // regresa al origen
+
+                        // regresa al origen e imprime el directorio
                         try {
                             System.out.println("regresando a --> " + origen.getID());
                             doMove(origen);
@@ -85,36 +83,17 @@ public class ReadAgent extends Agent{
                             System.out.println("Falla al mover al regresar al origen"); 
                             e.getMessage();
                         }
+                        // Leer el archivo (tamaño del buffer)
                         break;
                     case 2:
                         // Estoy en el origen
                         // escribir archivo local (tamaño del buffer)
-                        if (length > 0) {
-                            try {
-                                out.write(buffer);
-                                System.out.println("Escribiendo " + length + " Bytes");
-                            } catch(Exception e){
-                                e.printStackTrace();
-                            }
-
-                            try {
-                                doMove(destino);
-                            } catch(Exception e){
-                                e.printStackTrace();
-                            }
-                            _state--;
-                        } else {
-                            _state++;
-                            System.out.println("No hay mas para Leer");
-                        }
+                        // _state--; para volver al estado anterior de la maquina de estados
+                        // _state++; cuando termine de escribir el archivo
                     case 3:
-                        // Cierro el in y out
-                        try {
-                            in.close();
-                            out.close();
-                        } catch (Exception e) {
-                            e.getMessage();
-                        }
+                        // Regresó al origen, imprime el directorio y destruye al agente
+                        System.out.println("Estado 2 Regresó a origen --> " + here().getID());
+                        
                         // destruye al agente
                         System.out.println("destruye al agente --> " + getName());
                         doDelete();
@@ -124,27 +103,11 @@ public class ReadAgent extends Agent{
                     }
 			    }
 			private int _state = 0; // variable de máquina de estados del agente
-        });
-        
-        // registra un comportamiento dummy a los efectos de verificar concurrencia y movilidad
-		addBehaviour(new CyclicBehaviour(this){
-        
-			public void action() 
-			{
-				// arranca muestra cartel, duerme 5 segundos y muestra otro cartel
-                _contador++;
-                
-				}
-
-			private int _contador = 0; // cuenta la cantidad de ciclos en que se ejecuta el comportamiento
-	     
 		});
-	}
 
-	// Luego de ser movido el agente ejecuta este código
-	protected void afterMove() {
-		System.out.println("Siempre ejecuta afterMove cuando al llegar --> " + here().getID());
-	}
+    }
 
     
+
+
 }
