@@ -2,9 +2,11 @@ package RFS;
 import jade.core.*;
 import java.io.*;
 import jade.core.behaviours.CyclicBehaviour;
-import java.util.Scanner;
+import java.util.*;
 import jade.content.*;
 import jade.domain.JADEAgentManagement.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
 public class WriteAgent extends Agent{
     
@@ -19,7 +21,8 @@ public class WriteAgent extends Agent{
     FileInputStream in = null;
     FileOutputStream out = null;
 
-    int length = 0;
+    int count = 0;
+	long offset = 0;
     
     // Constructor
     public WriteAgent(String destino, String remoteFile, String localFile, Location origen){
@@ -29,8 +32,6 @@ public class WriteAgent extends Agent{
         this.localFile = localFile;
         this.remoteFile = remoteFile;
         this.buffer = new byte[MAX_BUFFER];
-        this.in = new FileInputStream(localFile);
-        this.out = new FileOutputStream(remoteFile, true);
 
     }
 
@@ -55,8 +56,21 @@ public class WriteAgent extends Agent{
                         System.out.println("Estado 0 Comienza la migración del agente al destino --> " + destino.getID());
                         // Debo Leer del archivo local
                         try {
-                            length = in.read(buffer);
-                            System.out.println("Leyendo " + length + " Bytes.");
+                            System.out.println("Archivo Local:"+ localFile);
+                            File _fr = new File(localFile);
+                            if (!_fr.exists()){
+                                System.out.println("No existe el archivo:"+_fr.getName());
+                            }
+                            FileInputStream fin = new FileInputStream(_fr.toPath().toString());
+                            if (offset > 0){
+                                fin.skip(offset);
+                            }
+                            Arrays.fill(buffer, (byte)'0');
+                            count = fin.read(buffer);
+                            fin.close();
+                            System.out.println("Leyendo " + count + "Bytes");
+                            offset = offset + count;
+
                         } catch (Exception e) {
                             e.getMessage();
                         }
@@ -70,36 +84,38 @@ public class WriteAgent extends Agent{
                         break;
                     case 1:
                     // el agente llegó al destino, recupera el directorio y regresa
-                        if (length > 0) {
+                         
+                         if (count > 0) {
                             try {
-                                out.write(buffer);
-                                System.out.println("Escribiendo " + length + " Bytes.");
+                                System.out.println("Archivo Remoto:"+ remoteFile);
+                                File _fl = new File(remoteFile);
+
+                                if (!_fl.exists())
+                                    _fl.createNewFile();
+
+                                FileOutputStream fout = new FileOutputStream(_fl.toPath().toString(), true);
+
+                                fout.write(buffer);
+                                fout.close();
+                                System.out.println("Escribiendo " + count + " Bytes");
                             } catch(Exception e){
-                                e.getMessage();
+                                e.printStackTrace();
                             }
 
                             try {
-                                doMove(destino);
+                                doMove(origen);
                             } catch(Exception e){
                                 e.printStackTrace();
                             }
                             _state--;
-                        }
-                        else {
-                            System.out.println("No tengo más para leer");
+                        } else {
                             _state++;
+                            System.out.println("No hay mas para Leer");
                         }
                         break;
                     case 2:
                         // Regresó al origen, imprime el directorio y destruye al agente
                         System.out.println("Estado 2 Regresó a origen --> " + here().getID());
-                        try {
-                            in.close();
-                            out.close();
-                        } catch(Exception e){
-                            e.printStackTrace();
-                        }
-                        
                         // destruye al agente
                         System.out.println("destruye al agente --> " + getName());
                         doDelete();
