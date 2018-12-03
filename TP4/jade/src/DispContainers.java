@@ -1,12 +1,7 @@
 package DispContainers;
-
 import jade.core.*;
-
 import jade.core.behaviours.CyclicBehaviour;
-
-
 import java.util.*;
- 
 import jade.lang.acl.*;
 import jade.content.*;
 import jade.content.onto.basic.*;
@@ -17,11 +12,8 @@ import jade.domain.mobility.*;
 
 public class DispContainers extends Agent
 {
-
-	
 	private boolean error = false;
-	private int operacion = 0;
-	
+	private int operacion = 0;	
 	private ArrayList containers = new ArrayList(); // Obtiene una Lista de los Contenedores registrados en JADE.
 	private int cantidad_maxima_contenedores = 0;
 	private int cant_contenedores = 0;	
