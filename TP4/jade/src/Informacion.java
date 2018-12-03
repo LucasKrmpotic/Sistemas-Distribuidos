@@ -2,6 +2,8 @@ package ListadoCircular;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.util.*;
+import com.sun.management.OperatingSystemMXBean;
+import java.lang.management.ManagementFactory;
 
 public class Informacion implements Serializable{
     public String ip;
@@ -9,6 +11,7 @@ public class Informacion implements Serializable{
     public String timeLlegada;
     public String timePartida;
     public String so;
+    public String cpu;
 
     public Informacion (){
         this.timeLlegada = "";
@@ -16,6 +19,7 @@ public class Informacion implements Serializable{
         this.ip = "";
         this.so = ""; 
         this.hostName = "";
+        this.cpu = "";
     }
 
     public void leerDatos(){
@@ -39,6 +43,10 @@ public class Informacion implements Serializable{
         }
         Calendar cal = Calendar.getInstance();
         this.timePartida = String.valueOf(cal.getTime());
+        
+        // Lectura de CPU
+        OperatingSystemMXBean cpu = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
+        this.cpu = String.valueOf(cpu.getSystemCpuLoad());
     }
 
     public void mostrarInfo(){
@@ -46,6 +54,7 @@ public class Informacion implements Serializable{
         System.out.println("Host Name: " + this.hostName);
         System.out.println("IP: " + this.ip);
         System.out.println("SO: " + this.so);
+        System.out.println("CPU: " + this.cpu);
         System.out.println("Hora Llegada a Destino: " + this.timeLlegada );
         System.out.println("Hora de Partida hacia el Origen: " + this.timePartida);
         System.out.println("-------------------------------------------------");
