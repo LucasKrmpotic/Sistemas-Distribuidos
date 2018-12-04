@@ -54,10 +54,7 @@ public class App extends Agent{
             }
             if(opcion == 3){
                 System.out.println("SALIR");
-                break;
             }
-            
-            
         }
 
     }
@@ -93,7 +90,7 @@ public class App extends Agent{
         System.out.print(">>> ");
 
         String lFileName = sc.nextLine();
-        this.setRemoteFile(lFileName);
+        this.setLocalFile(lFileName);
 
 
     }

@@ -348,10 +348,71 @@ y cuáles son las ventajas y desventajas comparando esta solución con el
 estándar
 cliente/servidor.}\label{c-describa-en-quuxe9-cambia-la-arquitectura-de-la-soluciuxf3n-y-cuuxe1les-son-las-ventajas-y-desventajas-comparando-esta-soluciuxf3n-con-el-estuxe1ndar-clienteservidor.}}
 
+    La arquitectura de la solución cambia en que el programador se centra en
+implementar un agente, el cual se encarga de viajar hasta la máquina
+remota, realizar la tarea deseada, y retornar a destino (ya no se crean
+stubs como en cliente/servidor).
+
+Mientras que en el estándar cliente/servidor, el programador se
+concentra en el conjunto de métodos o procedimientos a ejecutar en la
+máquina remota.
+
+\hypertarget{ventajas}{%
+\paragraph{Ventajas}\label{ventajas}}
+
+\begin{itemize}
+\tightlist
+\item
+  No es necesario acordar los procedimientos entre cliente y servidor.
+\item
+  No es necesario ejecutar una instalación del servidor.
+\item
+  Se evitan los constantes pedidos y respuestas propias de
+  cliente/servidor, disminuyendo con esto el tráfico de la red.
+\end{itemize}
+
+\hypertarget{desventajas}{%
+\paragraph{Desventajas}\label{desventajas}}
+
+\begin{itemize}
+\tightlist
+\item
+  Esta solución es solo compatible con la plataforma de JADE
+\end{itemize}
+
     \hypertarget{d-identifique-las-similitudes-y-diferencias-de-distribuciuxf3nmovilidad-de-cuxf3digo-entre-rmi-y-jade.}{%
 \subsubsection{d) Identifique las similitudes y diferencias de
 distribución/movilidad de código entre RMI y
 Jade.}\label{d-identifique-las-similitudes-y-diferencias-de-distribuciuxf3nmovilidad-de-cuxf3digo-entre-rmi-y-jade.}}
+
+    \hypertarget{similitudes-entre-rmi-y-jad}{%
+\subsubsection{Similitudes entre RMI y
+Jad}\label{similitudes-entre-rmi-y-jad}}
+
+\begin{itemize}
+\tightlist
+\item
+  Ambas tecnologías trabajan con objetos.
+\item
+  Permiten la ejecución remota de código.
+\item
+  Ambas están implementadas en Java.
+\end{itemize}
+
+\hypertarget{diferencias-entre-rmi-y-jade}{%
+\paragraph{Diferencias entre RMI y
+Jade}\label{diferencias-entre-rmi-y-jade}}
+
+\begin{itemize}
+\tightlist
+\item
+  RMI ejecuta código que se encuentra en una máquina remota (invoca
+  métodos implementados en otra máquina).
+\item
+  Mientras que Jade, tiene la posibilidad de migrar su código a otro
+  host, ejecutarse y regresar al sitio de origen. (también permite la
+  clonación de código)
+\end{itemize}
 
     \hypertarget{programar-un-agente-muxf3vil-para-que-periuxf3dicamente-recorra-una-secuencia-de-computadoras-y-conforme-una-tabla-que-contenga}{%
 \subsection{2. Programar un agente móvil para que periódicamente recorra
@@ -385,6 +446,64 @@ presencia.}\label{al-llegar-a-cada-una-de-las-computadoras-el-agente-debe-perman
 indicando además el tiempo total ocupado en el recorrido para recolectar
 la
 información.}\label{al-retorno-al-punto-de-origen-se-presentaruxe1-la-tabla-indicando-ademuxe1s-el-tiempo-total-ocupado-en-el-recorrido-para-recolectar-la-informaciuxf3n.}}
+
+    \hypertarget{implementacion}{%
+\paragraph{Implementacion}\label{implementacion}}
+
+Se implementó un agente que contiene, en su método ``action()'', como
+estructura principal un switch con tres opciones. Cada una de ellas es
+ejecutada acorde al número de una variable estática numérica y global
+que indica el ``estado'' (**\_state**) en el que se encuentra el agente.
+En nuestro caso, los estados son:
+
+\begin{itemize}
+\item
+  \textbf{Opción 0:} El agente está en el contenedor en que se lo
+  inició. En este punto se obtiene la lista de contenedores y se prepara
+  el contexto para la migración.
+\item
+  \textbf{Opción 1:} El agente está en alguno de los contenedores que
+  deben ser escaneados para obtener información del host. Una vez
+  escaneado esto, se mueve al siguiente contenedor.
+\item
+  \textbf{Opción 2:} El agente volvió al contenedor inicial, esto quiere
+  decir que ya circulo por todos los contenedores, entonces debe
+  imprimir en la salida estándar la información recolectada y terminar.
+\end{itemize}
+
+Para el guardado de la información se implementó un arreglo de la clase
+``Informacion'', la cual contiene toda la especificacion de lo requerido
+en cada lectura de cada contenedor. Entonces, el agente en cada
+contenedor que visita instancia un objeto ``Informacion'' que contiene
+toda la información escaneada y la agrega a dicho arreglo.
+
+Luego, en el \_State=2, donde el agente ya esta nuevamente en destino y
+debio haber escaneado todos los contenedores, recorre su arreglo
+imprimiendo la informacion de cada objeto de tipo ``Informacion''
+perteneciente a cada contenedor escaneado.
+
+En nuestro caso, la informacion escaneada es:
+
+\begin{itemize}
+\tightlist
+\item
+  Host Name
+\item
+  IP Host
+\item
+  SO
+\item
+  Consumo de CPU
+\item
+  Horario de llegada al Host Destino
+\item
+  Horario de partida del Host
+\end{itemize}
+
+Ejemplo de Escaneo de Contenedores
+\includegraphics{images/ListadoCircular-1.png}
+
+Ejemplo de Imprecion de un Host \includegraphics{images/Escaneo.png}
 
     \hypertarget{realizar-y-documentar-los-siguientes-experimentos}{%
 \subsection{3. Realizar y documentar los siguientes
@@ -439,7 +558,7 @@ y en modo eventual con estampa
 temporal.}\label{en-la-placa-publicadora-instrumentar-una-mediciuxf3n-de-temperatura-dos-botones-por-touch-y-pulsado-como-sensores-y-dos-leds-rojo-azul-como-actuadores.-la-temperatura-se-publicaruxe1-cada-10-segundos.-el-cambio-de-estado-de-los-botones-se-publicaruxe1-cuando-ocurra-y-en-modo-eventual-con-estampa-temporal.}}
 
     \hypertarget{introducciuxf3n}{%
-\paragraph{Introducción}\label{introducciuxf3n}}
+\paragraph{Introducción\\}\label{introducciuxf3n}}
 
 La simulación de este apartado del trabajo se utilizarán las siguientes
 tecnologías:
@@ -525,7 +644,7 @@ interfaces web estarán disponibles en las rutas:
 \end{itemize}
 
     \hypertarget{diseuxf1o}{%
-\paragraph{Diseño}\label{diseuxf1o}}
+\paragraph{Diseño\\}\label{diseuxf1o}}
 
 Según los requerimientos de la consigna la placa Arduino podría tener el
 siguiente esquema de conexiones:
@@ -567,7 +686,7 @@ Tal como se puede ver en la siguiente imagen:
 
     \hypertarget{esquema-de-tuxf3picos-y-programaciuxf3n-de-los-nodos}{%
 \paragraph{Esquema de tópicos y programación de los
-nodos}\label{esquema-de-tuxf3picos-y-programaciuxf3n-de-los-nodos}}
+nodos\\}\label{esquema-de-tuxf3picos-y-programaciuxf3n-de-los-nodos}}
 
 En sistemas grandes puede resultar conveniente la utilización de un
 protocolo de aplicación (MARA por ejemplo) para publicar un conjunto
@@ -732,7 +851,7 @@ variando las distintas QOS (0, 1 y 2). Informe lo
 observado.}\label{b.-probando-con-el-servidor-mosquitto-en-localhost-analizar-mediante-wireshark-en-modo-comando-por-consola-o-utilizando-el-mqtt-spy-en-java---como-es-el-comportamiento-de-los-mensajes-variando-las-distintas-qos-0-1-y-2.-informe-lo-observado.}}
 
     \hypertarget{introducciuxf3n}{%
-\paragraph{Introducción}\label{introducciuxf3n}}
+\paragraph{Introducción\\}\label{introducciuxf3n}}
 
 Las calidades de servicio en MQTT determinan el modo en que se
 confirmarán, o no, las recepciones de mensajes de tipo
@@ -809,9 +928,11 @@ pcap}\label{clase-sniffer-para-filtrado-y-generaciuxf3n-del-pcap}}
 \paragraph{Prueba 1: QoS 2 en publicador, QoS 0 en
 suscriptor}\label{prueba-1-qos-2-en-publicador-qos-0-en-suscriptor}}
 
-Escenario teórico esperado:
+Escenario teórico esperado:\\:
 
-    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{images/qos0.png}
+    \end{center}
 
     Ejecucion de la prueba
 
@@ -840,7 +961,7 @@ Escenario teórico esperado:
             
     Vemos que efectivamente el sniffer capturó 5 paquetes correspondientes a
 los intercambios publicador/broker/suscriptor y que son consistentes con
-el escenario teórico esperado.
+el Escenario teórico esperado:\\.
 
 Finalmente ploteamos la disección del último paquete que corresponde al
 envío del mensaje desde el broker al suscriptor. En la imagen podemos
@@ -863,7 +984,7 @@ Ignoring line 5843 in mapping file 'psfonts.map': Unknown token '<DSSerifUni-Bol
 \texttt{\color{outcolor}Out[{\color{outcolor}4}]:}
     
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Laboratorio-4_files/Laboratorio-4_45_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Laboratorio-4_files/Laboratorio-4_48_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -872,9 +993,12 @@ Ignoring line 5843 in mapping file 'psfonts.map': Unknown token '<DSSerifUni-Bol
 \paragraph{Prueba 2: QoS 2 en publicador QoS 1 en
 suscriptor}\label{prueba-2-qos-2-en-publicador-qos-1-en-suscriptor}}
 
-Escenario teórico esperado
+Escenario teórico esperado:\\
 
-    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{images/qos1.png}
+    \end{center}
+
 
     Ejecución de la prueba
 
@@ -916,7 +1040,7 @@ Ignoring line 5843 in mapping file 'psfonts.map': Unknown token '<DSSerifUni-Bol
 \texttt{\color{outcolor}Out[{\color{outcolor}2}]:}
     
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Laboratorio-4_files/Laboratorio-4_51_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Laboratorio-4_files/Laboratorio-4_54_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -925,9 +1049,12 @@ Ignoring line 5843 in mapping file 'psfonts.map': Unknown token '<DSSerifUni-Bol
 \paragraph{Prueba 3: QoS 2 en publicador, QoS 2 en
 suscriptor}\label{prueba-3-qos-2-en-publicador-qos-2-en-suscriptor}}
 
-Escenario teórico esperado
+Escenario teórico esperado:\\
 
-    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{images/qos2.png}
+    \end{center}
+
 
     Ejecución de la prueba
 
@@ -970,7 +1097,7 @@ Ignoring line 5843 in mapping file 'psfonts.map': Unknown token '<DSSerifUni-Bol
 \texttt{\color{outcolor}Out[{\color{outcolor}3}]:}
     
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Laboratorio-4_files/Laboratorio-4_57_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Laboratorio-4_files/Laboratorio-4_60_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
