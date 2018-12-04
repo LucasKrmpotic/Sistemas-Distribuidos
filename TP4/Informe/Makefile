@@ -2,7 +2,7 @@
 
 
 # specify your main target here:
-NAME=Laboratorio-3
+NAME=Laboratorio-4
 
 all: convert $(NAME).pdf clean
 
@@ -11,12 +11,9 @@ convert:
 
 
 # specify the main file and all the files that you are including
-SOURCE=$(NAME).tex #references.bib 
+SOURCE=$(NAME).tex
 
 %.pdf: %.tex $(SOURCE)
-	pdflatex $*
-	#bibtex $*
-	pdflatex $*
 	pdflatex $*
 	pdflatex $*
 

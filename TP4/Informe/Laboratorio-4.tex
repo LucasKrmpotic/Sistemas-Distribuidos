@@ -10,62 +10,12 @@
 
 
     
-\documentclass[11pt]{article}
+\documentclass[11pt]{extarticle}
 
     
     
-    \usepackage[T1]{fontenc}
-    % Nicer default font (+ math font) than Computer Modern for most use cases
-    \usepackage{mathpazo}
+\input{project_settings}
 
-    % Basic figure setup, for now with no caption control since it's done
-    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
-    \usepackage{graphicx}
-    % We will generate all images so they have a width \maxwidth. This means
-    % that they will get their normal width if they fit onto the page, but
-    % are scaled down if they would overflow the margins.
-    \makeatletter
-    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
-    \else\Gin@nat@width\fi}
-    \makeatother
-    \let\Oldincludegraphics\includegraphics
-    % Set max figure width to be 80% of text width, for now hardcoded.
-    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
-    % Ensure that by default, figures have no caption (until we provide a
-    % proper Figure object with a Caption API and a way to capture that
-    % in the conversion process - todo).
-    \usepackage{caption}
-    \DeclareCaptionLabelFormat{nolabel}{}
-    \captionsetup{labelformat=nolabel}
-
-    \usepackage{adjustbox} % Used to constrain images to a maximum size 
-    \usepackage{xcolor} % Allow colors to be defined
-    \usepackage{enumerate} % Needed for markdown enumerations to work
-    \usepackage{geometry} % Used to adjust the document margins
-    \usepackage{amsmath} % Equations
-    \usepackage{amssymb} % Equations
-    \usepackage{textcomp} % defines textquotesingle
-    % Hack from http://tex.stackexchange.com/a/47451/13684:
-    \AtBeginDocument{%
-        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
-    }
-    \usepackage{upquote} % Upright quotes for verbatim code
-    \usepackage{eurosym} % defines \euro
-    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
-    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
-    \usepackage{fancyvrb} % verbatim replacement that allows latex
-    \usepackage{grffile} % extends the file name processing of package graphics 
-                         % to support a larger range 
-    % The hyperref package gives us a pdf with properly built
-    % internal navigation ('pdf bookmarks' for the table of contents,
-    % internal cross-reference links, web links for URLs, etc.)
-    \usepackage{hyperref}
-    \usepackage{longtable} % longtable support required by pandoc >1.10
-    \usepackage{booktabs}  % table support for pandoc > 1.12.2
-    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
-    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
-                                % normalem makes italics be italics, not underlines
-    
 
     
     
@@ -141,7 +91,7 @@
     \def\gt{>}
     \def\lt{<}
     % Document parameters
-    \title{Laboratorio-4}
+    
     
     
     
@@ -275,7 +225,12 @@
     \begin{document}
     
     
-    \maketitle
+    
+\input{titlepage}
+\newpage
+\tableofcontents
+\newpage
+
     
     
 
@@ -290,6 +245,106 @@
 \subsubsection{a) Desarrollar, utilizando agentes móviles en JADE, un
 sistema rfs con las cuatro operaciones básicas: open, close, read y
 write.}\label{a-desarrollar-utilizando-agentes-muxf3viles-en-jade-un-sistema-rfs-con-las-cuatro-operaciones-buxe1sicas-open-close-read-y-write.}}
+
+    \hypertarget{implementacion}{%
+\paragraph{Implementacion}\label{implementacion}}
+
+Para realizar un RFS con Agentes Moviles se opto por desarrollar una
+aplicacion lanzadora (\textbf{App.java}) la cual es en si un agente que
+puede ser lanzado por la plataforma JADE.
+
+Esta aplicacion despliega un menu de opciones y dependiendo de la opcion
+\textbf{leer/escribir} se instancia un objeto de tipo \textbf{ReadAgent}
+o un objeto de tipo \textbf{WriteAgent}. Estos ultimos son los agentes
+que viajaran al destino y realizacar la escritura o lectura remota de
+archivos.
+
+En resumen:
+
+\begin{itemize}
+\item
+  \textbf{App.java}: Es en si un agente que puede ser lanzado por la
+  plataforma JADE. Este agente no viaja a ningun destino, sino que se
+  encarga de instanciar los objetos de lectura o escritura remota.
+  Tampoco tiene estados (***\_State***), sino que solo controla como
+  instanciar los objetos de lectura/escritura y despliega el menu de
+  opciones para seleccionar que accion realizar.
+\item
+  \textbf{ReadAgent}: Es un agente de lectura remota. Este agente viaja
+  a destino y es el encargado de realizar la lectura remota y escritura
+  local. Este agente en su maquina de estados consta de 4(cuatro)
+  estados.
+
+  \begin{itemize}
+  \item
+    ***\_state=0*\textbf{: En este estado el agente se encuentra en la
+    maquina local y se realiza la migracion hacia el host destino
+    (container de destino) con el metodo }doMove()**.
+  \item
+    ***\_state=1*\textbf{: En este estado el agente se encuentra en el
+    contenedor del host remoto. Entonces aqui comienza la lectura del
+    archivo remoto. Se utiliza un buffer de tamaño 1024 bytes y ademas
+    se realiza el control de un }offset\textbf{, ya que JADE maneja
+    agentes con }migracion debil\textbf{, es decir que no maneja
+    estados. Y por ultimo se vuelve al host de origen (local) con el
+    metodo }doMove()**.
+  \item
+    ***\_state=2\emph{\textbf{: En este estado el agente se encuentra
+    nuevamente en el origen, con lo cual procede a la escritura del
+    buffer que leyo remotamente, a un archivo local. La clave de este
+    estado, es verificar si }count\textbf{ (variable que realiza el
+    }read()\textbf{) es mayor a 0. Entonces si
+    }count\textgreater{}0\textbf{ quiere decir que leyo algo en el
+    buffer y tiene que hacer un }write()\textbf{ en el archivo local y
+    poner la variable global }}\_state=1*** o ***\_state--*** nuevamente
+    para repetir la accion de lectura remota. Y si
+    \textbf{count\textless{}0} quiere decir que no hay mas que leer, y
+    se pone ***\_state++*** o ***\_state=3*** para que la maquina de
+    estados pase de estado.
+  \item
+    ***\_state=3*** : Si se llega a este estado quiere decir que ya no
+    hay mas que leer y se termino de leer el archivo remoto. Se procede
+    a eliminar el agente con el metodo \textbf{doDelete()}.
+  \end{itemize}
+\item
+  \textbf{WriteAgent}: Es un agente de escritura remota. Este agente
+  viaja de origen a destino y se encarga de realizar una escritura
+  remota. Este agente en su maquina de estados consta de 3(tres)
+  estados.
+
+  \begin{itemize}
+  \item
+    ***\_state=0\emph{\textbf{: En este estado el agente se encuentra en
+    la maquina local o host local. Por lo cual se procede a la lectura
+    del archivo local con la funcion }read()\textbf{ de manera local.
+    Luego el agente migra hacia el host destino (container destino) con
+    }doMove()\textbf{ y se reliza el cambio de estado }}\_state++*** o
+    ***\_state=1***.
+  \item
+    ***\_state=1***: En este estado el agente se encuentra en el host
+    remoto (o container destino) y se verifica si:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      La variable de lectura \textbf{count\textgreater{}0} quiere decir
+      que el buffer esta lleno y hay bytes que escribir en el archivo
+      remoto. Se escriben con la funcion \textbf{write()} y luego se
+      realida el \textbf{doMove()} nuevamente hacia la maquina local y
+      se vuelve al estado anterior de la maquina de estados
+      ***\_state--*** o ***\_state=1***.
+    \item
+      La variable de lectura \textbf{count\textless{}0} quiere decir que
+      el buffer esta vacio y termino de leer el archivo local y no hay
+      nada que escribir remotamente. Se procede a cambiar de estado la
+      maquina de estado ***\_state++*** o ***\_state=2***.
+    \end{itemize}
+  \item
+    ***\_state=2*\textbf{: Si se llega a este estado quiere decir que ya
+    no hay mas escribir en el archivo remoto. Se procede a eliminar el
+    agente con el metodo }doDelete()**.
+  \end{itemize}
+\end{itemize}
 
     \hypertarget{b-efectuxfae-una-instalaciuxf3n-de-jade-de-modo-tal-de-tener-su-contenedor-principal-corriendo-en-una-maquina-y-un-contenedor-1-corriendo-en-otra-muxe1quina-de-modo-tal-que-este-uxfaltimo-contenga-los-archivos-que-seruxe1n-objeto-de-la-lecturaescritura.}{%
 \subsubsection{b) Efectúe una instalación de JADE de modo tal de tener
@@ -348,36 +403,44 @@ y cuáles son las ventajas y desventajas comparando esta solución con el
 estándar
 cliente/servidor.}\label{c-describa-en-quuxe9-cambia-la-arquitectura-de-la-soluciuxf3n-y-cuuxe1les-son-las-ventajas-y-desventajas-comparando-esta-soluciuxf3n-con-el-estuxe1ndar-clienteservidor.}}
 
-    La arquitectura de la solución cambia en que el programador se centra en
-implementar un agente, el cual se encarga de viajar hasta la máquina
-remota, realizar la tarea deseada, y retornar a destino (ya no se crean
-stubs como en cliente/servidor).
+    La diferencia más evidente radica en el caso de la arquitectura
+cliente/servidos tenemos dos aplicaciones que conforman el sistema
+distribuido, mientras en el caso de agentes, es sólo una.
 
-Mientras que en el estándar cliente/servidor, el programador se
-concentra en el conjunto de métodos o procedimientos a ejecutar en la
-máquina remota.
+Por ello es que en el paradigma cliente/servidor, el problema es el
+protocolo de comunicaciones mientras que en el paradigma agentes el
+problema radica en el desarrollo de una máquina de estados que nos
+permita monitarear la movilidad de los agentes.
+
+En relación al problema abordado (RFS) se distinguen algunas de las
+ventajas y desventajas de la implementación de una solución basada en
+agentes.
 
 \hypertarget{ventajas}{%
 \paragraph{Ventajas}\label{ventajas}}
 
 \begin{itemize}
-\tightlist
 \item
-  No es necesario acordar los procedimientos entre cliente y servidor.
+  No es necesario establecer un protocolo o interfaz entre cliente y
+  servidor.
 \item
-  No es necesario ejecutar una instalación del servidor.
+  La programación asíncrona es inherente al paradígma.
 \item
-  Se evitan los constantes pedidos y respuestas propias de
-  cliente/servidor, disminuyendo con esto el tráfico de la red.
+  En la mayoría de los casos (en nuestro caso no lo hemos probado)
+  reduce el tráfico de red.
 \end{itemize}
 
 \hypertarget{desventajas}{%
 \paragraph{Desventajas}\label{desventajas}}
 
 \begin{itemize}
-\tightlist
 \item
-  Esta solución es solo compatible con la plataforma de JADE
+  Puede complicarse notablemente la gestión y escalibilidad en
+  aplicaciones multiagente con requerimientos de comunicacion entre
+  ellos.
+\item
+  La movilidad y ejecución de código remoto genera problemas de
+  seguridad adicionales que pueden resultar difícil gestionar
 \end{itemize}
 
     \hypertarget{d-identifique-las-similitudes-y-diferencias-de-distribuciuxf3nmovilidad-de-cuxf3digo-entre-rmi-y-jade.}{%
@@ -385,18 +448,18 @@ máquina remota.
 distribución/movilidad de código entre RMI y
 Jade.}\label{d-identifique-las-similitudes-y-diferencias-de-distribuciuxf3nmovilidad-de-cuxf3digo-entre-rmi-y-jade.}}
 
-    \hypertarget{similitudes-entre-rmi-y-jad}{%
+    \hypertarget{similitudes-entre-rmi-y-jade}{%
 \subsubsection{Similitudes entre RMI y
-Jad}\label{similitudes-entre-rmi-y-jad}}
+Jade}\label{similitudes-entre-rmi-y-jade}}
 
 \begin{itemize}
-\tightlist
 \item
-  Ambas tecnologías trabajan con objetos.
+  En ambos casos el ``cliente'' (host que consume el servicio RFS),
+  ejecuta código en un host remoto.
 \item
-  Permiten la ejecución remota de código.
-\item
-  Ambas están implementadas en Java.
+  Existe bibliografía que propone implementaciones de agentes basadas en
+  RMI
+  (http://ocw.uc3m.es/ingenieria-informatica/desarrollo-de-aplicaciones-distribuidas/materiales-de-clase/paradigmas)
 \end{itemize}
 
 \hypertarget{diferencias-entre-rmi-y-jade}{%
@@ -404,14 +467,22 @@ Jad}\label{similitudes-entre-rmi-y-jad}}
 Jade}\label{diferencias-entre-rmi-y-jade}}
 
 \begin{itemize}
-\tightlist
 \item
-  RMI ejecuta código que se encuentra en una máquina remota (invoca
-  métodos implementados en otra máquina).
+  RMI ejecuta código que se encuentra en una máquina remota (el
+  servidor), pero la complejidad de la programación del servicio se
+  encuentra en ese host remoto.
 \item
-  Mientras que Jade, tiene la posibilidad de migrar su código a otro
-  host, ejecutarse y regresar al sitio de origen. (también permite la
-  clonación de código)
+  Jade, tiene la posibilidad de migrar su código a otro host, ejecutarse
+  y regresar al sitio de origen. (también permite la clonación de
+  código), con lo cual la complejidad se encuentra en el consumidor del
+  servicio
+\item
+  Mientras que en RMI, tal como en todas las soluciones de tipo
+  cliente/servidor, la carga de procesamiento está en un solo host, en
+  Jade se distribuye. Además es una gran verntaja que el host remoto no
+  deba tener instalada una aplicación adicional sino solo la plataforma,
+  dado que genera mucha más transparencia de localización de los
+  archivos
 \end{itemize}
 
     \hypertarget{programar-un-agente-muxf3vil-para-que-periuxf3dicamente-recorra-una-secuencia-de-computadoras-y-conforme-una-tabla-que-contenga}{%
@@ -518,13 +589,35 @@ condiciones:}\label{transferir-un-archivo-de-gran-tamauxf1o-gbs-completo-las-sig
 \subsubsection{a) En la versión con Java Sockets del
 TP1.}\label{a-en-la-versiuxf3n-con-java-sockets-del-tp1.}}
 
+    Se utilizó el archivo pdf del libro ''Distributed Systems Concepts and
+Design'' de George Coulouris, que pesa 11,1MB y se utilizo un buffer de
+1024 bytes. Como puede verse en la imágenes a continuació, la aplicación
+con sockets tardó un poco más de 11 seg en transferir el archivo
+localmente.
+
+\includegraphics{images/cronometro-1.png}
+
     \hypertarget{b-en-la-versiuxf3n-java-rmi-del-tp2.}{%
 \subsubsection{b) En la versión Java RMI del
 TP2.}\label{b-en-la-versiuxf3n-java-rmi-del-tp2.}}
 
+    Se utilizó el archivo pdf del libro ''Distributed Systems Concepts and
+Design'' de George Coulouris, que pesa 11,1MB y se utilizo un buffer de
+1024 bytes. Como puede verse en la imágene a continuación, la aplicación
+con rmi demoró solamente 549 ms.
+
+\includegraphics{images/cronometro-2.png}
+
     \hypertarget{c-en-la-versiuxf3n-con-agentes-muxf3viles-del-punto-1}{%
 \subsubsection{c) En la versión con Agentes Móviles del punto
 1}\label{c-en-la-versiuxf3n-con-agentes-muxf3viles-del-punto-1}}
+
+    Se utilizó el archivo pdf del libro ''Distributed Systems Concepts and
+Design'' de George Coulouris, que pesa 11,1MB y se utilizo un buffer de
+1024 bytes. Como puede verse en la imágenes a continuació, la aplicacion
+con agentes tardo aproximadamente 5 segundos.
+
+\includegraphics{images/cronometro-3.png}
 
     \hypertarget{utilizar-las-primitivas-de-lectura-o-escritura-con-un-tamauxf1o-de-buffer-igual-y-cronometrar-que-el-mismo-cliente-muestre-cuanto-demoruxf3-en-los-tres-casos-sacando-las-conclusiones-de-cada-caso-respecto-a-la-performance-de-cada-soluciuxf3n.-documentar-lo-realizado.}{%
 \subsubsection{Utilizar las primitivas de lectura o escritura con un
@@ -558,7 +651,7 @@ y en modo eventual con estampa
 temporal.}\label{en-la-placa-publicadora-instrumentar-una-mediciuxf3n-de-temperatura-dos-botones-por-touch-y-pulsado-como-sensores-y-dos-leds-rojo-azul-como-actuadores.-la-temperatura-se-publicaruxe1-cada-10-segundos.-el-cambio-de-estado-de-los-botones-se-publicaruxe1-cuando-ocurra-y-en-modo-eventual-con-estampa-temporal.}}
 
     \hypertarget{introducciuxf3n}{%
-\paragraph{Introducción\\}\label{introducciuxf3n}}
+\paragraph{Introducción}\label{introducciuxf3n}}
 
 La simulación de este apartado del trabajo se utilizarán las siguientes
 tecnologías:
@@ -644,7 +737,7 @@ interfaces web estarán disponibles en las rutas:
 \end{itemize}
 
     \hypertarget{diseuxf1o}{%
-\paragraph{Diseño\\}\label{diseuxf1o}}
+\paragraph{Diseño}\label{diseuxf1o}}
 
 Según los requerimientos de la consigna la placa Arduino podría tener el
 siguiente esquema de conexiones:
@@ -660,14 +753,13 @@ siguiente esquema de conexiones:
   Dos led para la simulación de los actuadores
 \end{itemize}
 
-tal como se ve en la siguiente imagen
+tal como se ve en la siguiente imagen\\
 
-    \includegraphics{images/placa.png}
+    \includegraphics{images/placa.png}\\
 
-    La correspondencia de este diseño arduino con la UI-web se puede ver en
-la siguiente imagen
+    La correspondencia de este diseño arduino con la UI-web se puede ver en la siguiente imagen\\
 
-    \includegraphics{images/simulacion-placa.png}
+    \includegraphics{images/simulacion-placa.png}\\
 
     Por su parte el panel de control cuenta con:
 
@@ -680,13 +772,13 @@ la siguiente imagen
   Dos botones para estimular los actuadores
 \end{itemize}
 
-Tal como se puede ver en la siguiente imagen:
+Tal como se puede ver en la siguiente imagen:\\
 
-    \includegraphics{images/panel-control.png}
+    \includegraphics{images/panel-control.png}\\
 
     \hypertarget{esquema-de-tuxf3picos-y-programaciuxf3n-de-los-nodos}{%
 \paragraph{Esquema de tópicos y programación de los
-nodos\\}\label{esquema-de-tuxf3picos-y-programaciuxf3n-de-los-nodos}}
+nodos}\label{esquema-de-tuxf3picos-y-programaciuxf3n-de-los-nodos}}
 
 En sistemas grandes puede resultar conveniente la utilización de un
 protocolo de aplicación (MARA por ejemplo) para publicar un conjunto
@@ -735,7 +827,7 @@ aplicación que simula la placa arduino, en ella se distinguen:
   para manipular los mensajes entre los nodos.
 \end{itemize}
 
-    \includegraphics{images/node-red-sim-ardu.png}
+    \includegraphics{images/node-red-sim-ardu.png}\\
 
     Las conexiones entre los nodos representan flujos de eventos javascript
 en los que los nodos observadores reciben por parametro un objeto
@@ -839,9 +931,9 @@ Las únicas funciones javascript utilizadas tienen por objetivo escuchar
 la recepción de mensajes en los tópicos correspondientes a los sonsores
 digitales y tomar del mensaje el valor del sensor o el timestamp para
 pasárselo al elemento gráfico pertinente (nodo caja de texto y nodo
-notificación respectivamente).
+notificación respectivamente).\\
 
-    \includegraphics{images/node-red-panel-control.png}
+    \includegraphics{images/node-red-panel-control.png}\\
 
     \hypertarget{b.-probando-con-el-servidor-mosquitto-en-localhost-analizar-mediante-wireshark-en-modo-comando-por-consola-o-utilizando-el-mqtt-spy-en-java---como-es-el-comportamiento-de-los-mensajes-variando-las-distintas-qos-0-1-y-2.-informe-lo-observado.}{%
 \subsubsection{b. Probando con el servidor Mosquitto en localhost
@@ -851,7 +943,7 @@ variando las distintas QOS (0, 1 y 2). Informe lo
 observado.}\label{b.-probando-con-el-servidor-mosquitto-en-localhost-analizar-mediante-wireshark-en-modo-comando-por-consola-o-utilizando-el-mqtt-spy-en-java---como-es-el-comportamiento-de-los-mensajes-variando-las-distintas-qos-0-1-y-2.-informe-lo-observado.}}
 
     \hypertarget{introducciuxf3n}{%
-\paragraph{Introducción\\}\label{introducciuxf3n}}
+\paragraph{Introducción}\label{introducciuxf3n}}
 
 Las calidades de servicio en MQTT determinan el modo en que se
 confirmarán, o no, las recepciones de mensajes de tipo
@@ -926,13 +1018,11 @@ pcap}\label{clase-sniffer-para-filtrado-y-generaciuxf3n-del-pcap}}
 
     \hypertarget{prueba-1-qos-2-en-publicador-qos-0-en-suscriptor}{%
 \paragraph{Prueba 1: QoS 2 en publicador, QoS 0 en
-suscriptor}\label{prueba-1-qos-2-en-publicador-qos-0-en-suscriptor}}
+suscriptor\\}\label{prueba-1-qos-2-en-publicador-qos-0-en-suscriptor}}
 
-Escenario teórico esperado:\\:
+Escenario teórico esperado:\\
 
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{images/qos0.png}
-    \end{center}
+\includegraphics{images/qos0.png}\\
 
     Ejecucion de la prueba
 
@@ -961,7 +1051,7 @@ Escenario teórico esperado:\\:
             
     Vemos que efectivamente el sniffer capturó 5 paquetes correspondientes a
 los intercambios publicador/broker/suscriptor y que son consistentes con
-el Escenario teórico esperado:\\.
+el escenario teórico esperado.
 
 Finalmente ploteamos la disección del último paquete que corresponde al
 envío del mensaje desde el broker al suscriptor. En la imagen podemos
@@ -984,21 +1074,18 @@ Ignoring line 5843 in mapping file 'psfonts.map': Unknown token '<DSSerifUni-Bol
 \texttt{\color{outcolor}Out[{\color{outcolor}4}]:}
     
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Laboratorio-4_files/Laboratorio-4_48_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Laboratorio-4_files/Laboratorio-4_52_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
 
     \hypertarget{prueba-2-qos-2-en-publicador-qos-1-en-suscriptor}{%
 \paragraph{Prueba 2: QoS 2 en publicador QoS 1 en
-suscriptor}\label{prueba-2-qos-2-en-publicador-qos-1-en-suscriptor}}
+suscriptor\\}\label{prueba-2-qos-2-en-publicador-qos-1-en-suscriptor}}
 
 Escenario teórico esperado:\\
 
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{images/qos1.png}
-    \end{center}
-
+\includegraphics{images/qos1.png}\\ 
 
     Ejecución de la prueba
 
@@ -1040,21 +1127,20 @@ Ignoring line 5843 in mapping file 'psfonts.map': Unknown token '<DSSerifUni-Bol
 \texttt{\color{outcolor}Out[{\color{outcolor}2}]:}
     
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Laboratorio-4_files/Laboratorio-4_54_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Laboratorio-4_files/Laboratorio-4_58_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
 
     \hypertarget{prueba-3-qos-2-en-publicador-qos-2-en-suscriptor}{%
 \paragraph{Prueba 3: QoS 2 en publicador, QoS 2 en
-suscriptor}\label{prueba-3-qos-2-en-publicador-qos-2-en-suscriptor}}
+suscriptor\\}\label{prueba-3-qos-2-en-publicador-qos-2-en-suscriptor}}
 
 Escenario teórico esperado:\\
 
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{images/qos2.png}
-    \end{center}
+\includegraphics{images/qos2.png}\\
 
+    
 
     Ejecución de la prueba
 
@@ -1097,7 +1183,7 @@ Ignoring line 5843 in mapping file 'psfonts.map': Unknown token '<DSSerifUni-Bol
 \texttt{\color{outcolor}Out[{\color{outcolor}3}]:}
     
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Laboratorio-4_files/Laboratorio-4_60_1.pdf}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Laboratorio-4_files/Laboratorio-4_64_1.pdf}
     \end{center}
     { \hspace*{\fill} \\}
     
@@ -1115,11 +1201,11 @@ en el incisa a).
 
 La primera imagen muestra como es posible suscribirse al tópico
 temperatura y la segunda muestra la creación de 2 botones para hacer
-toggle sobre los actuadores, publicando sobre los tópicos led1 y led2.
+toggle sobre los actuadores, publicando sobre los tópicos led1 y led2.\\
 
-    \includegraphics{images/dashboard-subs.png}
+    \includegraphics{images/dashboard-subs.png}\\
 
-    \includegraphics{images/dashboard-pub.png}
+    \includegraphics{images/dashboard-pub.png}\\
 
     Cabe mencionar que en el escenario planteado no se hizo huso de
 autenticación para la publicación/suscripcipón en los tópicos.
@@ -1128,5 +1214,8 @@ autenticación para la publicación/suscripcipón en los tópicos.
     % Add a bibliography block to the postdoc
     
     
+\bibliographystyle{plain}
+\bibliography{references}
+
     
     \end{document}
