@@ -24,7 +24,11 @@ public class ReadAgent extends Agent{
     FileOutputStream out = null;
    
     int count = 0;
-	long offset = 0;
+    long offset = 0;
+    
+    long tiempoInicio=0;
+    long tiempoFinal=0;
+    long tiempoTotal=0;
 
     // Constructor
     public ReadAgent(String destino, String remoteFile, String localFile, Location origen){
@@ -47,7 +51,8 @@ public class ReadAgent extends Agent{
 
         System.out.println("Origen --> " + this.origen.getID()); 
 		System.out.println("Destino --> " + this.destino.getID());
-
+        long tiempoInicio = System.currentTimeMillis();
+        System.out.println("Tiempo de inicio = " + tiempoInicio);
         // registra el comportamiento deseado del agente
         addBehaviour(new CyclicBehaviour(this){
 			public void action() {
@@ -79,7 +84,6 @@ public class ReadAgent extends Agent{
                             if (offset > 0){
                                 fin.skip(offset);
                             }
-
                             Arrays.fill(buffer, (byte)'0');
                             count = fin.read(buffer);
                             fin.close();
@@ -132,6 +136,10 @@ public class ReadAgent extends Agent{
                         }
                         break;
                     case 3:
+                        long tiempoFinal = System.currentTimeMillis();
+                        System.out.println("Tiempo de fin = " + tiempoFinal);
+                        long tiempoTotal = tiempoFinal - tiempoInicio;
+                        System.out.println("Tiempo Total de Ejecucion = " + tiempoTotal);
                         // destruye al agente
                         System.out.println("destruye al agente --> " + getName());
                         doDelete();
